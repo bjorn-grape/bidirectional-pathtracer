@@ -8,8 +8,7 @@
 
 class Simple {
 public:
-    static bool cake()
-    {
+    static bool cake() {
         return false;
     }
 };

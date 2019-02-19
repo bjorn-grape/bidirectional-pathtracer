@@ -3,6 +3,6 @@
 
 int main() {
     Simple s;
-    std::cout << "Hello, World!" <<  s.cake()<<  std::endl;
+    std::cout << "Hello, World!" << s.cake() << std::endl;
     return 0;
 }
