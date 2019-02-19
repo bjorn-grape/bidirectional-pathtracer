@@ -1,8 +1,8 @@
 #include <iostream>
-#include "Simple.hh"
+#include "parser/Parser.hh"
 
 int main() {
-    Simple s;
-    std::cout << "Hello, World!" << s.cake() << std::endl;
+    std::cout << "test" << std::endl;
+    Parser::fromPathToObjStruct("../objs/cube.obj");
     return 0;
 }

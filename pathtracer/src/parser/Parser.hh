@@ -9,6 +9,7 @@
 
 class Parser {
 
+public :
     static void fromPathToObjStruct(std::string path);
 };
 
