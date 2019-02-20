@@ -8,14 +8,13 @@ public:
 
     Vector2D(T x, T y);
 
-    T get_X();
+    T getX_() const;
 
-    T get_Y();
+    void setX_(T x_);
 
+    T getY_() const;
 
-    void set_X(T x);
-
-    void set_Y(T y);
+    void setY_(T y_);
 
 
 private:

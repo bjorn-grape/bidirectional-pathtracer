@@ -3,3 +3,9 @@
 //
 
 #include "AmbientLight.hh"
+
+AmbientLight::AmbientLight()
+        : Light() {}
+
+AmbientLight::AmbientLight(float intensity, const Vector3D<uint8_t> &color)
+        : Light(intensity, color) {}

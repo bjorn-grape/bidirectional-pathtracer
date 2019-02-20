@@ -7,8 +7,23 @@
 
 class Light {
 public:
-    float intensity;
-    Vector3D<uint8_t> color;
+    Light();
+    Light(float intensity, Vector3D<uint8_t> color);
+
+
+protected:
+    float intensity_;
+public:
+    float getIntensity_() const;
+
+    void setIntensity_(float intensity_);
+
+    const Vector3D<uint8_t> &getColor_() const;
+
+    void setColor_(const Vector3D<uint8_t> &color_);
+
+protected:
+    Vector3D<uint8_t> color_;
 };
 
 

@@ -7,8 +7,10 @@
 #include "Light.hh"
 
 class AmbientLight : public Light {
+public:
+    AmbientLight();
 
-
+    AmbientLight(float intensity, const Vector3D<uint8_t> &color);
 };
 
 

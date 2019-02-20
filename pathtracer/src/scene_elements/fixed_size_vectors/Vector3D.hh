@@ -8,20 +8,23 @@ public:
 
     Vector3D(T x, T y, T z);
 
-    T get_X();
-
-    T get_Y();
-
-    T get_Z();
-
-    void set_X(T x);
-
-    void set_Y(T y);
-
-    void set_Z(T z);
 
 private:
     T x_;
+public:
+    T getX_() const;
+
+    void setX_(T x_);
+
+    T getY_() const;
+
+    void setY_(T y_);
+
+    T getZ_() const;
+
+    void setZ_(T z_);
+
+private:
     T y_;
     T z_;
 };
