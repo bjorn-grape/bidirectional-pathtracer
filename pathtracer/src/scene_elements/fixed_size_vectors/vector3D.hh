@@ -64,4 +64,5 @@ void vector3D<T>::set_Z(T z) {
 }
 
 
+
 #endif //PATHTRACER_VECTOR3D_HH

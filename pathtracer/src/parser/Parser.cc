@@ -19,4 +19,10 @@ void Parser::fromPathToObjStruct(std::string path) {
         std::cout << "working";
     else
         std::cout << "not working";
+
+    if (!err.empty()) { // `err` may contain warning message.
+        std::cerr << err << std::endl;
+    }
+
+
 }
