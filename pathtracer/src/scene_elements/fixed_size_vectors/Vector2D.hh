@@ -2,11 +2,11 @@
 #define PATHTRACER_VECTOR2D_HH
 
 template<typename T>
-class vector2D {
+class Vector2D {
 public:
-    vector2D();
+    Vector2D();
 
-    vector2D(T x, T y);
+    Vector2D(T x, T y);
 
     T get_X();
 

@@ -2,11 +2,11 @@
 #define PATHTRACER_VECTOR3D_HH
 
 template<typename T>
-class vector3D {
+class Vector3D {
 public:
-    vector3D();
+    Vector3D();
 
-    vector3D(T x, T y, T z);
+    Vector3D(T x, T y, T z);
 
     T get_X();
 

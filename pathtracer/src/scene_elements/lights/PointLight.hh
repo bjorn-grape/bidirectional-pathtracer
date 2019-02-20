@@ -1,15 +1,12 @@
-//
-// Created by bjorn on 20/02/19.
-//
-
 #ifndef PATHTRACER_POINT_LIGHT_HH
 #define PATHTRACER_POINT_LIGHT_HH
 
 
-#include "ambientLight.hh"
+#include "Light.hh"
 
-class point_light : ambient_light{
-    
+class PointLight : public Light {
+    Vector3D<float> position;
+    float radius;
 };
 
 
