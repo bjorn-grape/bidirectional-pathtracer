@@ -6,7 +6,7 @@
 #define PATHTRACER_POINT_LIGHT_HH
 
 
-#include "ambient_light.hh"
+#include "ambientLight.hh"
 
 class point_light : ambient_light{
     
