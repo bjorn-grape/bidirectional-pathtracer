@@ -20,19 +20,10 @@ T Vector3D<T>::getX_() const {
     return x_;
 }
 
-template<typename T>
-void Vector3D<T>::setX_(T x_) {
-    Vector3D::x_ = x_;
-}
 
 template<typename T>
 T Vector3D<T>::getY_() const {
     return y_;
-}
-
-template<typename T>
-void Vector3D<T>::setY_(T y_) {
-    Vector3D::y_ = y_;
 }
 
 template<typename T>
@@ -41,15 +32,25 @@ T Vector3D<T>::getZ_() const {
 }
 
 template<typename T>
-void Vector3D<T>::setZ_(T z_) {
-    Vector3D::z_ = z_;
+void Vector3D<T>::setX_(T x) {
+    x_ = x;
+}
+
+template<typename T>
+void Vector3D<T>::setY_(T y) {
+    y_ = y;
+}
+
+template<typename T>
+void Vector3D<T>::setZ_(T z) {
+    z_ = z;
 }
 
 template<typename T>
 bool Vector3D<T>::operator==(const Vector3D &rhs) const {
-    return x_ == rhs.x_ &&
-           y_ == rhs.y_ &&
-           z_ == rhs.z_;
+    return getX_() == rhs.getX_() &&
+           getY_() == rhs.getY_() &&
+           getZ_() == rhs.getZ_();
 }
 
 template<typename T>
@@ -59,110 +60,110 @@ bool Vector3D<T>::operator!=(const Vector3D &rhs) const {
 
 template<typename T>
 Vector3D<T> Vector3D<T>::operator+(const Vector3D<T> &vector3D) const {
-    return Vector3D<T>(x_ + vector3D.x_, y_ + vector3D.y_, z_ + vector3D.z_);
+    return Vector3D<T>(getX_() + vector3D.getX_(), getY_() + vector3D.getY_(), getZ_() + vector3D.getZ_());
 }
 
 template<typename T>
 Vector3D<T> operator+(const T &elm, const Vector3D<T> &vector3D) {
-    return Vector3D<T>(vector3D.x_ + elm, vector3D.y_ + elm, vector3D.z_ + elm);
+    return Vector3D<T>(vector3D.getX_() + elm, vector3D.getY_() + elm, vector3D.getZ_() + elm);
 }
 
 
 template<typename T>
-Vector3D<T> operator+(const Vector3D<T> &vector3D, const T &elm) {
-    return Vector3D<T>(vector3D.x_ + elm, vector3D.y_ + elm, vector3D.z_ + elm);
+Vector3D<T> Vector3D<T>::operator+(const T &elm) const {
+    return Vector3D<T>(getX_() + elm, getY_() + elm, getZ_() + elm);
 }
 
 
 template<typename T>
 void Vector3D<T>::operator+=(const Vector3D<T> &vector3D) {
-    x_ += vector3D.x_;
-    y_ += vector3D.y_;
-    z_ += vector3D.z_;
+    *this = *this + vector3D;
 }
 
 template<typename T>
 void Vector3D<T>::operator+=(const T &elm) {
-    x_ += elm;
-    y_ += elm;
-    z_ += elm;
+    *this = *this + elm;
 }
 
 template<typename T>
 Vector3D<T> Vector3D<T>::operator-(const Vector3D<T> &vector3D) const {
-    return Vector3D<T>(x_ - vector3D.x_, y_ - vector3D.y_, z_ - vector3D.z_);
+    return Vector3D<T>(getX_() - vector3D.getX_(), getY_() - vector3D.getY_(), getZ_() - vector3D.getZ_());
 }
 
 
 template<typename T>
-Vector3D<T> operator-(const Vector3D<T> &vector3D, const T &elm) {
-    return Vector3D<T>(vector3D.x_ - elm, vector3D.y_ - elm, vector3D.z_ - elm);
+Vector3D<T> Vector3D<T>::operator-(const T &elm) const {
+    return Vector3D<T>(getX_() - elm, getY_() - elm, getZ_() - elm);
 }
 
 
 template<typename T>
 void Vector3D<T>::operator-=(const Vector3D<T> &vector3D) {
-    x_ -= vector3D.x_;
-    y_ -= vector3D.y_;
-    z_ -= vector3D.z_;
+    *this = *this - vector3D;
 }
 
 template<typename T>
 void Vector3D<T>::operator-=(const T &elm) {
-    x_ -= elm;
-    y_ -= elm;
-    z_ -= elm;
+    *this = *this - elm;
 }
 
 template<typename T>
 Vector3D<T> Vector3D<T>::operator*(const Vector3D<T> &vector3D) const {
-    return Vector3D<T>(x_ * vector3D.x_, y_ * vector3D.y_, z_ * vector3D.z_);
+    return Vector3D<T>(getX_() * vector3D.getX_(), getY_() * vector3D.getY_(), getZ_() * vector3D.getZ_());
+}
+
+template<typename T>
+Vector3D<T> Vector3D<T>::operator*(const T &elm) const {
+    return Vector3D<T>(getX_() * elm, getY_() * elm, getZ_() * elm);
+}
+
+template<typename T>
+Vector3D<T> operator*(const T &elm, const Vector3D<T> &vector3D) {
+    return Vector3D<T>(vector3D.getX_() * elm, vector3D.getY_() * elm, vector3D.getZ_() * elm);
 }
 
 template<typename T>
 void Vector3D<T>::operator*=(const Vector3D<T> &vector3D) {
-    x_ *= vector3D.x_;
-    y_ *= vector3D.y_;
-    z_ *= vector3D.z_;
+    *this = *this * vector3D;
 }
 
 template<typename T>
 void Vector3D<T>::operator*=(const T &elm) {
-    x_ *= elm;
-    y_ *= elm;
-    z_ *= elm;
+    *this = *this * elm;
 }
 
 template<typename T>
 Vector3D<T> Vector3D<T>::operator/(const Vector3D<T> &vector3D) const {
-    return Vector3D<T>(x_ / vector3D.x_, y_ / vector3D.y_, z_ / vector3D.z_);
+    return Vector3D<T>(getX_() / vector3D.getX_(), getY_() / vector3D.getY_(), getZ_() / vector3D.getZ_());
+}
+
+template<typename T>
+Vector3D<T> Vector3D<T>::operator/(const T &elm) const {
+    return Vector3D<T>(getX_() / elm, getY_() / elm, getZ_() / elm);
 }
 
 template<typename T>
 void Vector3D<T>::operator/=(const Vector3D<T> &vector3D) {
-    x_ /= vector3D.x_;
-    y_ /= vector3D.y_;
-    z_ /= vector3D.z_;
+    *this = *this / vector3D;
 }
 
 template<typename T>
 void Vector3D<T>::operator/=(const T &elm) {
-    x_ /= elm;
-    y_ /= elm;
-    z_ /= elm;
+    *this = *this / elm;
 }
 
 template<typename T>
 T Vector3D<T>::dotproduct(const Vector3D &vector3D) const {
-    return x_ * vector3D.x_ + y_ * vector3D.y_ + z_ * vector3D.z_;
+    return getX_() * vector3D.getX_() + getY_() * vector3D.getY_() + getZ_() * vector3D.getZ_();
 }
 
 template<typename T>
 Vector3D<T> Vector3D<T>::crossproduct(const Vector3D &vector3D) const {
-    return Vector3D(y_ * vector3D.z_ - z_ * vector3D.y_,
-                    z_ * vector3D.x_ - x_ * vector3D.z_,
-                    x_ * vector3D.y_ - y_ * vector3D.x_);
+    return Vector3D(getY_() * vector3D.getZ_() - getZ_() * vector3D.getY_(),
+                    getZ_() * vector3D.getX_() - getX_() * vector3D.getZ_(),
+                    getX_() * vector3D.getY_() - getY_() * vector3D.getX_());
 }
+
 
 template<typename T>
 std::ostream &operator<<(std::ostream &os, const Vector3D<T> &d) {

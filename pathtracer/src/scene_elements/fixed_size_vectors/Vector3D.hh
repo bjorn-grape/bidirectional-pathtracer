@@ -14,47 +14,55 @@ private:
 public:
     T getX_() const;
 
-    void setX_(T x_);
+    void setX_(T x);
 
     T getY_() const;
 
-    void setY_(T y_);
+    void setY_(T y);
 
     T getZ_() const;
 
-    void setZ_(T z_);
+    void setZ_(T z);
 
     bool operator==(const Vector3D &rhs) const;
 
     bool operator!=(const Vector3D &rhs) const;
 
-    Vector3D<T> operator+(const Vector3D<T> &vector2D) const;
+    Vector3D<T> operator+(const Vector3D<T> &vector3D) const;
+
+    Vector3D<T> operator+(const T &elm) const;
 
     void operator+=(const Vector3D<T> &vector3D);
 
     void operator+=(const T &elm);
 
-    Vector3D<T> operator-(const Vector3D<T> &vector2D) const;
+    Vector3D<T> operator-(const Vector3D<T> &vector3D) const;
 
-    void operator-=(const Vector3D<T> &vector2D);
+    Vector3D<T> operator-(const T &elm) const;
+
+    void operator-=(const Vector3D<T> &vector3D);
 
     void operator-=(const T &elm);
 
-    Vector3D<T> operator*(const Vector3D<T> &vector2D) const;
+    Vector3D<T> operator*(const Vector3D<T> &vector3D) const;
 
-    void operator*=(const Vector3D<T> &vector2D);
+    Vector3D<T> operator*(const T &elm) const;
+
+    void operator*=(const Vector3D<T> &vector3D);
 
     void operator*=(const T &elm);
 
-    Vector3D<T> operator/(const Vector3D<T> &vector2D) const;
+    Vector3D<T> operator/(const Vector3D<T> &vector3D) const;
 
-    void operator/=(const Vector3D<T> &vector2D);
+    Vector3D<T> operator/(const T &elm) const;
+
+    void operator/=(const Vector3D<T> &vector3D);
 
     void operator/=(const T &elm);
 
-    T dotproduct(const Vector3D &rhs) const;
+    T dotproduct(const Vector3D &vector3D) const;
 
-    Vector3D crossproduct(const Vector3D &rhs) const;
+    Vector3D crossproduct(const Vector3D &vector3D) const;
 
 private:
     T y_;
