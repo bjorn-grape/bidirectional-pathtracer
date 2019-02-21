@@ -1,0 +1,3 @@
+[submodule "pathtracer_tests/pathtracer_tests/lib/googletest"]
+	path = pathtracer_tests/pathtracer_tests/lib/googletest
+	url = git@github.com:google/googletest.git
