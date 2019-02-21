@@ -1,0 +1,9 @@
+#ifndef PATHTRACER_CONSTANTS_HH
+#define PATHTRACER_CONSTANTS_HH
+
+namespace constants {
+    constexpr float Epsilon = 0.00001f;
+    constexpr float Pi = 3.14159265358979323846264338327950288419716939937510f;
+}
+
+#endif //PATHTRACER_CONSTANTS_HH

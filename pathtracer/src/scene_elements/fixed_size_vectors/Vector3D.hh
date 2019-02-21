@@ -24,10 +24,43 @@ public:
 
     void setZ_(T z_);
 
+    bool operator==(const Vector3D &rhs) const;
+
+    bool operator!=(const Vector3D &rhs) const;
+
+    Vector3D<T> operator+(const Vector3D<T> &vector2D) const;
+
+    void operator+=(const Vector3D<T> &vector3D);
+
+    void operator+=(const T &elm);
+
+    Vector3D<T> operator-(const Vector3D<T> &vector2D) const;
+
+    void operator-=(const Vector3D<T> &vector2D);
+
+    void operator-=(const T &elm);
+
+    Vector3D<T> operator*(const Vector3D<T> &vector2D) const;
+
+    void operator*=(const Vector3D<T> &vector2D);
+
+    void operator*=(const T &elm);
+
+    Vector3D<T> operator/(const Vector3D<T> &vector2D) const;
+
+    void operator/=(const Vector3D<T> &vector2D);
+
+    void operator/=(const T &elm);
+
+    T dotproduct(const Vector3D &rhs) const;
+
+    Vector3D crossproduct(const Vector3D &rhs) const;
+
 private:
     T y_;
     T z_;
 };
 
+#include "Vector3D.hxx"
 
 #endif //PATHTRACER_VECTOR3D_HH
