@@ -8,7 +8,7 @@
 class Light {
 public:
     Light();
-    Light(float intensity, Vector3D<uint8_t> color);
+    Light(float intensity, const Vector3D<uint8_t>& color);
 
 
 protected:

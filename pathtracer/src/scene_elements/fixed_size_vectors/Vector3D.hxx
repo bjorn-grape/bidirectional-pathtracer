@@ -175,7 +175,7 @@ float Vector3D<T>::angleRadian(const Vector3D &vector3D) const {
 
 template<typename T>
 float Vector3D<T>::angleDegree(const Vector3D &vector3D) const {
-    return angleRadian(vector3D) * constants::Pi / static_cast<float>(180);
+    return angleRadian(vector3D) * constants::PI / static_cast<float>(180);
 }
 
 
@@ -183,6 +183,8 @@ template<typename T>
 T Vector3D<T>::norm() const {
     return std::sqrt(getX_() * getX_() + getY_() * getY_() + getZ_() * getZ_());
 }
+
+
 
 
 template<typename T>

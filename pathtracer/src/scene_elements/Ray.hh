@@ -14,7 +14,8 @@ public:
     Ray(const Vector3D<float> &position_, const Vector3D<float> &orientation);
 
 public:
-    bool doIntersect(Vector3D<float> v0, Vector3D<float> v1, Vector3D<float> v2) const;
+    bool doIntersect(Vector3D<float>& v0, Vector3D<float>& v1, Vector3D<float>& v2, Vector3D<float>& intersection) const;
+    bool doIntersectNotOpti(Vector3D<float> v0, Vector3D<float> v1, Vector3D<float> v2) const;
 
 private:
     Vector3D<float> position_;

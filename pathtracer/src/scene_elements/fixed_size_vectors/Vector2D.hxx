@@ -122,8 +122,8 @@ bool Vector2D<T>::operator==(const Vector2D &rhs) const {
 
 template<>
 bool Vector2D<float>::operator==(const Vector2D<float> &rhs) const {
-    return std::abs(x_ - rhs.x_) < constants::Epsilon &&
-           std::abs(y_ - rhs.y_) < constants::Epsilon;
+    return std::abs(x_ - rhs.x_) < constants::EPSILON &&
+           std::abs(y_ - rhs.y_) < constants::EPSILON;
 }
 
 template<typename T>

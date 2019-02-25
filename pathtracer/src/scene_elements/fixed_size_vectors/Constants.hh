@@ -2,8 +2,8 @@
 #define PATHTRACER_CONSTANTS_HH
 
 namespace constants {
-    constexpr float Epsilon = 0.00001f;
-    constexpr float Pi = 3.14159265358979323846264338327950288419716939937510f;
+    constexpr float EPSILON = 0.000001f;
+    constexpr float PI = 3.14159265358979323846264338327950288419716939937510f;
 }
 
 #endif //PATHTRACER_CONSTANTS_HH

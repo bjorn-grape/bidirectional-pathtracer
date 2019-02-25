@@ -15,13 +15,15 @@ int main() {
     auto v1 = Vector3D<float>(7, 2, 0);
     auto v2 = Vector3D<float>(4, 3, 0);
 
-    auto point = Vector3D<float>(4, 2, -1);
-    auto direc = Vector3D<float>(0, 0, 1);
+    auto point = Vector3D<float>(4, 3, 0.1f);
+    auto direc = Vector3D<float>(-1, -1, -1);
 
     auto ray1 = Ray(point, direc);
 
+    auto intersec = Vector3D<float>();
 
-    std::cout << "res = " << ray1.doIntersect(v0,v1,v2) << std::endl;
+    std::cout << "res = " << ray1.doIntersect(v0, v1, v2, intersec)
+              << " and intesection is " << intersec << std::endl;
     //Parser::fromPathToObjStruct(path_global);
     return 0;
 }

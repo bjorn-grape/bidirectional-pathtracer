@@ -4,7 +4,7 @@ Light::Light()
         : intensity_(1)
           , color_(Vector3D<uint8_t>()) {}
 
-Light::Light(float intensity, Vector3D<uint8_t> color)
+Light::Light(float intensity, const Vector3D<uint8_t>& color)
         : intensity_(intensity)
           , color_(color) {}
 

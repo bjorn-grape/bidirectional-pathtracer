@@ -24,6 +24,7 @@ public:
 
     void setZ_(T z);
 
+
     bool operator==(const Vector3D &rhs) const;
 
     bool operator!=(const Vector3D &rhs) const;
@@ -67,6 +68,7 @@ public:
     T norm() const;
 
     float angleRadian(const Vector3D &vector3D) const;
+
     float angleDegree(const Vector3D &vector3D) const;
 
 private:
