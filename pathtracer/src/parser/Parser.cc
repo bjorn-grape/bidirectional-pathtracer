@@ -23,6 +23,4 @@ void Parser::fromPathToObjStruct(std::string path) {
     if (!err.empty()) { // `err` may contain warning message.
         std::cerr << err << std::endl;
     }
-
-
 }

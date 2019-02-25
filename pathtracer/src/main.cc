@@ -2,6 +2,7 @@
 #include "parser/Parser.hh"
 #include "scene_elements/fixed_size_vectors/Vector2D.hh"
 #include "scene_elements/fixed_size_vectors/Vector3D.hh"
+#include "scene_elements/Ray.hh"
 
 #ifdef  _WIN32
 const std::string path_global = "..\\objs\\cube.obj";
@@ -10,15 +11,17 @@ const std::string path_global = "../objs/cube.obj";
 #endif
 
 int main() {
-    auto a = Vector3D<float>(2.f, 2.f,3.f);
-    auto b = Vector3D<float>(1.f, 5.f, 4.f);
-   // a *= a;
-    //a /=a;
-    a += 2.f * a;
-    //a -=a;
+    auto v0 = Vector3D<float>(1, 0, 0);
+    auto v1 = Vector3D<float>(7, 2, 0);
+    auto v2 = Vector3D<float>(4, 3, 0);
+
+    auto point = Vector3D<float>(4, 2, -1);
+    auto direc = Vector3D<float>(0, 0, 1);
+
+    auto ray1 = Ray(point, direc);
 
 
-    std::cout << "test" << (a)  << std::endl;
+    std::cout << "res = " << ray1.doIntersect(v0,v1,v2) << std::endl;
     //Parser::fromPathToObjStruct(path_global);
     return 0;
 }

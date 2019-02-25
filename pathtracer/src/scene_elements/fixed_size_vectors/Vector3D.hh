@@ -64,6 +64,11 @@ public:
 
     Vector3D crossproduct(const Vector3D &vector3D) const;
 
+    T norm() const;
+
+    float angleRadian(const Vector3D &vector3D) const;
+    float angleDegree(const Vector3D &vector3D) const;
+
 private:
     T y_;
     T z_;

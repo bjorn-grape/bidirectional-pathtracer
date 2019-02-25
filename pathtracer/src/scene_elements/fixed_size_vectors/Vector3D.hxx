@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Vector3D.hh"
+#include "Constants.hh"
 #include <ostream>
+#include <cmath>
 
 template<typename T>
 Vector3D<T>::Vector3D()
@@ -162,6 +164,24 @@ Vector3D<T> Vector3D<T>::crossproduct(const Vector3D &vector3D) const {
     return Vector3D(getY_() * vector3D.getZ_() - getZ_() * vector3D.getY_(),
                     getZ_() * vector3D.getX_() - getX_() * vector3D.getZ_(),
                     getX_() * vector3D.getY_() - getY_() * vector3D.getX_());
+}
+
+template<typename T>
+float Vector3D<T>::angleRadian(const Vector3D &vector3D) const {
+    auto dotprod = *this->dotproduct(vector3D);
+    auto normprod = *this->norm() * vector3D.norm();
+    return std::acos(dotprod / normprod);
+}
+
+template<typename T>
+float Vector3D<T>::angleDegree(const Vector3D &vector3D) const {
+    return angleRadian(vector3D) * constants::Pi / static_cast<float>(180);
+}
+
+
+template<typename T>
+T Vector3D<T>::norm() const {
+    return std::sqrt(getX_() * getX_() + getY_() * getY_() + getZ_() * getZ_());
 }
 
 
