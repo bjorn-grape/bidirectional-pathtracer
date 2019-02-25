@@ -7,7 +7,7 @@
 #include <tiny_obj_loader.h>
 #include <iostream>
 
-void Parser::fromPathToObjStruct(std::string path) {
+std::vector<Triangle> Parser::fromPathToObjStruct(std::string path) {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
@@ -15,10 +15,6 @@ void Parser::fromPathToObjStruct(std::string path) {
     std::string warn;
     std::string err;
     bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str());
-    if (ret)
-        std::cout << "working";
-    else
-        std::cout << "not working";
 
     if (!err.empty()) { // `err` may contain warning message.
         std::cerr << err << std::endl;

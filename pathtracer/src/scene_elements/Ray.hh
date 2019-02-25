@@ -7,7 +7,8 @@
 
 
 #include "fixed_size_vectors/Vector3D.hh"
-
+#include <exception>
+#include <vector>
 class Ray {
 
 public:
@@ -15,8 +16,8 @@ public:
 
 public:
     bool doIntersect(Vector3D<float>& v0, Vector3D<float>& v1, Vector3D<float>& v2, Vector3D<float>& intersection) const;
-    bool doIntersectNotOpti(Vector3D<float> v0, Vector3D<float> v1, Vector3D<float> v2) const;
 
+    bool doIntersectPolygon(std::vector<Vector3D<float>> vertices, Vector3D<float> intersection) const;
 private:
     Vector3D<float> position_;
 public:

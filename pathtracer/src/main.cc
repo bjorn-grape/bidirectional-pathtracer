@@ -10,7 +10,7 @@ const std::string path_global = "..\\objs\\cube.obj";
 const std::string path_global = "../objs/cube.obj";
 #endif
 
-int main() {
+void vectorTest() {
     auto v0 = Vector3D<float>(1, 0, 0);
     auto v1 = Vector3D<float>(7, 2, 0);
     auto v2 = Vector3D<float>(4, 3, 0);
@@ -24,6 +24,11 @@ int main() {
 
     std::cout << "res = " << ray1.doIntersect(v0, v1, v2, intersec)
               << " and intesection is " << intersec << std::endl;
+}
+
+int main() {
+    Parser p;
+    p.fromPathToObjStruct(path_global);
     //Parser::fromPathToObjStruct(path_global);
     return 0;
 }

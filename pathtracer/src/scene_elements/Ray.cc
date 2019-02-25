@@ -1,3 +1,4 @@
+#include <vector>
 #include "Ray.hh"
 
 
@@ -40,17 +41,20 @@ Ray::doIntersect(Vector3D<float> &v0, Vector3D<float> &v1, Vector3D<float> &v2,
     auto v = f * direction_.dotproduct(q);
     if (v < 0.0 || u + v > 1.0)
         return false;
-    // At this stage we can compute t to find out where the intersection point is on the line.
     float t = f * edge2.dotproduct(q);
-    if (t > constants::EPSILON) // ray intersection
-    {
+    if (t > constants::EPSILON) {
         intersection = position_ + direction_ * t;
         return true;
-    } else // This means that there is a line intersection but not a ray intersection.
-        return false;
+    }
+    return false;
 }
 
-bool Ray::doIntersectNotOpti(const Vector3D<float> v0, const Vector3D<float> v1, const Vector3D<float> v2) const {
+bool Ray::doIntersectPolygon(const std::vector<Vector3D<float>> vertices, const Vector3D<float> intersection) const {
+    if (vertices.size() < 2)
+        return false;
+    auto v0 = vertices[0];
+    auto v1 = vertices[1];
+
     auto N = v0.crossproduct(v1);
 
     float D = N.dotproduct(v0);
@@ -61,20 +65,16 @@ bool Ray::doIntersectNotOpti(const Vector3D<float> v0, const Vector3D<float> v1,
     float num_t = N.dotproduct(position_) + D;
     float t = -num_t / denom_t;
     if (t < 0)
-        return false; //triangle is behind us
+        return false; //polygon is behind us
 
-    auto E0 = v1 - v0;
-    auto E1 = v2 - v1;
-    auto E2 = v0 - v2;
+    for (int i = 0; i < vertices.size(); ++i) {
+        auto v= vertices[i];
+        auto E0 = vertices[(i + 1)%vertices.size()] - v;
+        auto c0 = position_ - v;
+        if (N.dotproduct(E0.crossproduct(c0)) < constants::EPSILON)
+            return false;
+    }
 
-    auto c0 = position_ - v0;
-    auto c1 = position_ - v1;
-    auto c2 = position_ - v2;
-
-    bool b1 = N.dotproduct(E0.crossproduct(c0)) > 0;
-    bool b2 = N.dotproduct(E1.crossproduct(c1)) > 0;
-    bool b3 = N.dotproduct(E2.crossproduct(c2)) > 0;
-
-    return b1 && b2 && b3;
+    return true;
 }
 
