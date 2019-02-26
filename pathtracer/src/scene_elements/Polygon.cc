@@ -25,7 +25,7 @@ bool Polygon::isValid() {
     return vertices_.size() > 2;
 }
 
-bool Polygon::isTriangle() {
+bool Polygon::isTriangle() const {
     return vertices_.size() == 3;
 }
 

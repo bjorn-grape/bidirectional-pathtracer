@@ -26,7 +26,7 @@ public:
 
     bool isValid();
 
-    bool isTriangle();
+    bool isTriangle() const;
 
     size_t size() const;
 

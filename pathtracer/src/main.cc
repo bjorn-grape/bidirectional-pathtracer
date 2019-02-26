@@ -3,6 +3,7 @@
 #include "scene_elements/fixed_size_vectors/Vector2D.hh"
 #include "scene_elements/fixed_size_vectors/Vector3D.hh"
 #include "scene_elements/Ray.hh"
+#include "scene_elements/Camera.hh"
 
 #ifdef  _WIN32
 const std::string path_global = "..\\objs\\cube.obj";
@@ -31,6 +32,13 @@ int main() {
     for (int i = 0; i < list.size(); ++i) {
         std::cout << list[i] << "\n";
     }
+    Camera c = Camera(1.f, Vector2D(500, 500), Vector3D(1.f, 1.f, 0.f), Vector3D(0.f, 0.f, 0.f));
+    std::cout << "started compute" << std::endl;
+    c.computeImage(list);
+    std::cout << "end compute" << std::endl;
+
+    c.dumpImageToPpm();
+
     //Parser::fromPathToObjStruct(path_global);
     return 0;
 }
