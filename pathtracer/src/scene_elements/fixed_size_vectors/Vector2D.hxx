@@ -114,17 +114,15 @@ void Vector2D<T>::operator/=(const Vector2D<T> &vector2D) {
     this->y_ /= vector2D.y_;
 }
 
+
+
 template<typename T>
 bool Vector2D<T>::operator==(const Vector2D &rhs) const {
     return x_ == rhs.x_ &&
            y_ == rhs.y_;
 }
 
-template<>
-bool Vector2D<float>::operator==(const Vector2D<float> &rhs) const {
-    return std::abs(x_ - rhs.x_) < constants::EPSILON &&
-           std::abs(y_ - rhs.y_) < constants::EPSILON;
-}
+
 
 template<typename T>
 bool Vector2D<T>::operator!=(const Vector2D &rhs) const {

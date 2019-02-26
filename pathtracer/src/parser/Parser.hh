@@ -6,11 +6,13 @@
 #define PATHTRACER_PARSER_HH
 
 #include<string>
+#include "../scene_elements/Polygon.hh"
+
 
 class Parser {
 
 public :
-    static void fromPathToObjStruct(std::string path);
+    static std::vector<Polygon> fromPathToObjStruct(std::string path);
 };
 
 

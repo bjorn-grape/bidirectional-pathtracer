@@ -27,8 +27,10 @@ void vectorTest() {
 }
 
 int main() {
-    Parser p;
-    p.fromPathToObjStruct(path_global);
+    auto list = Parser::fromPathToObjStruct(path_global);
+    for (int i = 0; i < list.size(); ++i) {
+        std::cout << list[i] << "\n";
+    }
     //Parser::fromPathToObjStruct(path_global);
     return 0;
 }

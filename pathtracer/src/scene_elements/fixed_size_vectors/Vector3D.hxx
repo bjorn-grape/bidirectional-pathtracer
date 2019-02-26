@@ -185,10 +185,10 @@ T Vector3D<T>::norm() const {
 }
 
 
-
-
 template<typename T>
 std::ostream &operator<<(std::ostream &os, const Vector3D<T> &d) {
-    os << "<" << d.getX_() << "," << d.getY_() << "," << d.getZ_() << ">";
+    os << "<" << static_cast<float>(d.getX_()) << ","
+       << static_cast<float>(d.getY_()) << ","
+       << static_cast<float>(d.getZ_()) << ">";
     return os;
 }
