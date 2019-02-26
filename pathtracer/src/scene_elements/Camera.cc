@@ -16,15 +16,30 @@ Camera::Camera(float screenDistance, const Vector2D<int> &screenDimension_,
           , orientation_(orientation_) {}
 
 void Camera::computeImage(std::vector<Polygon> polygons) {
-    Vector3D<float> screenCenter = position_ + orientation_ * screenDistance;
-    const float step = 10.f;
-    screenCenter -= Vector3D(step * screenDimension_.getX_() / 2.f,
-                             step * screenDimension_.getY_() / 2.f,
-                             0.f);
+
+    const float scaleDimension = screenDimension_.getY_()/screenDimension_.getX_();
+    auto upperleft = orientation_;
+    auto thetas = Vector2D<float>();
+    const float stepx = fieldOfViewRadian / screenDimension_.getX_();
+    const float stepy = fieldOfViewRadian / screenDimension_.getY_() ;
+
+    thetas -= fieldOfViewRadian;
+    thetas /= 2.0f;
+    thetas *= Vector2D<float>(1.f, 1.f);
+
+    upperleft.rotate(thetas);
+
+
     for (int i = 0; i < screenDimension_.getX_(); ++i) {
+        auto left = upperleft;
+        left.rotateOnX(stepx * i);
+
+
         for (int j = 0; j < screenDimension_.getY_(); ++j) {
             bool doInter = false;
-            Ray r = Ray(position_, screenCenter + Vector3D(i * step, j * step, 0.0f));
+            auto movingDir = left;
+            movingDir.rotateOnY(stepy * j);
+            Ray r = Ray(position_, movingDir);
             Vector3D<float> fff;
             for (const Polygon &p : polygons) {
 
@@ -54,9 +69,9 @@ void Camera::dumpImageToPpm() {
     ofstream << screenDimension_.getX_() << " ";
     ofstream << screenDimension_.getY_() << "\n";
     ofstream << "15\n";
-    for (int i = 0; i < screenDimension_.getX_(); ++i) {
-        for (int j = 0; j < screenDimension_.getY_(); ++j) {
-            if ((screen_[(i * screenDimension_.getX_() + j) * 3] != 0))
+    for (int i = 0; i < screenDimension_.getY_(); ++i) {
+        for (int j = 0; j < screenDimension_.getX_(); ++j) {
+            if ((screen_[(i * screenDimension_.getY_() + j) * 3] != 0))
                 ofstream << "15 ";
             else
                 ofstream << "0 ";

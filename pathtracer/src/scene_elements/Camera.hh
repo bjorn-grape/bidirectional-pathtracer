@@ -18,8 +18,12 @@ public:
            const Vector3D<float> &position_, const Vector3D<float> &orientation_);
 
     void computeImage(std::vector<Polygon> polygons);
+
     void dumpImageToPpm();
+
 private:
+    const float fieldOfView = 90.f;
+    const float fieldOfViewRadian = fieldOfView / 180.f * constants::PI;
     float screenDistance;
     Vector2D<int> screenDimension_;
     std::vector<uint8_t> screen_;

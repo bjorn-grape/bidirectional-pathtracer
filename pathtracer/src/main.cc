@@ -29,10 +29,10 @@ void vectorTest() {
 
 int main() {
     auto list = Parser::fromPathToObjStruct(path_global);
-    for (int i = 0; i < list.size(); ++i) {
+    /*for (int i = 0; i < list.size(); ++i) {
         std::cout << list[i] << "\n";
-    }
-    Camera c = Camera(1.f, Vector2D(500, 500), Vector3D(1.f, 1.f, 0.f), Vector3D(0.f, 0.f, 0.f));
+    }*/
+    Camera c = Camera(1.f, Vector2D(50, 100), Vector3D(3.f, 0.f, 0.0f), Vector3D(-1.f, 0.f, 0.f));
     std::cout << "started compute" << std::endl;
     c.computeImage(list);
     std::cout << "end compute" << std::endl;

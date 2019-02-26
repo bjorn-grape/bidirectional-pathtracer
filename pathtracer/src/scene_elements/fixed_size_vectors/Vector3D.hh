@@ -1,6 +1,8 @@
 #ifndef PATHTRACER_VECTOR3D_HH
 #define PATHTRACER_VECTOR3D_HH
 
+#include "Vector2D.hh"
+
 template<typename T>
 class Vector3D {
 public:
@@ -8,6 +10,8 @@ public:
 
     Vector3D(T x, T y, T z);
 
+
+    void rotate(Vector2D<float> vector2D);
 
 private:
     T x_;
@@ -70,6 +74,10 @@ public:
     float angleRadian(const Vector3D &vector3D) const;
 
     float angleDegree(const Vector3D &vector3D) const;
+
+    void rotateOnX(const float &angle);
+
+    void rotateOnY(const float &angle);
 
 private:
     T y_;

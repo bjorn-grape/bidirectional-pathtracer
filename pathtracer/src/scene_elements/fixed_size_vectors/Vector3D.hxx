@@ -186,6 +186,25 @@ T Vector3D<T>::norm() const {
 
 
 template<typename T>
+void Vector3D<T>::rotateOnX(const float &angle) {
+    setX_(getX_() * std::cos(angle) - getY_() * std::sin(angle));
+    setY_(getX_() * std::sin(angle) + getY_() * std::cos(angle));
+}
+
+template<typename T>
+void Vector3D<T>::rotateOnY(const float &angle) {
+    setX_(getX_() * std::cos(angle) + getZ_() * std::sin(angle));
+    setZ_(- getX_() * std::sin(angle) + getZ_() * std::cos(angle));
+}
+
+template<typename T>
+void Vector3D<T>::rotate(Vector2D<float> vector2D) {
+    rotateOnX(vector2D.getX_());
+    rotateOnY(vector2D.getY_());
+}
+
+
+template<typename T>
 std::ostream &operator<<(std::ostream &os, const Vector3D<T> &d) {
     os << "<" << static_cast<float>(d.getX_()) << ","
        << static_cast<float>(d.getY_()) << ","
