@@ -1,9 +1,7 @@
 #pragma once
 
 #include "Vector3D.hh"
-#include "Constants.hh"
-#include <ostream>
-#include <cmath>
+
 
 template<typename T>
 Vector3D<T>::Vector3D()
@@ -18,41 +16,41 @@ Vector3D<T>::Vector3D(T x, T y, T z)
           , z_(z) {}
 
 template<typename T>
-T Vector3D<T>::getX_() const {
+T Vector3D<T>::getX() const {
     return x_;
 }
 
 
 template<typename T>
-T Vector3D<T>::getY_() const {
+T Vector3D<T>::getY() const {
     return y_;
 }
 
 template<typename T>
-T Vector3D<T>::getZ_() const {
+T Vector3D<T>::getZ() const {
     return z_;
 }
 
 template<typename T>
-void Vector3D<T>::setX_(T x) {
+void Vector3D<T>::setX(T x) {
     x_ = x;
 }
 
 template<typename T>
-void Vector3D<T>::setY_(T y) {
+void Vector3D<T>::setY(T y) {
     y_ = y;
 }
 
 template<typename T>
-void Vector3D<T>::setZ_(T z) {
+void Vector3D<T>::setZ(T z) {
     z_ = z;
 }
 
 template<typename T>
 bool Vector3D<T>::operator==(const Vector3D &rhs) const {
-    return getX_() == rhs.getX_() &&
-           getY_() == rhs.getY_() &&
-           getZ_() == rhs.getZ_();
+    return getX_() == rhs.getX() &&
+           getY_() == rhs.getY() &&
+           getZ_() == rhs.getZ();
 }
 
 template<typename T>
@@ -62,18 +60,18 @@ bool Vector3D<T>::operator!=(const Vector3D &rhs) const {
 
 template<typename T>
 Vector3D<T> Vector3D<T>::operator+(const Vector3D<T> &vector3D) const {
-    return Vector3D<T>(getX_() + vector3D.getX_(), getY_() + vector3D.getY_(), getZ_() + vector3D.getZ_());
+    return Vector3D<T>(getX() + vector3D.getX(), getY() + vector3D.getY(), getZ() + vector3D.getZ());
 }
 
 template<typename T>
 Vector3D<T> operator+(const T &elm, const Vector3D<T> &vector3D) {
-    return Vector3D<T>(vector3D.getX_() + elm, vector3D.getY_() + elm, vector3D.getZ_() + elm);
+    return Vector3D<T>(vector3D.getX() + elm, vector3D.getY() + elm, vector3D.getZ() + elm);
 }
 
 
 template<typename T>
 Vector3D<T> Vector3D<T>::operator+(const T &elm) const {
-    return Vector3D<T>(getX_() + elm, getY_() + elm, getZ_() + elm);
+    return Vector3D<T>(getX() + elm, getY() + elm, getZ() + elm);
 }
 
 
@@ -89,13 +87,13 @@ void Vector3D<T>::operator+=(const T &elm) {
 
 template<typename T>
 Vector3D<T> Vector3D<T>::operator-(const Vector3D<T> &vector3D) const {
-    return Vector3D<T>(getX_() - vector3D.getX_(), getY_() - vector3D.getY_(), getZ_() - vector3D.getZ_());
+    return Vector3D<T>(getX() - vector3D.getX(), getY() - vector3D.getY(), getZ() - vector3D.getZ());
 }
 
 
 template<typename T>
 Vector3D<T> Vector3D<T>::operator-(const T &elm) const {
-    return Vector3D<T>(getX_() - elm, getY_() - elm, getZ_() - elm);
+    return Vector3D<T>(getX() - elm, getY() - elm, getZ() - elm);
 }
 
 
@@ -111,17 +109,17 @@ void Vector3D<T>::operator-=(const T &elm) {
 
 template<typename T>
 Vector3D<T> Vector3D<T>::operator*(const Vector3D<T> &vector3D) const {
-    return Vector3D<T>(getX_() * vector3D.getX_(), getY_() * vector3D.getY_(), getZ_() * vector3D.getZ_());
+    return Vector3D<T>(getX() * vector3D.getX(), getY() * vector3D.getY(), getZ() * vector3D.getZ());
 }
 
 template<typename T>
 Vector3D<T> Vector3D<T>::operator*(const T &elm) const {
-    return Vector3D<T>(getX_() * elm, getY_() * elm, getZ_() * elm);
+    return Vector3D<T>(getX() * elm, getY() * elm, getZ() * elm);
 }
 
 template<typename T>
 Vector3D<T> operator*(const T &elm, const Vector3D<T> &vector3D) {
-    return Vector3D<T>(vector3D.getX_() * elm, vector3D.getY_() * elm, vector3D.getZ_() * elm);
+    return Vector3D<T>(vector3D.getX() * elm, vector3D.getY() * elm, vector3D.getZ() * elm);
 }
 
 template<typename T>
@@ -136,12 +134,12 @@ void Vector3D<T>::operator*=(const T &elm) {
 
 template<typename T>
 Vector3D<T> Vector3D<T>::operator/(const Vector3D<T> &vector3D) const {
-    return Vector3D<T>(getX_() / vector3D.getX_(), getY_() / vector3D.getY_(), getZ_() / vector3D.getZ_());
+    return Vector3D<T>(getX() / vector3D.getX(), getY() / vector3D.getY(), getZ() / vector3D.getZ());
 }
 
 template<typename T>
 Vector3D<T> Vector3D<T>::operator/(const T &elm) const {
-    return Vector3D<T>(getX_() / elm, getY_() / elm, getZ_() / elm);
+    return Vector3D<T>(getX() / elm, getY() / elm, getZ() / elm);
 }
 
 template<typename T>
@@ -156,14 +154,14 @@ void Vector3D<T>::operator/=(const T &elm) {
 
 template<typename T>
 T Vector3D<T>::dotproduct(const Vector3D &vector3D) const {
-    return getX_() * vector3D.getX_() + getY_() * vector3D.getY_() + getZ_() * vector3D.getZ_();
+    return getX() * vector3D.getX() + getY() * vector3D.getY() + getZ() * vector3D.getZ();
 }
 
 template<typename T>
 Vector3D<T> Vector3D<T>::crossproduct(const Vector3D &vector3D) const {
-    return Vector3D(getY_() * vector3D.getZ_() - getZ_() * vector3D.getY_(),
-                    getZ_() * vector3D.getX_() - getX_() * vector3D.getZ_(),
-                    getX_() * vector3D.getY_() - getY_() * vector3D.getX_());
+    return Vector3D(getY() * vector3D.getZ() - getZ() * vector3D.getY(),
+                    getZ() * vector3D.getX() - getX() * vector3D.getZ(),
+                    getX() * vector3D.getY() - getY() * vector3D.getX());
 }
 
 template<typename T>
@@ -181,33 +179,33 @@ float Vector3D<T>::angleDegree(const Vector3D &vector3D) const {
 
 template<typename T>
 T Vector3D<T>::norm() const {
-    return std::sqrt(getX_() * getX_() + getY_() * getY_() + getZ_() * getZ_());
+    return std::sqrt(getX() * getX() + getY() * getY() + getZ() * getZ());
 }
 
 
 template<typename T>
 void Vector3D<T>::rotateOnX(const float &angle) {
-    setX_(getX_() * std::cos(angle) - getY_() * std::sin(angle));
-    setY_(getX_() * std::sin(angle) + getY_() * std::cos(angle));
+    setX(getX() * std::cos(angle) - getY() * std::sin(angle));
+    setY(getX() * std::sin(angle) + getY() * std::cos(angle));
 }
 
 template<typename T>
 void Vector3D<T>::rotateOnY(const float &angle) {
-    setX_(getX_() * std::cos(angle) + getZ_() * std::sin(angle));
-    setZ_(- getX_() * std::sin(angle) + getZ_() * std::cos(angle));
+    setX(getX() * std::cos(angle) + getZ() * std::sin(angle));
+    setZ(- getX() * std::sin(angle) + getZ() * std::cos(angle));
 }
 
 template<typename T>
 void Vector3D<T>::rotate(Vector2D<float> vector2D) {
-    rotateOnX(vector2D.getX_());
-    rotateOnY(vector2D.getY_());
+    rotateOnX(vector2D.getX());
+    rotateOnY(vector2D.getY());
 }
 
 
 template<typename T>
 std::ostream &operator<<(std::ostream &os, const Vector3D<T> &d) {
-    os << "<" << static_cast<float>(d.getX_()) << ","
-       << static_cast<float>(d.getY_()) << ","
-       << static_cast<float>(d.getZ_()) << ">";
+    os << "<" << static_cast<float>(d.getX()) << ","
+       << static_cast<float>(d.getY()) << ","
+       << static_cast<float>(d.getZ()) << ">";
     return os;
 }
