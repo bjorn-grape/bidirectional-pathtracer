@@ -6,11 +6,11 @@ Ray::Ray(const Vector3D<float> &position, const Vector3D<float> &direction)
         : position_(position), direction_(direction) {}
 
 
-const Vector3D<float> &Ray::getPosition_() const {
+const Vector3D<float> &Ray::getPosition() const {
     return position_;
 }
 
-void Ray::setPosition_(const Vector3D<float> &position) {
+void Ray::setPosition(const Vector3D<float> &position) {
     Ray::position_ = position;
 }
 
