@@ -23,7 +23,7 @@ void vectorTest() {
 
     auto intersec = Vector3D<float>();
 
-    std::cout << "res = " << ray1.doIntersect(v0, v1, v2, intersec)
+    std::cout << "res = " << ray1.intersectOneTriangle(v0, v1, v2, intersec)
               << " and intesection is " << intersec << std::endl;
 }
 
