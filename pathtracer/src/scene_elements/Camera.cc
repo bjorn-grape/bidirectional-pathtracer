@@ -17,28 +17,29 @@ Camera::Camera(float screenDistance, const Vector2D<int> &screenDimension_,
 
 void Camera::computeImage(std::vector<Polygon> polygons) {
 
-    const float scaleDimension = screenDimension_.getY_()/screenDimension_.getX_();
+    const float scaleDimension =
+            static_cast<float>(screenDimension_.getY_()) / static_cast<float>(screenDimension_.getX_());
     auto upperleft = orientation_;
     auto thetas = Vector2D<float>();
     const float stepx = fieldOfViewRadian / screenDimension_.getX_();
-    const float stepy = fieldOfViewRadian / screenDimension_.getY_() ;
+    const float stepy = fieldOfViewRadian / screenDimension_.getY_() * scaleDimension;
 
     thetas -= fieldOfViewRadian;
     thetas /= 2.0f;
-    thetas *= Vector2D<float>(1.f, 1.f);
+    thetas *= Vector2D<float>(1.f, 1.f * scaleDimension);
 
     upperleft.rotate(thetas);
 
 
-    for (int i = 0; i < screenDimension_.getX_(); ++i) {
+    for (int i = 0; i < screenDimension_.getY_(); ++i) {
         auto left = upperleft;
-        left.rotateOnX(stepx * i);
+        left.rotateOnX(stepy * i);
 
 
-        for (int j = 0; j < screenDimension_.getY_(); ++j) {
+        for (int j = 0; j < screenDimension_.getX_(); ++j) {
             bool doInter = false;
             auto movingDir = left;
-            movingDir.rotateOnY(stepy * j);
+            movingDir.rotateOnY(stepx * j);
             Ray r = Ray(position_, movingDir);
             Vector3D<float> fff;
             for (const Polygon &p : polygons) {
@@ -71,7 +72,7 @@ void Camera::dumpImageToPpm() {
     ofstream << "15\n";
     for (int i = 0; i < screenDimension_.getY_(); ++i) {
         for (int j = 0; j < screenDimension_.getX_(); ++j) {
-            if ((screen_[(i * screenDimension_.getY_() + j) * 3] != 0))
+            if ((screen_[(i * screenDimension_.getX_() + j) * 3] != 0))
                 ofstream << "15 ";
             else
                 ofstream << "0 ";

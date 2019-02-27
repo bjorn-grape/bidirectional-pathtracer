@@ -32,7 +32,7 @@ int main() {
     /*for (int i = 0; i < list.size(); ++i) {
         std::cout << list[i] << "\n";
     }*/
-    Camera c = Camera(1.f, Vector2D(50, 100), Vector3D(3.f, 0.f, 0.0f), Vector3D(-1.f, 0.f, 0.f));
+    Camera c = Camera(1.f, Vector2D(8, 8), Vector3D(3.f, 0.f, 0.0f), Vector3D(-1.f, 0.f, 0.f));
     std::cout << "started compute" << std::endl;
     c.computeImage(list);
     std::cout << "end compute" << std::endl;
