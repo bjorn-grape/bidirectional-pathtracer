@@ -5,19 +5,19 @@
 #include "Polygon.hh"
 
 
-const std::vector<Vector3D<float>> &Polygon::getVectices_() const {
+const std::vector<Vector3D<float>> &Polygon::getVertices() const {
     return vertices_;
 }
 
-const std::vector<Vector3D<float>> &Polygon::getNormals_() const {
+const std::vector<Vector3D<float>> &Polygon::getNormals() const {
     return normals_;
 }
 
-const std::vector<Vector2D<float>> &Polygon::getTexcoords_() const {
+const std::vector<Vector2D<float>> &Polygon::getTexcoords() const {
     return texcoords_;
 }
 
-const std::vector<Vector3D<uint8_t>> &Polygon::getColors_() const {
+const std::vector<Vector3D<uint8_t>> &Polygon::getColors() const {
     return colors_;
 }
 

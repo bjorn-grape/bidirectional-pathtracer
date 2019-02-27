@@ -2,8 +2,7 @@
 // Created by bjorn on 25/02/19.
 //
 
-#ifndef PATHTRACER_TRIANGLE_HH
-#define PATHTRACER_TRIANGLE_HH
+#pragma once
 
 
 #include <vector>
@@ -16,13 +15,13 @@ public:
     void add(const Vector3D<float> &vextex, const Vector3D<float> &normal,
              const Vector2D<float> &texcoord, const Vector3D<uint8_t> &color);
 
-    const std::vector<Vector3D<float>> &getVectices_() const;
+    const std::vector<Vector3D<float>> &getVertices() const;
 
-    const std::vector<Vector3D<float>> &getNormals_() const;
+    const std::vector<Vector3D<float>> &getNormals() const;
 
-    const std::vector<Vector2D<float>> &getTexcoords_() const;
+    const std::vector<Vector2D<float>> &getTexcoords() const;
 
-    const std::vector<Vector3D<uint8_t>> &getColors_() const;
+    const std::vector<Vector3D<uint8_t>> &getColors() const;
 
     bool isValid();
 
@@ -38,6 +37,3 @@ private:
     std::vector<Vector2D<float>> texcoords_;
     std::vector<Vector3D<uint8_t>> colors_;
 };
-
-
-#endif //PATHTRACER_TRIANGLE_HH
