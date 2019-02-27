@@ -2,21 +2,19 @@
 // Created by bjorn on 26/02/19.
 //
 
-#include <fstream>
 #include "Camera.hh"
-#include "Polygon.hh"
-#include "Ray.hh"
 
-Camera::Camera(float screenDistance, const Vector2D<int> &screenDimension_,
-               const Vector3D<float> &position_,
-               const Vector3D<float> &orientation_)
-        : screenDistance(screenDistance)
-          , screenDimension_(screenDimension_)
-          , position_(position_)
-          , orientation_(orientation_) {}
+
+Camera::Camera(float screenDistance, const Vector2D<int> &screenDimension,
+               const Vector3D<float> &position,
+               const Vector3D<float> &orientation)
+        : screenDistance_(screenDistance)
+          , screenDimension_(screenDimension)
+          , position_(position)
+          , orientation_(orientation) {}
+
 
 void Camera::computeImage(std::vector<Polygon> polygons) {
-
     const float scaleDimension =
             static_cast<float>(screenDimension_.getY_()) / static_cast<float>(screenDimension_.getX_());
     auto upperleft = orientation_;
@@ -45,9 +43,9 @@ void Camera::computeImage(std::vector<Polygon> polygons) {
             for (const Polygon &p : polygons) {
 
                 if (p.isTriangle())
-                    if (r.doIntersect(const_cast<Vector3D<float> &>(p.getVectices_()[0]),
-                                      const_cast<Vector3D<float> &>(p.getVectices_()[1]),
-                                      const_cast<Vector3D<float> &>(p.getVectices_()[2]),
+                    if (r.intersectOneTriangle(const_cast<Vector3D<float> &>(p.getVertices()[0]),
+                                      const_cast<Vector3D<float> &>(p.getVertices()[1]),
+                                      const_cast<Vector3D<float> &>(p.getVertices()[2]),
                                       fff)) {
                         doInter = true;
                         break;
@@ -63,6 +61,7 @@ void Camera::computeImage(std::vector<Polygon> polygons) {
         }
     }
 }
+
 
 void Camera::dumpImageToPpm() {
     std::ofstream ofstream("plop.ppm");
