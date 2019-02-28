@@ -185,8 +185,8 @@ T Vector3D<T>::norm() const {
 
 template<typename T>
 void Vector3D<T>::rotateOnX(const float &angle) {
-    setX(getX() * std::cos(angle) - getY() * std::sin(angle));
-    setY(getX() * std::sin(angle) + getY() * std::cos(angle));
+    setY_(getY_() * std::cos(angle) + getZ_() * std::sin(angle));
+    setZ_(- getY_() * std::sin(angle) + getZ_() * std::cos(angle));
 }
 
 template<typename T>

@@ -149,3 +149,21 @@ TEST(TestVector3, crossProduct) {
     EXPECT_EQ(a.crossproduct(b), Vector3D(-1, 11, -7));
 }
 
+TEST(TestVector3, rotateOnXnothing) {
+    auto expected = Vector3D<float>(1, 0, 0);
+
+    auto got = Vector3D<float>(1, 0, 0);
+    got.rotate(Vector2D<float>(2 * constants::PI , 0.f));
+
+    EXPECT_EQ(expected, got);
+}
+
+TEST(TestVector3, rotateOnXsimple) {
+    auto expected = Vector3D<float>(0, 1, 0);
+
+    auto got = Vector3D<float>(0, 1, 0);
+    got.rotate(Vector2D<float>(2 * constants::PI , 0.f));
+
+    EXPECT_EQ(expected, got);
+}
+
