@@ -11,13 +11,13 @@ public:
 
     Vector2D(T x, T y);
 
-    T getX_() const;
+    T getX() const;
 
-    void setX_(T x_);
+    void setX(T x_);
 
-    T getY_() const;
+    T getY() const;
 
-    void setY_(T y_);
+    void setY(T y_);
 
     Vector2D<T> operator+(const Vector2D<T> &vector2D) const;
 

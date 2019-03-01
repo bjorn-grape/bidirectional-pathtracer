@@ -149,6 +149,16 @@ TEST(TestVector3, crossProduct) {
     EXPECT_EQ(a.crossproduct(b), Vector3D(-1, 11, -7));
 }
 
+TEST(TestVector3, floatVectorEqualityTolerance) {
+    Vector3D<float> expected = Vector3D<float>(0.f, 1, 0);
+    Vector3D<float> got = Vector3D<float>(0, 1 + 10e-8f, 0);
+
+    bool plop = expected == got;
+
+    EXPECT_EQ(expected, got);
+}
+
+
 TEST(TestVector3, rotateOnXnothing) {
     auto expected = Vector3D<float>(1, 0, 0);
 
@@ -158,12 +168,22 @@ TEST(TestVector3, rotateOnXnothing) {
     EXPECT_EQ(expected, got);
 }
 
+
+
 TEST(TestVector3, rotateOnXsimple) {
-    auto expected = Vector3D<float>(0, 1, 0);
+    auto expected = Vector3D<float>(0, -1, 0);
 
     auto got = Vector3D<float>(0, 1, 0);
-    got.rotate(Vector2D<float>(2 * constants::PI , 0.f));
+    got.rotate(Vector2D<float>(constants::PI , 0.f));
 
     EXPECT_EQ(expected, got);
 }
 
+TEST(TestVector3, rotateOnZsimple2) {
+    auto expected = Vector3D<float>(0, 0, -1);
+
+    auto got = Vector3D<float>(0, 0, 1);
+    got.rotate(Vector2D<float>(-constants::PI/2.f , 0.f));
+
+    EXPECT_EQ(expected, got);
+}

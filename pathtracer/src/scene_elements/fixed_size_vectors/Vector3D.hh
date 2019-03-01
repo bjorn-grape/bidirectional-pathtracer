@@ -49,12 +49,12 @@ public:
 
     float angleDegree(const Vector3D &vector3D) const;
 
-    void rotate(Vector2D<float> vector2D);
+    void rotate(Vector3D<float> vector3D);
 
     void rotateOnX(const float &angle);
 
     void rotateOnY(const float &angle);
-
+    void rotateOnZ(const float &angle);
 
 private:
     T x_;

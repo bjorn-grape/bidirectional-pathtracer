@@ -1,7 +1,3 @@
-//
-// Created by bjorn on 26/02/19.
-//
-
 #pragma once
 
 #include <vector>
@@ -22,7 +18,7 @@ public:
     void dumpImageToPpm();
 
 private:
-    const float fieldOfView = 90.f;
+    const float fieldOfView = 60.f;
     const float fieldOfViewRadian = fieldOfView / 180.f * constants::PI;
     float screenDistance_;
     Vector2D<int> screenDimension_;
@@ -32,4 +28,3 @@ private:
 };
 
 
-#endif //PATHTRACER_CAMERA_HH

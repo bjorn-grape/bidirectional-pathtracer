@@ -15,22 +15,22 @@ Vector2D<T>::Vector2D(T x, T y)
          , y_(y) {}
 
 template<typename T>
-T Vector2D<T>::getX_() const {
+T Vector2D<T>::getX() const {
     return x_;
 }
 
 template<typename T>
-void Vector2D<T>::setX_(T x_) {
+void Vector2D<T>::setX(T x_) {
     Vector2D::x_ = x_;
 }
 
 template<typename T>
-T Vector2D<T>::getY_() const {
+T Vector2D<T>::getY() const {
     return y_;
 }
 
 template<typename T>
-void Vector2D<T>::setY_(T y_) {
+void Vector2D<T>::setY(T y_) {
     Vector2D::y_ = y_;
 }
 
@@ -165,6 +165,6 @@ T Vector2D<T>::crossproduct(const Vector2D &rhs) const {
 
 template<typename T>
 std::ostream &operator<<(std::ostream &os, const Vector2D<T> &d) {
-    os << "<" << d.getX_() << "," << d.getY_() << ">";
+    os << "<" << d.getX() << "," << d.getY() << ">";
     return os;
 }

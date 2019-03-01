@@ -48,10 +48,18 @@ void Vector3D<T>::setZ(T z) {
 
 template<typename T>
 bool Vector3D<T>::operator==(const Vector3D &rhs) const {
-    return getX_() == rhs.getX() &&
-           getY_() == rhs.getY() &&
-           getZ_() == rhs.getZ();
+    return getX() == rhs.getX() &&
+           getY() == rhs.getY() &&
+           getZ() == rhs.getZ();
 }
+
+template<>
+inline bool Vector3D<float>::operator==(const Vector3D &rhs) const {
+    return std::abs(getX() - rhs.getX()) < constants::EPSILON &&
+           std::abs(getY() - rhs.getY()) < constants::EPSILON &&
+           std::abs(getZ() - rhs.getZ()) < constants::EPSILON;
+}
+
 
 template<typename T>
 bool Vector3D<T>::operator!=(const Vector3D &rhs) const {
@@ -185,20 +193,27 @@ T Vector3D<T>::norm() const {
 
 template<typename T>
 void Vector3D<T>::rotateOnX(const float &angle) {
-    setY_(getY_() * std::cos(angle) + getZ_() * std::sin(angle));
-    setZ_(- getY_() * std::sin(angle) + getZ_() * std::cos(angle));
+    setY(getY() * std::cos(angle) + getZ() * std::sin(angle));
+    setZ(-getY() * std::sin(angle) + getZ() * std::cos(angle));
 }
 
 template<typename T>
 void Vector3D<T>::rotateOnY(const float &angle) {
-    setX(getX() * std::cos(angle) + getZ() * std::sin(angle));
-    setZ(- getX() * std::sin(angle) + getZ() * std::cos(angle));
+    setX(getX() * std::cos(angle) - getZ() * std::sin(angle));
+    setZ(getX() * std::sin(angle) + getZ() * std::cos(angle));
 }
 
 template<typename T>
-void Vector3D<T>::rotate(Vector2D<float> vector2D) {
-    rotateOnX(vector2D.getX());
-    rotateOnY(vector2D.getY());
+void Vector3D<T>::rotateOnZ(const float &angle) {
+    setX(getX() * std::cos(angle) + getY() * std::sin(angle));
+    setY(-getX() * std::sin(angle) + getY() * std::cos(angle));
+}
+
+template<typename T>
+void Vector3D<T>::rotate(Vector3D<float> vector3D) {
+    rotateOnX(vector3D.getX());
+    rotateOnY(vector3D.getY());
+    rotateOnZ(vector3D.getZ());
 }
 
 
