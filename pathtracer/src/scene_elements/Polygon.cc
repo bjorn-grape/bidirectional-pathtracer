@@ -51,3 +51,12 @@ std::ostream &operator<<(std::ostream &os, const Polygon &polygon) {
 size_t Polygon::size() const {
     return vertices_.size();
 }
+
+const Vector3D<float> Polygon::meanVertices() const {
+    Vector3D<float> mean = Vector3D<float>();
+    mean += getVertices()[0];
+    mean += getVertices()[1];
+    mean += getVertices()[2];
+    mean /= 3;
+    return mean;
+}

@@ -163,27 +163,66 @@ TEST(TestVector3, rotateOnXnothing) {
     auto expected = Vector3D<float>(1, 0, 0);
 
     auto got = Vector3D<float>(1, 0, 0);
-    got.rotate(Vector2D<float>(2 * constants::PI , 0.f));
+    got.rotate(Vector3D<float>(2 * constants::PI, 0.f, 0.f));
 
     EXPECT_EQ(expected, got);
 }
-
 
 
 TEST(TestVector3, rotateOnXsimple) {
     auto expected = Vector3D<float>(0, -1, 0);
 
     auto got = Vector3D<float>(0, 1, 0);
-    got.rotate(Vector2D<float>(constants::PI , 0.f));
+    got.rotate(Vector3D<float>(constants::PI, 0.f, 0.f));
 
     EXPECT_EQ(expected, got);
 }
 
-TEST(TestVector3, rotateOnZsimple2) {
-    auto expected = Vector3D<float>(0, 0, -1);
+TEST(TestVector3, rotateOnXsimple2) {
+    auto expected = Vector3D<float>(0, -1, 0);
 
     auto got = Vector3D<float>(0, 0, 1);
-    got.rotate(Vector2D<float>(-constants::PI/2.f , 0.f));
+    got.rotateOnX(constants::PI / 2.f);
+
+    EXPECT_EQ(expected, got);
+}
+
+TEST(TestVector3, rotateOnXmedium) {
+    auto expected = Vector3D<float>(5.f, 2.f, -12.f);
+    auto got = Vector3D<float>(5.f, -12.f, -2.f);
+    got.rotateOnX(constants::PI / 2.f);
+
+    EXPECT_EQ(expected, got);
+}
+
+TEST(TestVector3, rotateOnXmedium2) {
+    auto expected = Vector3D<float>(5.f, 12.135775f, -0.850271f);
+    auto got = Vector3D<float>(5.f, 12.f, -2.f);
+    got.rotateOnX(constants::PI / 33.f);
+
+    EXPECT_EQ(expected, got);
+}
+
+TEST(TestVector3, rotateOnYmedium) {
+    auto expected = Vector3D<float>(-5.f, 12.f, 2.f);
+    auto got = Vector3D<float>(5.f, 12.f, -2.f);
+    got.rotate(Vector3D(0.f, constants::PI, 0.f));
+
+    EXPECT_EQ(expected, got);
+}
+
+TEST(TestVector3, rotateOnZmedium) {
+    auto expected = Vector3D<float>(-5.f, -12.f, -2.f);
+    auto got = Vector3D<float>(5.f, 12.f, -2.f);
+    got.rotate(Vector3D(0.f, 0.f, constants::PI));
+
+    EXPECT_EQ(expected, got);
+}
+
+TEST(TestVector3, rotateOnZmedium2) {
+    auto expected = Vector3D<float>(-7.892305f, 10.330127f, -2.f);
+    auto got = Vector3D<float>(5.f, 12.f, -2.f);
+    got.rotate(Vector3D(0.f, 0.f, constants::PI / 3));
 
     EXPECT_EQ(expected, got);
 }

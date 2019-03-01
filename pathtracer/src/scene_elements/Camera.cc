@@ -6,49 +6,47 @@
 #include "Camera.hh"
 
 
-Camera::Camera(float screenDistance, const Vector2D<int> &screenDimension,
-               const Vector3D<float> &position,
-               const Vector3D<float> &orientation)
+Camera::Camera(const float &screenDistance, const Vector2D<int> &screenDimension,
+               const Vector3D<float> &position, const Vector3D<float> &orientation,
+               const float &fovDegree)
         : screenDistance_(screenDistance)
           , screenDimension_(screenDimension)
           , position_(position)
-          , orientation_(orientation) {}
+          , orientation_(orientation)
+          , fieldOfView_ (fovDegree){}
 
 
 void Camera::computeImage(std::vector<Polygon> polygons) {
     const float scaleDimension =
             static_cast<float>(screenDimension_.getY()) / static_cast<float>(screenDimension_.getX());
-    auto upperleft = orientation_;
-    auto thetas = Vector3D<float>();
+    //auto upperleft = orientation_;
+    //auto thetas = Vector3D<float>();
     const float stepx = fieldOfViewRadian / screenDimension_.getX();
-    const float stepy = fieldOfViewRadian / screenDimension_.getY()* scaleDimension ;
-
+    const float stepy = fieldOfViewRadian / screenDimension_.getY() /* * scaleDimension*/;
+    auto screenCenterPoint = position_ + orientation_ * screenDistance_;
+    screenCenterPoint -= (fieldOfViewRadian / 2.f);
+    /*
     thetas -= fieldOfViewRadian;
     thetas /= 2.0f;
     thetas *= Vector3D<float>(1.f, 1.f , 1.f * scaleDimension);
 
     upperleft.rotate(thetas);
-
+*/
 
     for (int i = 0; i < screenDimension_.getY(); ++i) {
-        auto left = upperleft;
-        left.rotateOnZ(stepy * i);
-
-
         for (int j = 0; j < screenDimension_.getX(); ++j) {
+
             bool doInter = false;
-            auto movingDir = left;
-            movingDir.rotateOnY(stepx * j);
+            auto movingDir = screenCenterPoint + Vector3D(j * stepy, i * stepx, 0.f) - position_;
             Ray r = Ray(position_, movingDir);
-            //std::cout << "for couple ("<< i<< ","<< j<<") v = "<< movingDir << "\n";
             Vector3D<float> fff;
             for (const Polygon &p : polygons) {
 
                 if (p.isTriangle())
                     if (r.intersectOneTriangle(const_cast<Vector3D<float> &>(p.getVertices()[0]),
-                                      const_cast<Vector3D<float> &>(p.getVertices()[1]),
-                                      const_cast<Vector3D<float> &>(p.getVertices()[2]),
-                                      fff)) {
+                                               const_cast<Vector3D<float> &>(p.getVertices()[1]),
+                                               const_cast<Vector3D<float> &>(p.getVertices()[2]),
+                                               fff)) {
                         doInter = true;
                         break;
                     }

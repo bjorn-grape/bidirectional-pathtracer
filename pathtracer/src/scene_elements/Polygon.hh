@@ -23,6 +23,8 @@ public:
 
     const std::vector<Vector3D<uint8_t>> &getColors() const;
 
+    const Vector3D<float> meanVertices() const;
+
     bool isValid();
 
     bool isTriangle() const;

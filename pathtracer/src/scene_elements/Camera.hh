@@ -10,16 +10,17 @@
 
 class Camera {
 public:
-    Camera(float screenDistance, const Vector2D<int> &screenDimension,
-           const Vector3D<float> &position, const Vector3D<float> &orientation);
+    Camera(const float &screenDistance, const Vector2D<int> &screenDimension,
+           const Vector3D<float> &position, const Vector3D<float> &orientation,
+           const float &fovDegree);
 
     void computeImage(std::vector<Polygon> polygons);
 
     void dumpImageToPpm();
 
 private:
-    const float fieldOfView = 60.f;
-    const float fieldOfViewRadian = fieldOfView / 180.f * constants::PI;
+    const float fieldOfView_ ;
+    const float fieldOfViewRadian = fieldOfView_ / 180.f * constants::PI;
     float screenDistance_;
     Vector2D<int> screenDimension_;
     std::vector<uint8_t> screen_;
