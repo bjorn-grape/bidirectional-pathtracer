@@ -38,7 +38,7 @@ void Polygon::add(const Vector3D<float> &vextex, const Vector3D<float> &normal,
 }
 
 std::ostream &operator<<(std::ostream &os, const Polygon &polygon) {
-    for (int i = 0; i < polygon.size(); ++i) {
+    for (size_t i = 0; i < polygon.size(); ++i) {
         os << "v" << i << ": " << polygon.vertices_[i]
            << " n" << i << ": " << polygon.normals_[i]
            << " t" << i << ": " << polygon.texcoords_[i]

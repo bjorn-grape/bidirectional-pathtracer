@@ -9,11 +9,11 @@
 Camera::Camera(const float &screenDistance, const Vector2D<int> &screenDimension,
                const Vector3D<float> &position, const Vector3D<float> &orientation,
                const float &fovDegree)
-        : screenDistance_(screenDistance)
+        : fieldOfView_(fovDegree)
+          , screenDistance_(screenDistance)
           , screenDimension_(screenDimension)
           , position_(position)
-          , orientation_(orientation)
-          , fieldOfView_ (fovDegree){}
+          , orientation_(orientation) {}
 
 
 void Camera::computeImage(std::vector<Polygon> polygons) {
@@ -22,7 +22,7 @@ void Camera::computeImage(std::vector<Polygon> polygons) {
     //auto upperleft = orientation_;
     //auto thetas = Vector3D<float>();
     const float stepx = fieldOfViewRadian / screenDimension_.getX();
-    const float stepy = fieldOfViewRadian / screenDimension_.getY() /* * scaleDimension*/;
+    const float stepy = fieldOfViewRadian / screenDimension_.getY()  * scaleDimension;
     auto screenCenterPoint = position_ + orientation_ * screenDistance_;
     screenCenterPoint -= (fieldOfViewRadian / 2.f);
     /*

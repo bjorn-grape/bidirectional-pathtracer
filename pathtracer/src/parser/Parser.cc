@@ -17,6 +17,8 @@ std::vector<Polygon> Parser::fromPathToObjStruct(std::string path) {
     std::string err;
     bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str());
 
+    if(!ret)
+        std::cerr << "error while parsing..." << std::endl;
     if (!err.empty()) { // `err` may contain warning message.
         std::cerr << err << std::endl;
     }
@@ -27,7 +29,7 @@ std::vector<Polygon> Parser::fromPathToObjStruct(std::string path) {
         // Loop over faces(polygon)
         size_t index_offset = 0;
         for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
-            int fv = shapes[s].mesh.num_face_vertices[f];
+            size_t fv = shapes[s].mesh.num_face_vertices[f];
             Polygon p;
             // Loop over vertices in the face.
             for (size_t v = 0; v < fv; v++) {
@@ -47,7 +49,7 @@ std::vector<Polygon> Parser::fromPathToObjStruct(std::string path) {
                 // Optional: vertex colors
                 Vector2D<float> texcoord(tx, ty);
                 Vector3D<uint8_t> color;
-                if (attrib.colors.size() >= 3 * idx.vertex_index + 2) {
+                if (attrib.colors.size() >= 3u * idx.vertex_index + 2) {
                     tinyobj::real_t red = attrib.colors[3 * idx.vertex_index + 0];
                     tinyobj::real_t green = attrib.colors[3 * idx.vertex_index + 1];
                     tinyobj::real_t blue = attrib.colors[3 * idx.vertex_index + 2];

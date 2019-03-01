@@ -3,7 +3,8 @@
 
 
 Ray::Ray(const Vector3D<float> &position, const Vector3D<float> &direction)
-        : position_(position), direction_(direction) {}
+        : direction_(direction)
+          , position_(position) {}
 
 
 const Vector3D<float> &Ray::getPosition() const {
@@ -25,7 +26,7 @@ void Ray::setOrientation(const Vector3D<float> &direction) {
 
 bool
 Ray::intersectOneTriangle(const Vector3D<float> &v0, const Vector3D<float> &v1, const Vector3D<float> &v2,
-                 Vector3D<float> &intersection) const {
+                          Vector3D<float> &intersection) const {
     auto edge1 = v1 - v0;
     auto edge2 = v2 - v0;
     auto h = direction_.crossproduct(edge2);
@@ -49,7 +50,7 @@ Ray::intersectOneTriangle(const Vector3D<float> &v0, const Vector3D<float> &v1, 
     return false;
 }
 
-bool Ray::intersectOnePolygon(const std::vector<Vector3D<float>> vertices, Vector3D<float>& intersection) const {
+bool Ray::intersectOnePolygon(const std::vector<Vector3D<float>> vertices, Vector3D<float> &intersection) const {
     if (vertices.size() < 2)
         return false;
     auto v0 = vertices[0];
@@ -67,9 +68,9 @@ bool Ray::intersectOnePolygon(const std::vector<Vector3D<float>> vertices, Vecto
     if (t < 0)
         return false; //polygon is behind us
 
-    for (int i = 0; i < vertices.size(); ++i) {
-        auto v= vertices[i];
-        auto E0 = vertices[(i + 1)%vertices.size()] - v;
+    for (size_t i = 0; i < vertices.size(); ++i) {
+        auto v = vertices[i];
+        auto E0 = vertices[(i + 1) % vertices.size()] - v;
         auto c0 = position_ - v;
         if (N.dotproduct(E0.crossproduct(c0)) < constants::EPSILON)
             return false;
@@ -79,19 +80,18 @@ bool Ray::intersectOnePolygon(const std::vector<Vector3D<float>> vertices, Vecto
 }
 
 
-std::vector<Vector3D<float>> Ray::intersectAllObjects(const std::vector<Polygon> &objects)
-{
+std::vector<Vector3D<float>> Ray::intersectAllObjects(const std::vector<Polygon> &objects) {
     std::vector<Vector3D<float>> intersections;
-    for (const auto &object : objects)
-    {
+    for (const auto &object : objects) {
         Vector3D<float> intersect;
         bool hasIntersect;
-        if(object.isTriangle())
-            hasIntersect = this->intersectOneTriangle(object.getVertices()[0], object.getVertices()[1], object.getVertices()[2], intersect);
+        if (object.isTriangle())
+            hasIntersect = this->intersectOneTriangle(object.getVertices()[0], object.getVertices()[1],
+                                                      object.getVertices()[2], intersect);
         else
             hasIntersect = this->intersectOnePolygon(object.getVertices(), intersect);
 
-        if((hasIntersect))
+        if ((hasIntersect))
             intersections.push_back(intersect);
     }
     return intersections;
