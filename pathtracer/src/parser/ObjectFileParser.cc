@@ -3,12 +3,12 @@
 //
 #define TINYOBJLOADER_IMPLEMENTATION
 
-#include "Parser.hh"
+#include "ObjectFileParser.hh"
 #include "../scene_elements/Polygon.hh"
 #include <tiny_obj_loader.h>
 #include <iostream>
 
-std::vector<Polygon> Parser::fromPathToObjStruct(std::string path) {
+std::vector<Polygon> ObjectFileParser::fromPathToObjStruct(std::string path) {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;

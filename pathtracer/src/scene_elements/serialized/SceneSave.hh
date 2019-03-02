@@ -9,6 +9,8 @@ public:
 
     SceneSave(const AllLights &allLights, const Camera &camera, const std::vector<ObjectPaths> &objects);
 
+    SceneSave() = default;
+
     const AllLights &getAllLights() const;
     void setAllLights(const AllLights &allLights);
 

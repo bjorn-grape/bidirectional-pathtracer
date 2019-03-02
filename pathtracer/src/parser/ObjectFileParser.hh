@@ -4,7 +4,7 @@
 #include "../scene_elements/Polygon.hh"
 
 
-class Parser {
+class ObjectFileParser {
 
 public :
     static std::vector<Polygon> fromPathToObjStruct(std::string path);
