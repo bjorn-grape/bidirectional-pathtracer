@@ -1,3 +1,6 @@
 [submodule "pathtracer_tests/lib/googletest"]
 	path = pathtracer_tests/lib/googletest
 	url = https://github.com/google/googletest
+[submodule "pathtracer/libs/cereal"]
+	path = pathtracer/libs/cereal
+	url = https://github.com/USCiLab/cereal
