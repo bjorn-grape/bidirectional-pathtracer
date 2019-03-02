@@ -5,12 +5,16 @@
 
 #include <ostream>
 #include <cmath>
+#include <cereal/access.hpp>
+#include <cereal/cereal.hpp>
 
 template<typename T>
 class Vector3D {
 public:
     Vector3D();
     Vector3D(T x, T y, T z);
+
+
 
     T getX() const;
     void setX(T x);
@@ -55,6 +59,13 @@ public:
 
     void rotateOnY(const float &angle);
     void rotateOnZ(const float &angle);
+
+    friend class cereal::access;
+    template<class Archive>
+    void serialize(Archive & ar)
+    {
+        ar(CEREAL_NVP(x_), CEREAL_NVP(y_), CEREAL_NVP(z_));
+    }
 
 private:
     T x_;

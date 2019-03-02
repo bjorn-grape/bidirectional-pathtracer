@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <ostream>
+#include <cereal/access.hpp>
+#include <cereal/cereal.hpp>
 
 template<typename T>
 class Vector2D {
@@ -50,6 +52,14 @@ public:
     T dotproduct(const Vector2D &rhs) const;
 
     T crossproduct(const Vector2D &rhs) const;
+
+
+    friend class cereal::access;
+
+    template<class Archive>
+    void serialize(Archive &ar) {
+        ar(CEREAL_NVP(x_), CEREAL_NVP(y_));
+    }
 
 private:
     T x_;

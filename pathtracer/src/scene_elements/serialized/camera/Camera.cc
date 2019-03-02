@@ -78,3 +78,12 @@ void Camera::dumpImageToPpm() {
         ofstream << "\n";
     }
 }
+
+Camera &Camera::operator=(const Camera &camera) {
+    this->orientation_ = camera.orientation_;
+    this->position_ = camera.position_;
+    this->fieldOfViewRadian = camera.fieldOfViewRadian;
+    this->screenDistance_ = camera.screenDistance_;
+    this->screenDimension_ = camera.screenDimension_;
+    return *this;
+}

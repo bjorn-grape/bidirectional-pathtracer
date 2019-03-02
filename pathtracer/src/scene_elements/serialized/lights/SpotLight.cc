@@ -1,25 +1,25 @@
 #include "SpotLight.hh"
 
 float SpotLight::getAngle() const {
-    return angle;
+    return angle_;
 }
 
 void SpotLight::setAngle(float angle) {
-    SpotLight::angle = angle;
+    SpotLight::angle_ = angle;
 }
 
 const Vector3D<float> &SpotLight::getDirection() const {
-    return direction;
+    return direction_;
 }
 
 void SpotLight::setDirection(const Vector3D<float> &direction) {
-    SpotLight::direction = direction;
+    SpotLight::direction_ = direction;
 }
 
 const Vector3D<float> &SpotLight::getPosition() const {
-    return position;
+    return position_;
 }
 
 void SpotLight::setPosition(const Vector3D<float> &position) {
-    SpotLight::position = position;
+    SpotLight::position_ = position;
 }

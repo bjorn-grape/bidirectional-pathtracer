@@ -9,19 +9,19 @@ void PointLight::setPosition(const Vector3D<float> &position) {
 }
 
 float PointLight::getRadius() const {
-    return radius;
+    return radius_;
 }
 
 void PointLight::setRadius(float radius) {
-    PointLight::radius = radius;
+    PointLight::radius_ = radius;
 }
 
 PointLight::PointLight(const Vector3D<float> &position, float radius)
         : position(position)
-          , radius(radius) {}
+          , radius_(radius) {}
 
 PointLight::PointLight(float intensity, const Vector3D<uint8_t> &color,
                        const Vector3D<float> &position, float radius)
         : Light(intensity, color)
           , position(position)
-          , radius(radius) {}
+          , radius_(radius) {}

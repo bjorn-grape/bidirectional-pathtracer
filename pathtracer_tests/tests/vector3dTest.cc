@@ -152,9 +152,6 @@ TEST(TestVector3, crossProduct) {
 TEST(TestVector3, floatVectorEqualityTolerance) {
     Vector3D<float> expected = Vector3D<float>(0.f, 1, 0);
     Vector3D<float> got = Vector3D<float>(0, 1 + 10e-8f, 0);
-
-    bool plop = expected == got;
-
     EXPECT_EQ(expected, got);
 }
 
