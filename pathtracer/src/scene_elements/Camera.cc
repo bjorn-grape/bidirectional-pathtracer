@@ -19,19 +19,18 @@ Camera::Camera(const float &screenDistance, const Vector2D<int> &screenDimension
 void Camera::computeImage(std::vector<Polygon> polygons) {
     const float scaleDimension =
             static_cast<float>(screenDimension_.getY()) / static_cast<float>(screenDimension_.getX());
-    //auto upperleft = orientation_;
-    //auto thetas = Vector3D<float>();
-    const float stepx = fieldOfViewRadian / screenDimension_.getX();
-    const float stepy = fieldOfViewRadian / screenDimension_.getY()  * scaleDimension;
+    float stepx;
+    float stepy;
+    if (scaleDimension > 1u) {
+        stepx = fieldOfViewRadian / screenDimension_.getX();
+        stepy = fieldOfViewRadian / screenDimension_.getY() * scaleDimension;
+    } else {
+        stepx = fieldOfViewRadian / screenDimension_.getX() / scaleDimension;
+        stepy = fieldOfViewRadian / screenDimension_.getY();
+    }
+
     auto screenCenterPoint = position_ + orientation_ * screenDistance_;
     screenCenterPoint -= (fieldOfViewRadian / 2.f);
-    /*
-    thetas -= fieldOfViewRadian;
-    thetas /= 2.0f;
-    thetas *= Vector3D<float>(1.f, 1.f , 1.f * scaleDimension);
-
-    upperleft.rotate(thetas);
-*/
 
     for (int i = 0; i < screenDimension_.getY(); ++i) {
         for (int j = 0; j < screenDimension_.getX(); ++j) {

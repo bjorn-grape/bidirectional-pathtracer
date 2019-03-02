@@ -19,7 +19,7 @@ Vector3D<float> centerGravityPolygons(std::vector<Polygon> polygons) {
         std::cout << "center of gravity of " << i << " is " << polygons[i].meanVertices() << "\n";
     }
     gravityCenter /= polygons.size();
-    return  gravityCenter;
+    return gravityCenter;
 }
 
 int main() {
@@ -28,9 +28,8 @@ int main() {
         std::cout << list[i] << "\n";
     }*/
     //std::cout << "center of gravity is = " << centerGravityPolygons(list) << "\n";
-    // Camera c = Camera(1.f, Vector2D(200, 200), Vector3D(-4.f, 0.f, 2.5f), Vector3D(1.f, 0.f, 0.f));
-
-    Camera c = Camera(1.f, Vector2D(512, 512), Vector3D(.2f, 0.1f, -5.f), Vector3D(0.f, 0.f, 1.f), 60);
+    Camera c = Camera(1.f, Vector2D(512, 512), Vector3D(0.f, 0.0f, -2.f), Vector3D(0.f, 0.f, 1.f), 60);
+    //Camera c = Camera(1.f, Vector2D(512, 512), Vector3D(1.5f, .7f, -1.f), Vector3D(-0.5f, 0.f, 1.f), 90);
     std::cout << "started compute" << std::endl;
     c.computeImage(list);
     std::cout << "end compute" << std::endl;
