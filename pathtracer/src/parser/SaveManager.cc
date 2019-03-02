@@ -9,7 +9,7 @@
 void SaveManager::Save(const std::string &path, const SceneSave &sceneSave) {
     std::ofstream file(path);
     if (!file.is_open()) {
-        std::cerr << "Cannot write Scene Save on " << path;
+        std::cerr << "Cannot write Scene Save on " << path << std::endl;
         return;
     }
     cereal::JSONOutputArchive dumpToJson(file);
@@ -21,7 +21,7 @@ void SaveManager::Save(const std::string &path, const SceneSave &sceneSave) {
 void SaveManager::Load(const std::string &path, SceneSave &sceneSave) {
     std::ifstream file(path);
     if (!file.is_open()) {
-        std::cerr << "Cannot read Scene Save on " << path;
+        std::cerr << "Cannot read Scene Save on " << path << std::endl;
         return;
     }
     cereal::JSONInputArchive loadToJson(file);

@@ -12,12 +12,13 @@
 #include "executor/Executor.hh"
 #include "parser/CliParser.hh"
 
-
 int main(int argc,const char *argv[]) {
 
     CliParser cliParser(argc, argv);
     Executor executor;
-    std::cout << cliParser.getPathSave() << std::endl;
+    executor.setType(Executor::buildscene);
+    executor.run();
+    executor.save(cliParser.getPathSave());
 
     return 0;
 }

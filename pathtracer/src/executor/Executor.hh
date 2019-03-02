@@ -13,25 +13,32 @@ const std::string path_global = "../objs/cube.obj";
 
 class Executor {
 
+public:
 
-
+Executor();
     enum jobType {
         none,
-        binaryTest
+        binaryTest,
+        buildscene,
+        binaryTest2
     };
 
-    void load(std::string &path);
+    void load(const std::string &path);
 
-    void save(std::string &path);
+    void save(const std::string &path);
 
     void setType(jobType type);
+
+    void run();
+
+
 
 
 private:
     SceneSave sceneSave_;
     bool loaded_ = false;
     jobType type_ = none;
-
+    std::unordered_map<jobType, void (*)()> map_actions;
 };
 
 

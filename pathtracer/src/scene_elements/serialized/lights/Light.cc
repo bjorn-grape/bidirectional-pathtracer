@@ -1,12 +1,12 @@
 #include "Light.hh"
 
 Light::Light()
-        : intensity_(1)
-          , color_(Vector3D<uint8_t>()) {}
+        : color_(Vector3D<uint8_t>())
+          , intensity_(1) {}
 
-Light::Light(float intensity, const Vector3D<uint8_t>& color)
-        : intensity_(intensity)
-          , color_(color) {}
+Light::Light(float intensity, const Vector3D<uint8_t> &color)
+        : color_(color)
+          , intensity_(intensity) {}
 
 float Light::getIntensity_() const {
     return intensity_;
