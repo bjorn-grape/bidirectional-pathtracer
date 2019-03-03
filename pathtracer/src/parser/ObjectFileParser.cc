@@ -8,16 +8,23 @@
 #include <tiny_obj_loader.h>
 #include <iostream>
 
-std::vector<Polygon> ObjectFileParser::fromPathToObjStruct(std::string path) {
+#ifdef  _WIN32
+const std::string path_global = "..\\objs\\";
+#else
+const std::string relative_path = "../objs/";
+#endif
+
+std::vector<Polygon> ObjectFileParser::fromPathToObjStruct(std::string path,
+                                                           Vector3D<float> position) {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
 
     std::string warn;
     std::string err;
-    bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, path.c_str());
+    bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, (relative_path + path).c_str());
 
-    if(!ret)
+    if (!ret)
         std::cerr << "error while parsing..." << std::endl;
     if (!err.empty()) { // `err` may contain warning message.
         std::cerr << err << std::endl;
@@ -54,9 +61,9 @@ std::vector<Polygon> ObjectFileParser::fromPathToObjStruct(std::string path) {
                     tinyobj::real_t green = attrib.colors[3 * idx.vertex_index + 1];
                     tinyobj::real_t blue = attrib.colors[3 * idx.vertex_index + 2];
                     color = Vector3D<uint8_t>(static_cast<uint8_t>(red),
-                            static_cast<uint8_t>(green), static_cast<uint8_t>(blue));
+                                              static_cast<uint8_t>(green), static_cast<uint8_t>(blue));
                 }
-                p.add(vertex, normal, texcoord, color);
+                p.add(vertex + position, normal, texcoord, color);
 
             }
             index_offset += fv;
@@ -67,3 +74,13 @@ std::vector<Polygon> ObjectFileParser::fromPathToObjStruct(std::string path) {
     }
     return polygonVector;
 }
+
+std::vector<Polygon> ObjectFileParser::fromAllObjsToObjStruct(const std::vector<ObjectPaths> &objectsPaths) {
+    std::vector<Polygon> allPoly;
+    for (auto &objPath : objectsPaths) {
+        auto tmpvec = fromPathToObjStruct(objPath.getPath_obj(), objPath.getPosition());
+        allPoly.insert(allPoly.end(), tmpvec.begin(), tmpvec.end());
+    }
+    return allPoly;
+}
+

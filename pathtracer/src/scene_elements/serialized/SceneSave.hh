@@ -14,7 +14,7 @@ public:
     const AllLights &getAllLights() const;
     void setAllLights(const AllLights &allLights);
 
-    const Camera &getCamera() const;
+    Camera &getCamera();
     void setCamera(const Camera &camera);
 
     const std::vector<ObjectPaths> &getObjects() const;

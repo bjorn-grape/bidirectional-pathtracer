@@ -15,7 +15,7 @@ void SceneSave::setAllLights(const AllLights &allLights) {
     SceneSave::allLights = allLights;
 }
 
-const Camera &SceneSave::getCamera() const {
+Camera &SceneSave::getCamera()  {
     return camera;
 }
 

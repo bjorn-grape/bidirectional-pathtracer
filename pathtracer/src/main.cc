@@ -16,9 +16,10 @@ int main(int argc,const char *argv[]) {
 
     CliParser cliParser(argc, argv);
     Executor executor;
-    executor.setType(Executor::buildscene);
+    //executor.load("scene.json");
+    //executor.setSavePath("mine.ppm");
+    executor.setType(Executor::none);
     executor.run();
-    executor.save(cliParser.getPathSave());
 
     return 0;
 }

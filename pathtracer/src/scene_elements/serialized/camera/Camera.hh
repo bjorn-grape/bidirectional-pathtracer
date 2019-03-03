@@ -22,7 +22,7 @@ public:
 
     void computeImage(std::vector<Polygon> polygons);
 
-    void dumpImageToPpm();
+    void dumpImageToPpm(std::string path);
 
     friend class cereal::access;
 

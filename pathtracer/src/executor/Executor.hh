@@ -2,11 +2,6 @@
 
 #include <string>
 
-#ifdef  _WIN32
-const std::string path_global = "..\\objs\\cube.obj";
-#else
-const std::string path_global = "../objs/cube.obj";
-#endif
 
 
 #include "../scene_elements/serialized/SceneSave.hh"
@@ -21,21 +16,25 @@ public:
         none,
         binaryTest,
         buildscene,
-        binaryTest2
+        binaryTest2,
+        executeScene
     };
 
     void load(const std::string &path);
 
     void save(const std::string &path);
 
-    void localBuildScene();
+    void setSavePath(const std::string& path);
 
     void setType(jobType type);
 
     void run();
 
 
+
 private:
+    void renderScene();
+    std::string save_path = "default.ppm";
     SceneSave sceneSave_;
     bool loaded_ = false;
     jobType type_ = none;

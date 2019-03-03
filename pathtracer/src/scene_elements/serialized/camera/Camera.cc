@@ -64,8 +64,8 @@ void Camera::computeImage(std::vector<Polygon> polygons) {
 }
 
 
-void Camera::dumpImageToPpm() {
-    std::ofstream ofstream("plop.ppm");
+void Camera::dumpImageToPpm(std::string path) {
+    std::ofstream ofstream(path);
     ofstream << "P2\n";
     ofstream << screenDimension_.getX() << " ";
     ofstream << screenDimension_.getY() << "\n";
