@@ -15,7 +15,8 @@ class Executor {
 
 public:
 
-Executor();
+    Executor();
+
     enum jobType {
         none,
         binaryTest,
@@ -27,18 +28,18 @@ Executor();
 
     void save(const std::string &path);
 
+    void localBuildScene();
+
     void setType(jobType type);
 
     void run();
-
-
 
 
 private:
     SceneSave sceneSave_;
     bool loaded_ = false;
     jobType type_ = none;
-    std::unordered_map<jobType, void (*)()> map_actions;
+    std::unordered_map<jobType, void (*)(Executor &executor)> map_actions;
 };
 
 

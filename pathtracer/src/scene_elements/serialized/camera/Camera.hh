@@ -36,9 +36,9 @@ public:
 
 
 private:
-    float fieldOfView_;
-    float fieldOfViewRadian = fieldOfView_ / 180.f * constants::PI;
-    float screenDistance_;
+    float fieldOfView_ = 0.f;
+    float fieldOfViewRadian = 0.f;
+    float screenDistance_= 0.f;
     Vector2D<int> screenDimension_;
     std::vector<uint8_t> screen_;
     Vector3D<float> position_;

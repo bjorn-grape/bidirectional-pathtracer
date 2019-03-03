@@ -39,6 +39,7 @@ void cameraHit2() {
 
 void Executor::load(const std::string &path) {
     SaveManager::Load(path, sceneSave_);
+    loaded_ = true;
 }
 
 void Executor::save(const std::string &path) {
@@ -50,13 +51,19 @@ void Executor::setType(Executor::jobType type) {
 }
 
 void Executor::run() {
-    map_actions[type_]();
+    map_actions[type_](*this);
+}
+
+void Executor::localBuildScene() {
+    sceneSave_ = SceneFactory::BuildScene();
 }
 
 Executor::Executor() {
-    map_actions[jobType::none] = [](){};
-    map_actions[jobType::binaryTest] = cameraHit;
-    map_actions[jobType::binaryTest2] = cameraHit2;
-    map_actions[jobType::buildscene] = [](){ SceneFactory::BuildScene();};
+    map_actions[jobType::none] = [](Executor &executor) {};
+    map_actions[jobType::binaryTest] = [](Executor &executor) {cameraHit();} ;
+    map_actions[jobType::binaryTest2] = [](Executor &executor) {cameraHit2();} ;
+    map_actions[jobType::buildscene] = [](Executor &executor) { executor.sceneSave_ = SceneFactory::BuildScene(); };
 }
+
+
 

@@ -30,3 +30,7 @@ const std::vector<ObjectPaths> &SceneSave::getObjects() const {
 void SceneSave::setObjects(const std::vector<ObjectPaths> &objects) {
     SceneSave::objects = objects;
 }
+
+void SceneSave::addObject(const ObjectPaths &object) {
+    objects.emplace_back(object);
+}

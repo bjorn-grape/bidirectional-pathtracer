@@ -14,8 +14,6 @@ void SaveManager::Save(const std::string &path, const SceneSave &sceneSave) {
     }
     cereal::JSONOutputArchive dumpToJson(file);
     dumpToJson(CEREAL_NVP(sceneSave));
-    file << "\n}\n";
-
 }
 
 void SaveManager::Load(const std::string &path, SceneSave &sceneSave) {

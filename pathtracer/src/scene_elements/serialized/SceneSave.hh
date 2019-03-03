@@ -19,6 +19,7 @@ public:
 
     const std::vector<ObjectPaths> &getObjects() const;
     void setObjects(const std::vector<ObjectPaths> &objects);
+    void addObject(const ObjectPaths &object);
 
     friend class cereal::access;
 

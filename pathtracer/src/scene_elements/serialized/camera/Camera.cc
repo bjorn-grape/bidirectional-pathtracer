@@ -13,7 +13,9 @@ Camera::Camera(const float &screenDistance, const Vector2D<int> &screenDimension
           , screenDistance_(screenDistance)
           , screenDimension_(screenDimension)
           , position_(position)
-          , orientation_(orientation) {}
+          , orientation_(orientation) {
+    fieldOfViewRadian = fieldOfView_ / 180.f * constants::PI;
+}
 
 
 void Camera::computeImage(std::vector<Polygon> polygons) {
