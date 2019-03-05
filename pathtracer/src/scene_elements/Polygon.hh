@@ -34,8 +34,12 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const Polygon &polygon);
 
 private:
+    void computeMinMax();
     std::vector<Vector3D<float>> vertices_;
     std::vector<Vector3D<float>> normals_;
     std::vector<Vector2D<float>> texcoords_;
     std::vector<Vector3D<uint8_t>> colors_;
+    Vector3D<float> mean_;
+    Vector3D<float> min_;
+    Vector3D<float> max_;
 };

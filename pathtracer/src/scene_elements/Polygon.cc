@@ -35,6 +35,8 @@ void Polygon::add(const Vector3D<float> &vextex, const Vector3D<float> &normal,
     normals_.emplace_back(normal);
     texcoords_.emplace_back(texcoord);
     colors_.emplace_back(color);
+    mean_ = meanVertices();
+    computeMinMax();
 }
 
 std::ostream &operator<<(std::ostream &os, const Polygon &polygon) {
@@ -54,9 +56,31 @@ size_t Polygon::size() const {
 
 const Vector3D<float> Polygon::meanVertices() const {
     Vector3D<float> mean = Vector3D<float>();
-    mean += getVertices()[0];
-    mean += getVertices()[1];
-    mean += getVertices()[2];
-    mean /= 3;
+    for (size_t i = 0; i < vertices_.size(); ++i) {
+        mean += getVertices()[i];
+    }
+    mean /= vertices_.size();
     return mean;
+}
+
+void Polygon::computeMinMax() {
+    float minx = INFINITY;
+    float miny = INFINITY;
+    float minz = INFINITY;
+    float maxx = -INFINITY;
+    float maxy = -INFINITY;
+    float maxz = -INFINITY;
+
+    for (const Vector3D<float> &vect: vertices_) {
+        minx = std::min(minx,vect.getX());
+        miny = std::min(miny,vect.getY());
+        minz = std::min(minz,vect.getZ());
+        maxx = std::max(maxx,vect.getX());
+        maxy = std::max(maxy,vect.getY());
+        maxz = std::max(maxz,vect.getZ());
+    }
+
+    min_ = Vector3D(minx,miny,minz);
+    max_ = Vector3D(maxx,maxy,maxz);
+
 }
