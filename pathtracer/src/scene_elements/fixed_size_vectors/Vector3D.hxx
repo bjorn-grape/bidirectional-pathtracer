@@ -202,7 +202,7 @@ void Vector3D<T>::rotateOnX(const float &angle) {
 template<typename T>
 void Vector3D<T>::rotateOnY(const float &angle) {
     auto xx = getX() * std::cos(angle) + getZ() * std::sin(angle);
-    auto zz = - getX() * std::sin(angle) + getZ() * std::cos(angle);
+    auto zz = -getX() * std::sin(angle) + getZ() * std::cos(angle);
     setX(xx);
     setZ(zz);
 }
@@ -220,6 +220,21 @@ void Vector3D<T>::rotate(Vector3D<float> vector3D) {
     rotateOnX(vector3D.getX());
     rotateOnY(vector3D.getY());
     rotateOnZ(vector3D.getZ());
+}
+
+template<typename T>
+Vector3D<T> Vector3D<T>::minOfTwoCoordinates(const Vector3D &vector3D) {
+    return Vector3D(std::min<T>(x_, vector3D.x_),
+                    std::min<T>(y_, vector3D.y_),
+                    std::min<T>(z_, vector3D.z_));
+
+}
+
+template<typename T>
+Vector3D<T> Vector3D<T>::maxOfTwoCoordinates(const Vector3D &vector3D) {
+    return Vector3D(std::max<T>(x_, vector3D.x_),
+                    std::max<T>(y_, vector3D.y_),
+                    std::max<T>(z_, vector3D.z_));
 }
 
 

@@ -8,7 +8,7 @@
 class KDTree {
 public:
 
-    void build(const std::vector<Polygon>& polygons);
+    void build(std::vector<Polygon>& polygons);
 
     void getIntersectionList(Ray ray);
 

@@ -84,3 +84,24 @@ void Polygon::computeMinMax() {
     max_ = Vector3D(maxx,maxy,maxz);
 
 }
+
+bool Polygon::operator<(const Polygon &rhs) const {
+    switch (comparisonfactor_){
+    }
+}
+
+bool Polygon::operator>(const Polygon &rhs) const {
+    return rhs < *this;
+}
+
+bool Polygon::operator<=(const Polygon &rhs) const {
+    return !(rhs < *this);
+}
+
+bool Polygon::operator>=(const Polygon &rhs) const {
+    return !(*this < rhs);
+}
+
+void Polygon::setComparisonfactor(SplitAxis::Axis comparisonfactor) {
+    Polygon::comparisonfactor_ = comparisonfactor;
+}

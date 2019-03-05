@@ -60,6 +60,9 @@ public:
     void rotateOnY(const float &angle);
     void rotateOnZ(const float &angle);
 
+    Vector3D minOfTwoCoordinates(const Vector3D& vector3D);
+    Vector3D maxOfTwoCoordinates(const Vector3D& vector3D);
+
     friend class cereal::access;
     template<class Archive>
     void serialize(Archive & ar)

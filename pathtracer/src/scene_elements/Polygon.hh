@@ -9,6 +9,7 @@
 #include <ostream>
 #include "fixed_size_vectors/Vector3D.hh"
 #include "fixed_size_vectors/Vector2D.hh"
+#include "../datastruct/SplitAxis.hh"
 
 class Polygon {
 public:
@@ -33,6 +34,14 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const Polygon &polygon);
 
+    bool operator<(const Polygon &rhs) const;
+
+    bool operator>(const Polygon &rhs) const;
+
+    bool operator<=(const Polygon &rhs) const;
+
+    bool operator>=(const Polygon &rhs) const;
+
 private:
     void computeMinMax();
     std::vector<Vector3D<float>> vertices_;
@@ -42,4 +51,7 @@ private:
     Vector3D<float> mean_;
     Vector3D<float> min_;
     Vector3D<float> max_;
+    SplitAxis::Axis comparisonfactor_;
+public:
+    void setComparisonfactor(SplitAxis::Axis comparisonfactor);
 };
