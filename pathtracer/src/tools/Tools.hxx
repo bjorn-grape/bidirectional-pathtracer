@@ -26,3 +26,6 @@ inline SplitAxis::Axis Tools<T>::minIndexOfThree(const T &x, const T &y, const T
     res += (val == x);
     return static_cast<SplitAxis::Axis>(res);
 }
+
+template<typename T>
+typename Tools<T>::mapAxis Tools<T>::comparisonFunctionsMap = create_map();

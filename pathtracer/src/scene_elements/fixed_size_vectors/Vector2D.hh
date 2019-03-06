@@ -1,6 +1,4 @@
-#ifndef PATHTRACER_VECTOR2D_HH
-#define PATHTRACER_VECTOR2D_HH
-
+#pragma once
 #include <stdio.h>
 #include <ostream>
 #include <cereal/access.hpp>
@@ -72,4 +70,3 @@ std::ostream &operator<<(std::ostream &os, const Vector2D<T> &d);
 
 #include "Vector2D.hxx"
 
-#endif //PATHTRACER_VECTOR2D_HH

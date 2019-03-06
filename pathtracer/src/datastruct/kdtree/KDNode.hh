@@ -1,11 +1,4 @@
-//
-// Created by bjorn on 04/03/19.
-//
-
-#ifndef PATHTRACER_KDNODE_HH
-#define PATHTRACER_KDNODE_HH
-
-
+#pragma once
 #include <memory>
 #include "../../scene_elements/fixed_size_vectors/Vector3D.hh"
 #include "../../scene_elements/Polygon.hh"
@@ -32,5 +25,3 @@ private:
     std::vector<Polygon> polygons;
 };
 
-
-#endif //PATHTRACER_KDNODE_HH

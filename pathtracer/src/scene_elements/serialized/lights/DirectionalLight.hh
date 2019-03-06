@@ -1,6 +1,4 @@
-#ifndef PATHTRACER_DIRECTIONAL_HH
-#define PATHTRACER_DIRECTIONAL_HH
-
+#pragma once
 
 #include "Light.hh"
 #include <cereal/access.hpp>
@@ -32,4 +30,3 @@ private:
 };
 
 
-#endif //PATHTRACER_DIRECTIONAL_HH

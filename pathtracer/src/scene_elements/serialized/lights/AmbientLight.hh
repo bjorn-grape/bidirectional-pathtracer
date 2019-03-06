@@ -1,6 +1,4 @@
-#ifndef PATHTRACER_LIGHTS_HH
-#define PATHTRACER_LIGHTS_HH
-
+#pragma once
 #include <cereal/access.hpp>
 #include <cereal/cereal.hpp>
 #include <stdint-gcc.h>
@@ -22,4 +20,3 @@ public:
 };
 
 
-#endif //PATHTRACER_LIGHTS_HH

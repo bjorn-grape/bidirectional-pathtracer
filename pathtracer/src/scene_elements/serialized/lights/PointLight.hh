@@ -1,6 +1,4 @@
-#ifndef PATHTRACER_POINT_LIGHT_HH
-#define PATHTRACER_POINT_LIGHT_HH
-
+#pragma once
 #include <cereal/access.hpp>
 #include <cereal/cereal.hpp>
 
@@ -37,4 +35,3 @@ private:
 };
 
 
-#endif //PATHTRACER_POINT_LIGHT_HH

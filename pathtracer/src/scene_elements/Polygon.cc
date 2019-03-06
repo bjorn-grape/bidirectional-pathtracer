@@ -3,6 +3,7 @@
 //
 
 #include "Polygon.hh"
+#include "../tools/Tools.hh"
 
 
 const std::vector<Vector3D<float>> &Polygon::getVertices() const {
@@ -86,8 +87,8 @@ void Polygon::computeMinMax() {
 }
 
 bool Polygon::operator<(const Polygon &rhs) const {
-    switch (comparisonfactor_){
-    }
+
+    return Tools<float>::comparisonFunctionsMap[Polygon::comparisonFactor](this->mean_,rhs.mean_);
 }
 
 bool Polygon::operator>(const Polygon &rhs) const {
@@ -103,5 +104,7 @@ bool Polygon::operator>=(const Polygon &rhs) const {
 }
 
 void Polygon::setComparisonfactor(SplitAxis::Axis comparisonfactor) {
-    Polygon::comparisonfactor_ = comparisonfactor;
+    Polygon::comparisonFactor = comparisonfactor;
 }
+
+typename SplitAxis::Axis  Polygon::comparisonFactor = SplitAxis::none;

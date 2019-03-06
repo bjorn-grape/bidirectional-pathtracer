@@ -1,9 +1,6 @@
 #pragma once
 
 #include <string>
-
-
-
 #include "../scene_elements/serialized/SceneSave.hh"
 
 class Executor {

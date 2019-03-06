@@ -1,6 +1,4 @@
-#ifndef PATHTRACER_LIGHT_HH
-#define PATHTRACER_LIGHT_HH
-
+#pragma once
 #include <cereal/access.hpp>
 #include <cereal/cereal.hpp>
 #include <cstdint>
@@ -35,4 +33,3 @@ protected:
 };
 
 
-#endif //PATHTRACER_LIGHT_HH

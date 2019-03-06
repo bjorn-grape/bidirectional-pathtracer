@@ -1,7 +1,4 @@
-
-#ifndef PATHTRACER_ALLLIGHTS_HH
-#define PATHTRACER_ALLLIGHTS_HH
-
+#pragma  once
 
 #include <cereal/types/vector.hpp>
 #include "AmbientLight.hh"
@@ -29,4 +26,3 @@ public:
 };
 
 
-#endif //PATHTRACER_ALLLIGHTS_HH

@@ -1,6 +1,4 @@
-#ifndef PATHTRACER_SPOTLIGHT_HH
-#define PATHTRACER_SPOTLIGHT_HH
-
+#pragma once
 
 #include "Light.hh"
 #include <cereal/access.hpp>
@@ -39,4 +37,3 @@ private:
 };
 
 
-#endif //PATHTRACER_SPOTLIGHT_HH

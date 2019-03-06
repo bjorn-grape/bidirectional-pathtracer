@@ -1,7 +1,3 @@
-//
-// Created by bjorn on 25/02/19.
-//
-
 #pragma once
 
 
@@ -42,8 +38,13 @@ public:
 
     bool operator>=(const Polygon &rhs) const;
 
+    static void setComparisonfactor(SplitAxis::Axis comparisonfactor);
+
+    static SplitAxis::Axis comparisonFactor;
+
 private:
     void computeMinMax();
+
     std::vector<Vector3D<float>> vertices_;
     std::vector<Vector3D<float>> normals_;
     std::vector<Vector2D<float>> texcoords_;
@@ -51,7 +52,7 @@ private:
     Vector3D<float> mean_;
     Vector3D<float> min_;
     Vector3D<float> max_;
-    SplitAxis::Axis comparisonfactor_;
-public:
-    void setComparisonfactor(SplitAxis::Axis comparisonfactor);
+
 };
+
+#include "Polygon.hxx"
