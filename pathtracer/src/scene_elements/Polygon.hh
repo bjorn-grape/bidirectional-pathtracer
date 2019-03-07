@@ -38,7 +38,13 @@ public:
 
     bool operator>=(const Polygon &rhs) const;
 
+    void getBoundsOfInterest(float &min, float &max) const;
+    float getMeanOfInterest() const;
+
+
+
     static void setComparisonfactor(SplitAxis::Axis comparisonfactor);
+
 
     static SplitAxis::Axis comparisonFactor;
 

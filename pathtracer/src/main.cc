@@ -18,7 +18,7 @@ int main(int argc,const char *argv[]) {
     Executor executor;
     executor.load("3_tri.json");
     executor.setSavePath("mine.ppm");
-    executor.setType(Executor::executeScene);
+    executor.setType(Executor::buildTree);
 
 //    executor.setType(Executor::buildscene);
    executor.run();

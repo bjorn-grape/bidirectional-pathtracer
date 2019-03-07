@@ -2,8 +2,8 @@
 #include "../../tools/Tools.hh"
 
 BoundingBox::BoundingBox(Vector3D<float> mini, Vector3D<float> maxi)
-        : min(mini)
-          , max(maxi) {}
+        : min(std::make_shared<Vector3D<float>>(mini))
+          , max(std::make_shared<Vector3D<float>>(maxi)) {}
 
 SplitAxis::Axis BoundingBox::GetLargestDimension() const {
     auto dim = GetDimensions();
@@ -11,5 +11,5 @@ SplitAxis::Axis BoundingBox::GetLargestDimension() const {
 }
 
 Vector3D<float> BoundingBox::GetDimensions() const {
-    return max - min;
+    return *max - *min;
 }

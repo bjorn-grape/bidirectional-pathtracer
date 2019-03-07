@@ -1,22 +1,23 @@
 #include <memory>
 
 #include "KDTree.hh"
+#include "../../tools/Tools.hh"
 
-void KDTree::build(std::vector<Polygon> &polygons) {
+KDTree::KDTree(std::vector<Polygon> &polygons) {
     if (root_ != nullptr) {
         std::cerr << "KDTree not empty !" << std::endl;
         return;
     }
-    root_ = std::make_shared<KDNode>();
+    BoundingBox b;
+    Tools<float>::extremumPolygonList(polygons, b);
+    root_ = std::make_shared<KDNode>(polygons, b);
+}
 
-    auto min_coord = Vector3D<float>(INFINITY, INFINITY, INFINITY);
-    auto max_coord = Vector3D<float>(-INFINITY, -INFINITY, -INFINITY);
-    for (const auto &polygon: polygons) {
-        auto mean = polygon.meanVertices();
-        min_coord = min_coord.minOfTwoCoordinates(mean);
-        max_coord = max_coord.maxOfTwoCoordinates(mean);
+void KDTree::printPrefix() {
+    if (!root_) {
+        std::cerr << "No Tree" << std::endl;
+        return;
     }
+    root_->printInfix(1, true);
 
-    BoundingBox b = BoundingBox(min_coord, max_coord);
-    root_.get()->build(polygons.begin(), polygons.end(), b);
 }

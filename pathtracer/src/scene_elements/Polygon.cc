@@ -42,11 +42,11 @@ void Polygon::add(const Vector3D<float> &vextex, const Vector3D<float> &normal,
 
 std::ostream &operator<<(std::ostream &os, const Polygon &polygon) {
     for (size_t i = 0; i < polygon.size(); ++i) {
-        os << "v" << i << ": " << polygon.vertices_[i]
-           << " n" << i << ": " << polygon.normals_[i]
-           << " t" << i << ": " << polygon.texcoords_[i]
-           << " color" << i << ": " << polygon.colors_[i]
-           << "\n";
+        os << "v" << i << ": " << polygon.vertices_[i] << " ";
+//       os    << " n" << i << ": " << polygon.normals_[i]
+//           << " t" << i << ": " << polygon.texcoords_[i]
+//           << " color" << i << ": " << polygon.colors_[i]
+//           << "\n";
     }
     return os;
 }
@@ -73,22 +73,22 @@ void Polygon::computeMinMax() {
     float maxz = -INFINITY;
 
     for (const Vector3D<float> &vect: vertices_) {
-        minx = std::min(minx,vect.getX());
-        miny = std::min(miny,vect.getY());
-        minz = std::min(minz,vect.getZ());
-        maxx = std::max(maxx,vect.getX());
-        maxy = std::max(maxy,vect.getY());
-        maxz = std::max(maxz,vect.getZ());
+        minx = std::min(minx, vect.getX());
+        miny = std::min(miny, vect.getY());
+        minz = std::min(minz, vect.getZ());
+        maxx = std::max(maxx, vect.getX());
+        maxy = std::max(maxy, vect.getY());
+        maxz = std::max(maxz, vect.getZ());
     }
 
-    min_ = Vector3D(minx,miny,minz);
-    max_ = Vector3D(maxx,maxy,maxz);
+    min_ = Vector3D(minx, miny, minz);
+    max_ = Vector3D(maxx, maxy, maxz);
 
 }
 
 bool Polygon::operator<(const Polygon &rhs) const {
 
-    return Tools<float>::comparisonFunctionsMap[Polygon::comparisonFactor](this->mean_,rhs.mean_);
+    return Tools<float>::comparisonFunctionsMap[Polygon::comparisonFactor](this->mean_, rhs.mean_);
 }
 
 bool Polygon::operator>(const Polygon &rhs) const {
@@ -108,3 +108,33 @@ void Polygon::setComparisonfactor(SplitAxis::Axis comparisonfactor) {
 }
 
 typename SplitAxis::Axis  Polygon::comparisonFactor = SplitAxis::none;
+
+void Polygon::getBoundsOfInterest(float &min, float &max) const {
+    switch (comparisonFactor) {
+        case SplitAxis::X :
+            min = min_.getX();
+            max = max_.getX();
+            break;
+        case SplitAxis::Y :
+            min = min_.getY();
+            max = max_.getY();
+            break;
+        case SplitAxis::Z :
+            min = min_.getZ();
+            max = max_.getZ();
+            break;
+    }
+
+}
+
+float Polygon::getMeanOfInterest() const {
+    switch (comparisonFactor) {
+        case SplitAxis::X :
+            return mean_.getX();
+        case SplitAxis::Y :
+            return mean_.getY();
+        case SplitAxis::Z :
+            return mean_.getZ();
+    }
+    throw std::invalid_argument("comparisonFactor not set in polygon");
+}

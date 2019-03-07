@@ -51,10 +51,15 @@ std::vector<Polygon> ObjectFileParser::fromPathToObjStruct(std::string path,
                 tinyobj::real_t ny = attrib.normals[3 * idx.normal_index + 1];
                 tinyobj::real_t nz = attrib.normals[3 * idx.normal_index + 2];
                 Vector3D<float> normal(nx, ny, nz);
-                tinyobj::real_t tx = attrib.texcoords[2 * idx.texcoord_index + 0];
-                tinyobj::real_t ty = attrib.texcoords[2 * idx.texcoord_index + 1];
-                // Optional: vertex colors
-                Vector2D<float> texcoord(tx, ty);
+                Vector2D<float> texcoord;
+                if (2 * idx.texcoord_index < attrib.texcoords.size()) {
+                    tinyobj::real_t tx = attrib.texcoords[2 * idx.texcoord_index + 0];
+                    tinyobj::real_t ty = attrib.texcoords[2 * idx.texcoord_index + 1];
+                    // Optional: vertex colors
+                    texcoord = Vector2D<float>(tx, ty);
+                }
+
+
                 Vector3D<uint8_t> color;
                 if (attrib.colors.size() >= 3u * idx.vertex_index + 2) {
                     tinyobj::real_t red = attrib.colors[3 * idx.vertex_index + 0];

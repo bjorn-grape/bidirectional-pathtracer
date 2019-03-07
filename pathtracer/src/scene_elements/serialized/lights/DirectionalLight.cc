@@ -10,6 +10,7 @@ DirectionalLight::DirectionalLight(const Vector3D<float> &direction_,
 
 void DirectionalLight::setDirection(const Vector3D<float> &direction) {
     DirectionalLight::direction_ = direction;
+
 }
 
 DirectionalLight::DirectionalLight(const Vector3D<float> &direction)

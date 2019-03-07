@@ -8,10 +8,11 @@
 class KDTree {
 public:
 
-    void build(std::vector<Polygon>& polygons);
+    explicit KDTree(std::vector<Polygon>& polygons);
 
     void getIntersectionList(Ray ray);
 
+    void printPrefix();
     std::shared_ptr<KDNode> root_ = nullptr;
 
 };

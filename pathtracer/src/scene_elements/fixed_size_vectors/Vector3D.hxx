@@ -237,6 +237,13 @@ Vector3D<T> Vector3D<T>::maxOfTwoCoordinates(const Vector3D &vector3D) {
                     std::max<T>(z_, vector3D.z_));
 }
 
+template<typename T>
+void Vector3D<T>::replaceMyContentBy(const Vector3D &vector3D) {
+    x_ = vector3D.x_;
+    y_ = vector3D.y_;
+    z_ = vector3D.z_;
+}
+
 
 template<typename T>
 std::ostream &operator<<(std::ostream &os, const Vector3D<T> &d) {

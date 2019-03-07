@@ -5,8 +5,13 @@
 
 struct BoundingBox {
     BoundingBox(Vector3D<float> mini, Vector3D<float> maxi);
+
+    BoundingBox() = default;
+
     SplitAxis::Axis GetLargestDimension() const;
+
     Vector3D<float> GetDimensions() const;
-    Vector3D<float> min;
-    Vector3D<float> max;
+
+    std::shared_ptr<Vector3D<float>> min;
+    std::shared_ptr<Vector3D<float>> max;
 };

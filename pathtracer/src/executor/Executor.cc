@@ -8,6 +8,7 @@
 #include "../scene_elements/serialized/camera/Camera.hh"
 #include "../parser/SaveManager.hh"
 #include "../factory/SceneFactory.hh"
+#include "../datastruct/kdtree/KDTree.hh"
 
 Vector3D<float> centerGravityPolygons(std::vector<Polygon> polygons) {
     Vector3D<float> gravityCenter = Vector3D<float>();
@@ -61,7 +62,15 @@ Executor::Executor() {
     map_actions[jobType::binaryTest2] = [](Executor &executor) { cameraHit2(); };
     map_actions[jobType::buildscene] = [](Executor &executor) { executor.sceneSave_ = SceneFactory::BuildScene(); };
     map_actions[jobType::executeScene] = [](Executor &executor) { executor.renderScene(); };
+    map_actions[jobType::buildTree] = [](Executor &executor){ executor.createTree();};
 }
+
+void Executor::createTree() {
+    auto list = ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects());
+    auto tree = KDTree(list);
+    tree.printPrefix();
+}
+
 
 void Executor::renderScene() {
     auto list = ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects());

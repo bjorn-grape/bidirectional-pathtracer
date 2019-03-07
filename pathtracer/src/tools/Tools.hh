@@ -2,6 +2,8 @@
 
 #include "../datastruct/SplitAxis.hh"
 #include "../scene_elements/fixed_size_vectors/Vector3D.hh"
+#include "../scene_elements/Polygon.hh"
+#include "../datastruct/box/BoundingBox.hh"
 
 template<typename T>
 class Tools {
@@ -13,12 +15,17 @@ public:
 
     inline static SplitAxis::Axis maxIndexOfThree(const T &x, const T &y, const T &z);
 
+    static void extremumPolygonList(const std::vector<Polygon>& polygons, BoundingBox& box);
+
+
 
     static bool funCompareXlt(Vector3D<T> a, Vector3D<T> b) { return a.getX() < b.getX(); }
 
     static bool funCompareYlt(Vector3D<T> a, Vector3D<T> b) { return a.getY() < b.getY(); }
 
     static bool funCompareZlt(Vector3D<T> a, Vector3D<T> b) { return a.getZ() < b.getZ(); }
+
+
 
     inline static mapAxis create_map()
     {
