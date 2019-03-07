@@ -7,6 +7,7 @@
 #include "../../fixed_size_vectors/Vector2D.hh"
 #include "../../Polygon.hh"
 #include "../../Ray.hh"
+#include "../../../datastruct/kdtree/KDTree.hh"
 
 class Camera {
 public:
@@ -21,6 +22,7 @@ public:
            const float &fovDegree);
 
     void computeImage(std::vector<Polygon> polygons);
+    void computeImage(KDTree tree);
 
     void dumpImageToPpm(std::string path);
 

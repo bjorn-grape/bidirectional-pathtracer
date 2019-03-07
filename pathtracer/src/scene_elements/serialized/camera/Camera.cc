@@ -89,3 +89,51 @@ Camera &Camera::operator=(const Camera &camera) {
     this->screenDimension_ = camera.screenDimension_;
     return *this;
 }
+
+void Camera::computeImage(KDTree tree) {
+    const float scaleDimension =
+            static_cast<float>(screenDimension_.getY()) / static_cast<float>(screenDimension_.getX());
+    float stepx;
+    float stepy;
+    if (scaleDimension > 1u) {
+        stepx = fieldOfViewRadian / screenDimension_.getX();
+        stepy = fieldOfViewRadian / screenDimension_.getY() * scaleDimension;
+    } else {
+        stepx = fieldOfViewRadian / screenDimension_.getX() / scaleDimension;
+        stepy = fieldOfViewRadian / screenDimension_.getY();
+    }
+
+    auto screenCenterPoint = position_ + orientation_ * screenDistance_;
+    screenCenterPoint -= (fieldOfViewRadian / 2.f);
+
+    for (int i = 0; i < screenDimension_.getY(); ++i) {
+        for (int j = 0; j < screenDimension_.getX(); ++j) {
+
+            bool doInter = false;
+            auto movingDir = screenCenterPoint + Vector3D(j * stepy, i * stepx, 0.f) - position_;
+            Ray r = Ray(position_, movingDir);
+            Vector3D<float> fff;
+
+            std::vector<Polygon*> polygons;
+            tree.getIntersectionList(r,polygons);
+            for (const Polygon *p : polygons) {
+
+                if (p->isTriangle())
+                    if (r.intersectOneTriangle(const_cast<Vector3D<float> &>(p->getVertices()[0]),
+                                               const_cast<Vector3D<float> &>(p->getVertices()[1]),
+                                               const_cast<Vector3D<float> &>(p->getVertices()[2]),
+                                               fff)) {
+                        doInter = true;
+                        break;
+                    }
+            }
+
+            if (doInter)
+                screen_.emplace_back(1);
+            else
+                screen_.emplace_back(0);
+            screen_.emplace_back(0);
+            screen_.emplace_back(0);
+        }
+    }
+}

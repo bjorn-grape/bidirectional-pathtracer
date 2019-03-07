@@ -12,18 +12,14 @@
 #include "executor/Executor.hh"
 #include "parser/CliParser.hh"
 
-int main(int argc,const char *argv[]) {
+int main(int argc, const char *argv[]) {
 
     CliParser cliParser(argc, argv);
     Executor executor;
-    executor.load("3_tri.json");
+    executor.load(cliParser.getPathSave());
     executor.setSavePath("mine.ppm");
-    executor.setType(Executor::buildTree);
-
-//    executor.setType(Executor::buildscene);
-   executor.run();
-//    executor.save("3_tri.json");
-
+    executor.setType(Executor::executeScene);
+    executor.run();
 
     return 0;
 }

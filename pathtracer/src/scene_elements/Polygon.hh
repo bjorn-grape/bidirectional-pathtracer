@@ -9,6 +9,10 @@
 
 class Polygon {
 public:
+    enum compFactor {
+        none = 0, X = 1, Y = 2, Z = 4, distanceToOrigin = 8
+    };
+
     void add(const Vector3D<float> &vextex, const Vector3D<float> &normal,
              const Vector2D<float> &texcoord, const Vector3D<uint8_t> &color);
 
@@ -39,14 +43,13 @@ public:
     bool operator>=(const Polygon &rhs) const;
 
     void getBoundsOfInterest(float &min, float &max) const;
+
     float getMeanOfInterest() const;
 
 
+    static void setComparisonfactor(compFactor comparisonfactor);
 
-    static void setComparisonfactor(SplitAxis::Axis comparisonfactor);
-
-
-    static SplitAxis::Axis comparisonFactor;
+    static compFactor comparisonFactor;
 
 private:
     void computeMinMax();

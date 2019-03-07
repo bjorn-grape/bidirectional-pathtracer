@@ -5,12 +5,11 @@
 KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box) {
     /* Constructor initialization */
     splitAxis_ = box.GetLargestDimension();
-    Polygon::setComparisonfactor(splitAxis_);
+    Polygon::setComparisonfactor(static_cast<Polygon::compFactor>(splitAxis_));
     box_ = std::make_shared<BoundingBox>(box);
     polygons_ = std::make_shared<std::vector<Polygon>>();
-    if (polygonsVect.empty())
-        return;
-    splitValue_ = polygonsVect.at(polygonsVect.size() / 2).getMeanOfInterest();
+
+    splitValue_ = polygonsVect[polygonsVect.size() / 2].getMeanOfInterest();
     /* End Constructor initialization */
     std::sort(polygonsVect.begin(), polygonsVect.end());
     auto underList = std::vector<Polygon>();
@@ -37,7 +36,7 @@ KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box) {
     if (!aboveList.empty()) {
         BoundingBox b;
         Tools<float>::extremumPolygonList(aboveList, b);
-        right_ = std::make_shared<KDNode>(underList, b);
+        right_ = std::make_shared<KDNode>(aboveList, b);
     }
 
 
@@ -79,4 +78,16 @@ void KDNode::printInfix(unsigned id, bool isleft) {
         right_->printInfix(id * 2 + 1, false);
     }
 
+}
+
+void KDNode::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) {
+    if (Tools<float>::IntersectCubeRay(ray, *box_)) {
+        for (const auto &poly: *polygons_) {
+            resultList.emplace_back(poly);
+        }
+        if (left_ != nullptr)
+            left_->getIntersectionList(ray, resultList);
+        if (right_ != nullptr)
+            right_->getIntersectionList(ray, resultList);
+    }
 }

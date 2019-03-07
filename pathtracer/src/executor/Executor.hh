@@ -15,7 +15,8 @@ public:
         buildscene,
         binaryTest2,
         executeScene,
-        buildTree
+        executeSceneKDTree,
+        buildTreeAndPrint
     };
 
     void load(const std::string &path);
@@ -34,6 +35,7 @@ public:
 private:
     void createTree();
     void renderScene();
+    void renderSceneKDTree();
     std::string save_path = "default.ppm";
     SceneSave sceneSave_;
     bool loaded_ = false;

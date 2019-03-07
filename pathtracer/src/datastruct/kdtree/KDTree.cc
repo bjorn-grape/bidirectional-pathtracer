@@ -21,3 +21,10 @@ void KDTree::printPrefix() {
     root_->printInfix(1, true);
 
 }
+
+void KDTree::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) {
+    root_->getIntersectionList(ray, resultList);
+    Tools<float>::originVector = ray.getPosition();
+    Polygon::setComparisonfactor(Polygon::distanceToOrigin);
+    std::sort(resultList.begin(), resultList.end());
+}

@@ -38,6 +38,8 @@ void cameraHit2() {
     c.dumpImageToPpm("test2.ppm");
 }
 
+
+
 void Executor::load(const std::string &path) {
     SaveManager::Load(path, sceneSave_);
     loaded_ = true;
@@ -62,7 +64,8 @@ Executor::Executor() {
     map_actions[jobType::binaryTest2] = [](Executor &executor) { cameraHit2(); };
     map_actions[jobType::buildscene] = [](Executor &executor) { executor.sceneSave_ = SceneFactory::BuildScene(); };
     map_actions[jobType::executeScene] = [](Executor &executor) { executor.renderScene(); };
-    map_actions[jobType::buildTree] = [](Executor &executor){ executor.createTree();};
+    map_actions[jobType::executeSceneKDTree] = [](Executor &executor) { executor.renderSceneKDTree(); };
+    map_actions[jobType::buildTreeAndPrint] = [](Executor &executor){ executor.createTree();};
 }
 
 void Executor::createTree() {
@@ -80,6 +83,17 @@ void Executor::renderScene() {
 
 void Executor::setSavePath(const std::string &path) {
     save_path = path;
+}
+
+void Executor::renderSceneKDTree() {
+    auto list = ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects());
+    std::cout << "start building KDTree..." << std::endl;
+    KDTree tree(list);
+    std::cout << "Done." << std::endl;
+    std::cout << "start making image..." << std::endl;
+    sceneSave_.getCamera().computeImage(tree);
+    std::cout << "Done." << std::endl;
+    sceneSave_.getCamera().dumpImageToPpm(save_path);
 }
 
 

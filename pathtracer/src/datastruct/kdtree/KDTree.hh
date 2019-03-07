@@ -10,7 +10,7 @@ public:
 
     explicit KDTree(std::vector<Polygon>& polygons);
 
-    void getIntersectionList(Ray ray);
+    void getIntersectionList(const Ray& ray, std::vector<Polygon*>& resultList);
 
     void printPrefix();
     std::shared_ptr<KDNode> root_ = nullptr;

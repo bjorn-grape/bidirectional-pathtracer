@@ -6,11 +6,13 @@
 #include "../../scene_elements/Polygon.hh"
 #include "../box/BoundingBox.hh"
 #include "../SplitAxis.hh"
+#include "../../scene_elements/Ray.hh"
 
 class KDNode {
 public:
     KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box);
     void printInfix(unsigned depth, bool isleft);
+    void getIntersectionList(const Ray& ray, std::vector<Polygon*>& resultList);
 
 private:
     float splitValue_ = 0.f;

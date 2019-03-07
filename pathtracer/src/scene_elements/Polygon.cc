@@ -103,11 +103,11 @@ bool Polygon::operator>=(const Polygon &rhs) const {
     return !(*this < rhs);
 }
 
-void Polygon::setComparisonfactor(SplitAxis::Axis comparisonfactor) {
+void Polygon::setComparisonfactor(compFactor comparisonfactor) {
     Polygon::comparisonFactor = comparisonfactor;
 }
 
-typename SplitAxis::Axis  Polygon::comparisonFactor = SplitAxis::none;
+typename Polygon::compFactor  Polygon::comparisonFactor = compFactor::none;
 
 void Polygon::getBoundsOfInterest(float &min, float &max) const {
     switch (comparisonFactor) {

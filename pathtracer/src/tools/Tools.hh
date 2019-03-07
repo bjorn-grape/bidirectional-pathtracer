@@ -4,20 +4,23 @@
 #include "../scene_elements/fixed_size_vectors/Vector3D.hh"
 #include "../scene_elements/Polygon.hh"
 #include "../datastruct/box/BoundingBox.hh"
+#include "../scene_elements/Ray.hh"
 
 template<typename T>
 class Tools {
 public:
     typedef std::function<bool(Vector3D<T>, Vector3D<T>)> funcVecTor3sqToBool;
-    typedef std::unordered_map<SplitAxis::Axis, funcVecTor3sqToBool> mapAxis;
+    typedef std::unordered_map<Polygon::compFactor, funcVecTor3sqToBool> mapAxis;
 
     inline static SplitAxis::Axis minIndexOfThree(const T &x, const T &y, const T &z);
 
     inline static SplitAxis::Axis maxIndexOfThree(const T &x, const T &y, const T &z);
 
-    static void extremumPolygonList(const std::vector<Polygon>& polygons, BoundingBox& box);
+    static void extremumPolygonList(const std::vector<Polygon> &polygons, BoundingBox &box);
 
+    static bool IntersectCubeRay(Ray ray, BoundingBox bbox);
 
+    static Vector3D<float> originVector;
 
     static bool funCompareXlt(Vector3D<T> a, Vector3D<T> b) { return a.getX() < b.getX(); }
 
@@ -25,14 +28,17 @@ public:
 
     static bool funCompareZlt(Vector3D<T> a, Vector3D<T> b) { return a.getZ() < b.getZ(); }
 
+    static bool funCompareDistanceOrigin(Vector3D<float> a, Vector3D<float> b) {
+        return std::abs((a - originVector).norm()) < std::abs((b - originVector).norm());
+    }
 
 
-    inline static mapAxis create_map()
-    {
+    inline static mapAxis create_map() {
         mapAxis m;
-        m[SplitAxis::X] = funCompareXlt;
-        m[SplitAxis::Y] = funCompareYlt;
-        m[SplitAxis::Z] = funCompareZlt;
+        m[Polygon::X] = funCompareXlt;
+        m[Polygon::Y] = funCompareYlt;
+        m[Polygon::Z] = funCompareZlt;
+        m[Polygon::distanceToOrigin] = funCompareDistanceOrigin;
         return m;
     }
 
