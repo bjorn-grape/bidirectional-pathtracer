@@ -3,10 +3,11 @@
 //
 
 #include <iostream>
+#include <tiff.h>
 #include "Camera.hh"
+#include "tbb/tbb.h"
 
-
-Camera::Camera(const float &screenDistance, const Vector2D<int> &screenDimension,
+Camera::Camera(const float &screenDistance, const Vector2D<unsigned> &screenDimension,
                const Vector3D<float> &position, const Vector3D<float> &orientation,
                const float &fovDegree)
         : fieldOfView_(fovDegree)
@@ -34,8 +35,9 @@ void Camera::computeImage(std::vector<Polygon> polygons) {
     auto screenCenterPoint = position_ + orientation_ * screenDistance_;
     screenCenterPoint -= (fieldOfViewRadian / 2.f);
 
-    for (int i = 0; i < screenDimension_.getY(); ++i) {
-        for (int j = 0; j < screenDimension_.getX(); ++j) {
+    screen_.reserve(screenDimension_.getX() * screenDimension_.getY() * 3);
+    tbb::parallel_for(size_t(0), static_cast<size_t>(screenDimension_.getY()), [&](size_t i) {
+        for (unsigned j = 0; j < screenDimension_.getX(); ++j) {
 
             bool doInter = false;
             auto movingDir = screenCenterPoint + Vector3D(j * stepy, i * stepx, 0.f) - position_;
@@ -52,15 +54,9 @@ void Camera::computeImage(std::vector<Polygon> polygons) {
                         break;
                     }
             }
-
-            if (doInter)
-                screen_.emplace_back(1);
-            else
-                screen_.emplace_back(0);
-            screen_.emplace_back(0);
-            screen_.emplace_back(0);
+            screen_[(i * screenDimension_.getX() + j) * 3] = static_cast<unsigned char>(doInter);
         }
-    }
+    });
 }
 
 
@@ -70,8 +66,8 @@ void Camera::dumpImageToPpm(std::string path) {
     ofstream << screenDimension_.getX() << " ";
     ofstream << screenDimension_.getY() << "\n";
     ofstream << "15\n";
-    for (int i = 0; i < screenDimension_.getY(); ++i) {
-        for (int j = 0; j < screenDimension_.getX(); ++j) {
+    for (unsigned i = 0; i < screenDimension_.getY(); ++i) {
+        for (unsigned j = 0; j < screenDimension_.getX(); ++j) {
             if ((screen_[(i * screenDimension_.getX() + j) * 3] != 0))
                 ofstream << "15 ";
             else
@@ -105,17 +101,20 @@ void Camera::computeImage(KDTree tree) {
 
     auto screenCenterPoint = position_ + orientation_ * screenDistance_;
     screenCenterPoint -= (fieldOfViewRadian / 2.f);
+    screen_.reserve(screenDimension_.getX() * screenDimension_.getY() * 3);
 
-    for (int i = 0; i < screenDimension_.getY(); ++i) {
-        for (int j = 0; j < screenDimension_.getX(); ++j) {
+    tbb::parallel_for(size_t(0), static_cast<size_t>(screenDimension_.getY()), [&](size_t i) {
+        for (unsigned j = 0; j < screenDimension_.getX(); ++j) {
 
             bool doInter = false;
             auto movingDir = screenCenterPoint + Vector3D(j * stepy, i * stepx, 0.f) - position_;
             Ray r = Ray(position_, movingDir);
             Vector3D<float> fff;
 
-            std::vector<Polygon*> polygons;
-            tree.getIntersectionList(r,polygons);
+            std::vector<Polygon *> polygons;
+
+            tree.getIntersectionList(r, polygons);
+
             for (const Polygon *p : polygons) {
 
                 if (p->isTriangle())
@@ -127,13 +126,7 @@ void Camera::computeImage(KDTree tree) {
                         break;
                     }
             }
-
-            if (doInter)
-                screen_.emplace_back(1);
-            else
-                screen_.emplace_back(0);
-            screen_.emplace_back(0);
-            screen_.emplace_back(0);
+            screen_[(i * screenDimension_.getX() + j) * 3] = static_cast<unsigned char>(doInter);
         }
-    }
+    });
 }

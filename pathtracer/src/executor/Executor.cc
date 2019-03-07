@@ -1,6 +1,7 @@
 #include <cereal/archives/json.hpp>
 #include <cereal/types/vector.hpp>
 #include <cereal/types/string.hpp>
+#include <chrono>
 #include "Executor.hh"
 #include "../scene_elements/fixed_size_vectors/Vector3D.hh"
 #include "../scene_elements/Polygon.hh"
@@ -9,6 +10,7 @@
 #include "../parser/SaveManager.hh"
 #include "../factory/SceneFactory.hh"
 #include "../datastruct/kdtree/KDTree.hh"
+#include "../tools/performances/Stats.hh"
 
 Vector3D<float> centerGravityPolygons(std::vector<Polygon> polygons) {
     Vector3D<float> gravityCenter = Vector3D<float>();
@@ -22,7 +24,7 @@ Vector3D<float> centerGravityPolygons(std::vector<Polygon> polygons) {
 
 void cameraHit() {
     auto list = ObjectFileParser::fromPathToObjStruct("cube.obj");
-    Camera c = Camera(1.f, Vector2D(512, 512), Vector3D(1.5f, .7f, -1.f), Vector3D(-0.5f, 0.f, 1.f), 90);
+    Camera c = Camera(1.f, Vector2D<unsigned>(512, 512), Vector3D(1.5f, .7f, -1.f), Vector3D(-0.5f, 0.f, 1.f), 90);
     std::cout << "started compute" << std::endl;
     c.computeImage(list);
     std::cout << "end compute" << std::endl;
@@ -31,7 +33,7 @@ void cameraHit() {
 
 void cameraHit2() {
     auto list = ObjectFileParser::fromPathToObjStruct("cube.obj");
-    Camera c = Camera(1.f, Vector2D(512, 512), Vector3D(0.f, 0.0f, -2.f), Vector3D(0.f, 0.f, 1.f), 60);
+    Camera c = Camera(1.f, Vector2D<unsigned>(512, 512), Vector3D(0.f, 0.0f, -2.f), Vector3D(0.f, 0.f, 1.f), 60);
     std::cout << "started compute" << std::endl;
     c.computeImage(list);
     std::cout << "end compute" << std::endl;
@@ -77,7 +79,14 @@ void Executor::createTree() {
 
 void Executor::renderScene() {
     auto list = ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects());
+    std::cout << "start making image..." << std::endl;
+    auto start = std::chrono::system_clock::now();
     sceneSave_.getCamera().computeImage(list);
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+    std::cout << "Done." << std::endl;
     sceneSave_.getCamera().dumpImageToPpm(save_path);
 }
 
@@ -91,8 +100,13 @@ void Executor::renderSceneKDTree() {
     KDTree tree(list);
     std::cout << "Done." << std::endl;
     std::cout << "start making image..." << std::endl;
+    auto start = std::chrono::system_clock::now();
     sceneSave_.getCamera().computeImage(tree);
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end-start;
     std::cout << "Done." << std::endl;
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+    Stats::AABBvsRay.printInfos();
     sceneSave_.getCamera().dumpImageToPpm(save_path);
 }
 

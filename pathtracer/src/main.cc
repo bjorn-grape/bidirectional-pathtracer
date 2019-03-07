@@ -18,7 +18,7 @@ int main(int argc, const char *argv[]) {
     Executor executor;
     executor.load(cliParser.getPathSave());
     executor.setSavePath("mine.ppm");
-    executor.setType(Executor::executeScene);
+    executor.setType(Executor::executeSceneKDTree);
     executor.run();
 
     return 0;

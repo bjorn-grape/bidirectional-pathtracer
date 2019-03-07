@@ -1,6 +1,8 @@
 #include <sstream>
+#include <chrono>
 #include "KDNode.hh"
 #include "../../tools/Tools.hh"
+#include "../../tools/performances/Stats.hh"
 
 KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box) {
     /* Constructor initialization */
@@ -9,9 +11,10 @@ KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box) {
     box_ = std::make_shared<BoundingBox>(box);
     polygons_ = std::make_shared<std::vector<Polygon>>();
 
-    splitValue_ = polygonsVect[polygonsVect.size() / 2].getMeanOfInterest();
     /* End Constructor initialization */
     std::sort(polygonsVect.begin(), polygonsVect.end());
+    splitValue_ = polygonsVect[polygonsVect.size() / 2].getMeanOfInterest();
+
     auto underList = std::vector<Polygon>();
     auto aboveList = std::vector<Polygon>();
     for (const auto &polygon: polygonsVect) {
@@ -27,6 +30,7 @@ KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box) {
         }
         polygons_->push_back(polygon);
     }
+    
     if (!underList.empty()) {
         BoundingBox b;
         Tools<float>::extremumPolygonList(underList, b);
@@ -81,9 +85,18 @@ void KDNode::printInfix(unsigned id, bool isleft) {
 }
 
 void KDNode::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) {
-    if (Tools<float>::IntersectCubeRay(ray, *box_)) {
-        for (const auto &poly: *polygons_) {
-            resultList.emplace_back(poly);
+    auto start = std::chrono::system_clock::now();
+
+    bool res = Tools<float>::IntersectCubeRay(ray, *box_);
+
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+    Stats::AABBvsRay.addTime(elapsed_seconds.count());
+
+    if (res) {
+        for ( Polygon &poly: *polygons_) {
+            resultList.emplace_back(&poly);
         }
         if (left_ != nullptr)
             left_->getIntersectionList(ray, resultList);

@@ -17,7 +17,7 @@ public:
     Camera &operator=(const Camera &);
 
 
-    Camera(const float &screenDistance, const Vector2D<int> &screenDimension,
+    Camera(const float &screenDistance, const Vector2D<unsigned> &screenDimension,
            const Vector3D<float> &position, const Vector3D<float> &orientation,
            const float &fovDegree);
 
@@ -41,7 +41,7 @@ private:
     float fieldOfView_ = 0.f;
     float fieldOfViewRadian = 0.f;
     float screenDistance_= 0.f;
-    Vector2D<int> screenDimension_;
+    Vector2D<unsigned> screenDimension_;
     std::vector<uint8_t> screen_;
     Vector3D<float> position_;
     Vector3D<float> orientation_;
