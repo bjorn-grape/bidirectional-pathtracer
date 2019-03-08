@@ -5,6 +5,7 @@
 #include "../scene_elements/Polygon.hh"
 #include "../datastruct/box/BoundingBox.hh"
 #include "../scene_elements/Ray.hh"
+#include "../parser/AllPolygonContainer.hh"
 
 template<typename T>
 class Tools {
@@ -16,7 +17,8 @@ public:
 
     inline static SplitAxis::Axis maxIndexOfThree(const T &x, const T &y, const T &z);
 
-    static void extremumPolygonList(const std::vector<Polygon> &polygons, BoundingBox &box);
+    static void extremumPolygonList(std::vector<unsigned >& indexList, AllPolygonContainer& polygons,
+            BoundingBox &box);
 
     static bool IntersectCubeRay(Ray ray, BoundingBox bbox);
 

@@ -19,7 +19,7 @@ Camera::Camera(const float &screenDistance, const Vector2D<unsigned> &screenDime
 }
 
 
-void Camera::computeImage(std::vector<Polygon> polygons) {
+void Camera::computeImage(AllPolygonContainer polygons) {
     const float scaleDimension =
             static_cast<float>(screenDimension_.getY()) / static_cast<float>(screenDimension_.getX());
     float stepx;
@@ -43,12 +43,12 @@ void Camera::computeImage(std::vector<Polygon> polygons) {
             auto movingDir = screenCenterPoint + Vector3D(j * stepy, i * stepx, 0.f) - position_;
             Ray r = Ray(position_, movingDir);
             Vector3D<float> fff;
-            for (const Polygon &p : polygons) {
+            for (unsigned index = 0; index< polygons.size() ; ++index) {
 
-                if (p.isTriangle())
-                    if (r.intersectOneTriangle(const_cast<Vector3D<float> &>(p.getVertices()[0]),
-                                               const_cast<Vector3D<float> &>(p.getVertices()[1]),
-                                               const_cast<Vector3D<float> &>(p.getVertices()[2]),
+                if (polygons[index].isTriangle())
+                    if (r.intersectOneTriangle(const_cast<Vector3D<float> &>(polygons[index].getVertices()[0]),
+                                               const_cast<Vector3D<float> &>(polygons[index].getVertices()[1]),
+                                               const_cast<Vector3D<float> &>(polygons[index].getVertices()[2]),
                                                fff)) {
                         doInter = true;
                         break;
@@ -86,7 +86,7 @@ Camera &Camera::operator=(const Camera &camera) {
     return *this;
 }
 
-void Camera::computeImage(KDTree tree) {
+void Camera::computeImage(KDTree tree, const AllPolygonContainer &polygons) {
     const float scaleDimension =
             static_cast<float>(screenDimension_.getY()) / static_cast<float>(screenDimension_.getX());
     float stepx;
@@ -111,16 +111,16 @@ void Camera::computeImage(KDTree tree) {
             Ray r = Ray(position_, movingDir);
             Vector3D<float> fff;
 
-            std::vector<Polygon *> polygons;
+            std::unordered_set<unsigned> indexSet;
 
-            tree.getIntersectionList(r, polygons);
+            tree.getIntersectionList(r, indexSet);
 
-            for (const Polygon *p : polygons) {
+            for (const unsigned &index : indexSet) {
 
-                if (p->isTriangle())
-                    if (r.intersectOneTriangle(const_cast<Vector3D<float> &>(p->getVertices()[0]),
-                                               const_cast<Vector3D<float> &>(p->getVertices()[1]),
-                                               const_cast<Vector3D<float> &>(p->getVertices()[2]),
+                if (polygons[index].isTriangle())
+                    if (r.intersectOneTriangle(const_cast<Vector3D<float> &>(polygons[index].getVertices()[0]),
+                                               const_cast<Vector3D<float> &>(polygons[index].getVertices()[1]),
+                                               const_cast<Vector3D<float> &>(polygons[index].getVertices()[2]),
                                                fff)) {
                         doInter = true;
                         break;

@@ -20,21 +20,24 @@ inline SplitAxis::Axis Tools<T>::maxIndexOfThree(const T &x, const T &y, const T
 template<typename T>
 inline SplitAxis::Axis Tools<T>::minIndexOfThree(const T &x, const T &y, const T &z) {
     T val = std::min(std::min(x, y), z);
-    int res = 0;
-    res += (val == z);
-    res <<= 1;
-    res += (val == y);
-    res <<= 1;
-    res += (val == x);
-    return static_cast<SplitAxis::Axis>(res);
+
+    if (x == val)
+        return SplitAxis::X;
+    if (y == val)
+        return SplitAxis::Y;
+    if (z == val)
+        return SplitAxis::Z;
+
+    return SplitAxis::none;
 }
 
 template<typename T>
-void Tools<T>::extremumPolygonList(const std::vector<Polygon> &polygons, BoundingBox &box) {
+void Tools<T>::extremumPolygonList(std::vector<unsigned> &indexList, AllPolygonContainer &polygons,
+                                   BoundingBox &box) {
     box.min = std::make_shared<Vector3D<float>>(INFINITY, INFINITY, INFINITY);
     box.max = std::make_shared<Vector3D<float>>(-INFINITY, -INFINITY, -INFINITY);
-    for (const auto &polygon: polygons) {
-        Vector3D<float> mean = polygon.meanVertices();
+    for (unsigned i = 0; i < polygons.size(); i++) {
+        Vector3D<float> mean = polygons[i].meanVertices();
         box.min->replaceMyContentBy(box.min->minOfTwoCoordinates(mean));
         box.max->replaceMyContentBy(box.max->maxOfTwoCoordinates(mean));
     }
@@ -45,8 +48,8 @@ bool Tools<T>::IntersectCubeRay(Ray ray, BoundingBox bbox) {
 
     Vector3D<float> p = ray.getPosition();
     Vector3D<float> d = ray.getOrientation();
-    Vector3D<float>& bbmin = *(bbox.min);
-    Vector3D<float>& bbmax = *(bbox.max);
+    Vector3D<float> &bbmin = *(bbox.min);
+    Vector3D<float> &bbmax = *(bbox.max);
 
     float tmin = 0.0f;
     // set to -FLT_MAX to get first hit on line

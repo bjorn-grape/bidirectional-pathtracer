@@ -13,3 +13,8 @@ SplitAxis::Axis BoundingBox::GetLargestDimension() const {
 Vector3D<float> BoundingBox::GetDimensions() const {
     return *max - *min;
 }
+
+SplitAxis::Axis BoundingBox::GetSmallestDimension() const {
+    auto dim = GetDimensions();
+    return Tools<float>::minIndexOfThree(dim.getX(), dim.getY(), dim.getZ());
+}

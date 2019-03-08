@@ -3,14 +3,15 @@
 #include "KDTree.hh"
 #include "../../tools/Tools.hh"
 
-KDTree::KDTree(std::vector<Polygon> &polygons) {
+KDTree::KDTree( AllPolygonContainer &polygons) {
     if (root_ != nullptr) {
         std::cerr << "KDTree not empty !" << std::endl;
         return;
     }
     BoundingBox b;
-    Tools<float>::extremumPolygonList(polygons, b);
-    root_ = std::make_shared<KDNode>(polygons, b);
+    auto indexList = polygons.getAllindexes();
+    Tools<float>::extremumPolygonList(indexList, polygons, b);
+    root_ = std::make_shared<KDNode>(indexList, polygons, b, 1);
 }
 
 void KDTree::printPrefix() {
@@ -22,7 +23,7 @@ void KDTree::printPrefix() {
 
 }
 
-void KDTree::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) {
+void KDTree::getIntersectionList(const Ray &ray, std::unordered_set<unsigned> &resultList) {
     root_->getIntersectionList(ray, resultList);
     //Tools<float>::originVector = ray.getPosition();
     //Polygon::setComparisonfactor(Polygon::distanceToOrigin);

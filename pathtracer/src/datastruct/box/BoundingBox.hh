@@ -9,6 +9,7 @@ struct BoundingBox {
     BoundingBox() = default;
 
     SplitAxis::Axis GetLargestDimension() const;
+    SplitAxis::Axis GetSmallestDimension() const;
 
     Vector3D<float> GetDimensions() const;
 

@@ -21,8 +21,8 @@ public:
            const Vector3D<float> &position, const Vector3D<float> &orientation,
            const float &fovDegree);
 
-    void computeImage(std::vector<Polygon> polygons);
-    void computeImage(KDTree tree);
+    void computeImage(AllPolygonContainer polygons);
+    void computeImage(KDTree tree, const AllPolygonContainer &polygons);
 
     void dumpImageToPpm(std::string path);
 

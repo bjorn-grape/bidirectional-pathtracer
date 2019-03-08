@@ -7,12 +7,14 @@
 #include "../box/BoundingBox.hh"
 #include "../SplitAxis.hh"
 #include "../../scene_elements/Ray.hh"
+#include "../../parser/AllPolygonContainer.hh"
 
 class KDNode {
 public:
-    KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box);
+    KDNode(std::vector<unsigned> &indexList, AllPolygonContainer &polygons,
+            const BoundingBox &box, unsigned depth);
     void printInfix(unsigned depth, bool isleft);
-    void getIntersectionList(const Ray& ray, std::vector<Polygon*>& resultList);
+    void getIntersectionList(const Ray& ray, std::unordered_set<unsigned> &resultSet);
 
 private:
     float splitValue_ = 0.f;
@@ -20,7 +22,7 @@ private:
     std::shared_ptr<BoundingBox> box_ = nullptr;
     std::shared_ptr<KDNode> left_ = nullptr;
     std::shared_ptr<KDNode> right_ = nullptr;
-    std::shared_ptr<std::vector<Polygon>> polygons_;
+    std::shared_ptr<std::vector<unsigned>> polygons_;
 };
 
 

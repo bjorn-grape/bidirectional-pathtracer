@@ -4,43 +4,60 @@
 #include "../../tools/Tools.hh"
 #include "../../tools/performances/Stats.hh"
 
-KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box) {
+KDNode::KDNode(std::vector<unsigned> &indexList, AllPolygonContainer &polygons,
+               const BoundingBox &box, unsigned depth) {
     /* Constructor initialization */
-    splitAxis_ = box.GetLargestDimension();
+//    splitAxis_ = box.GetLargestDimension();
+    splitAxis_ = box.GetSmallestDimension();
     Polygon::setComparisonfactor(static_cast<Polygon::compFactor>(splitAxis_));
     box_ = std::make_shared<BoundingBox>(box);
-    polygons_ = std::make_shared<std::vector<Polygon>>();
+    polygons_ = std::make_shared<std::vector<unsigned >>();
 
     /* End Constructor initialization */
-    std::sort(polygonsVect.begin(), polygonsVect.end());
-    splitValue_ = polygonsVect[polygonsVect.size() / 2].getMeanOfInterest();
+//    if (depth > 5)
+//    {
+//        for(const auto &polygon: polygonsVect)
+//         polygons_->push_back(polygon);
+//        return;
+//    }
+    double mean = 0.0;
+    for (unsigned i = 0; i < indexList.size(); ++i)
+        mean += polygons[i].getMeanOfInterest();
+    splitValue_ = static_cast<float>(mean / indexList.size());
 
-    auto underList = std::vector<Polygon>();
-    auto aboveList = std::vector<Polygon>();
-    for (const auto &polygon: polygonsVect) {
+    auto underList = std::vector<unsigned>();
+    auto aboveList = std::vector<unsigned>();
+    for (unsigned i = 0; i < indexList.size(); i++) {
         float mmin, mmax;
-        polygon.getBoundsOfInterest(mmin, mmax);
+        polygons[i].getBoundsOfInterest(mmin, mmax);
         if (mmin > splitValue_) {
-            aboveList.push_back(polygon);
+            aboveList.push_back(indexList[i]);
             continue;
         }
         if (mmax < splitValue_) {
-            underList.push_back(polygon);
+            underList.push_back(indexList[i]);
             continue;
         }
-        polygons_->push_back(polygon);
+        polygons_->push_back(indexList[i]);
     }
-    
+//    if (!underList.empty() || !aboveList.empty()) {
+//        for (const auto &polygon: *polygons_) {
+//            underList.push_back(polygon);
+//            aboveList.push_back(polygon);
+//        }
+//        polygons_->clear();
+//    }
+
     if (!underList.empty()) {
         BoundingBox b;
-        Tools<float>::extremumPolygonList(underList, b);
-        left_ = std::make_shared<KDNode>(underList, b);
-
+        Tools<float>::extremumPolygonList(underList, polygons, b);
+        left_ = std::make_shared<KDNode>(underList, polygons, b, depth + 1);
     }
+
     if (!aboveList.empty()) {
         BoundingBox b;
-        Tools<float>::extremumPolygonList(aboveList, b);
-        right_ = std::make_shared<KDNode>(aboveList, b);
+        Tools<float>::extremumPolygonList(aboveList, polygons, b);
+        right_ = std::make_shared<KDNode>(aboveList, polygons, b, depth + 1);
     }
 
 
@@ -84,23 +101,23 @@ void KDNode::printInfix(unsigned id, bool isleft) {
 
 }
 
-void KDNode::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) {
-    auto start = std::chrono::system_clock::now();
+void KDNode::getIntersectionList(const Ray &ray, std::unordered_set<unsigned> &resultSet) {
+//    auto start = std::chrono::system_clock::now();
 
     bool res = Tools<float>::IntersectCubeRay(ray, *box_);
 
-    auto end = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_seconds = end-start;
-    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-    Stats::AABBvsRay.addTime(elapsed_seconds.count());
+//    auto end = std::chrono::system_clock::now();
+//    std::chrono::duration<double> elapsed_seconds = end-start;
+//    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+//    Stats::AABBvsRay.addTime(elapsed_seconds.count());
 
     if (res) {
-        for ( Polygon &poly: *polygons_) {
-            resultList.emplace_back(&poly);
+        for (unsigned i = 0; i < polygons_->size(); ++i) {
+            resultSet.insert((*polygons_)[i]);
         }
         if (left_ != nullptr)
-            left_->getIntersectionList(ray, resultList);
+            left_->getIntersectionList(ray, resultSet);
         if (right_ != nullptr)
-            right_->getIntersectionList(ray, resultList);
+            right_->getIntersectionList(ray, resultSet);
     }
 }

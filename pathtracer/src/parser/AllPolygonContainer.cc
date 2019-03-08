@@ -3,7 +3,7 @@
 //
 #define TINYOBJLOADER_IMPLEMENTATION
 
-#include "ObjectFileParser.hh"
+#include "AllPolygonContainer.hh"
 #include "../scene_elements/Polygon.hh"
 #include <tiny_obj_loader.h>
 #include <iostream>
@@ -14,8 +14,8 @@ const std::string path_global = "..\\objs\\";
 const std::string relative_path = "../objs/";
 #endif
 
-std::vector<Polygon> ObjectFileParser::fromPathToObjStruct(std::string path,
-                                                           Vector3D<float> position) {
+std::vector<Polygon> AllPolygonContainer::fromPathToObjStruct(std::string path,
+                                                              Vector3D<float> position) const {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
@@ -80,12 +80,35 @@ std::vector<Polygon> ObjectFileParser::fromPathToObjStruct(std::string path,
     return polygonVector;
 }
 
-std::vector<Polygon> ObjectFileParser::fromAllObjsToObjStruct(const std::vector<ObjectPaths> &objectsPaths) {
-    std::vector<Polygon> allPoly;
+AllPolygonContainer::AllPolygonContainer(const std::vector<ObjectPaths> &objectsPaths) {
     for (auto &objPath : objectsPaths) {
         auto tmpvec = fromPathToObjStruct(objPath.getPath_obj(), objPath.getPosition());
-        allPoly.insert(allPoly.end(), tmpvec.begin(), tmpvec.end());
+        polygons_.insert(polygons_.end(), tmpvec.begin(), tmpvec.end());
     }
-    return allPoly;
 }
+
+Polygon AllPolygonContainer::at(unsigned i) const {
+    if (i >= polygons_.size())
+        throw std::invalid_argument("Out of bounds!");
+    return polygons_[i];
+}
+
+Polygon AllPolygonContainer::operator[](unsigned i) const {
+    return polygons_[i];
+}
+
+std::vector<unsigned> AllPolygonContainer::getAllindexes() const {
+    auto vect = std::vector<unsigned int>();
+    vect.reserve(polygons_.size());
+    for (unsigned i = 0; i < polygons_.size(); ++i) {
+        vect.push_back(i);
+    }
+    return vect;
+}
+
+std::size_t AllPolygonContainer::size() const {
+    return polygons_.size();
+}
+
+
 

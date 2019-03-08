@@ -1,5 +1,5 @@
 #include <iostream>
-#include "parser/ObjectFileParser.hh"
+#include "parser/AllPolygonContainer.hh"
 #include "scene_elements/fixed_size_vectors/Vector2D.hh"
 #include "scene_elements/fixed_size_vectors/Vector3D.hh"
 #include "scene_elements/Ray.hh"
