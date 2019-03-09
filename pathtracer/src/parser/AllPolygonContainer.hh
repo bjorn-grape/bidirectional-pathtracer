@@ -1,6 +1,6 @@
 #pragma once
 
-#include<string>
+#include <string>
 #include "../scene_elements/Polygon.hh"
 #include "../scene_elements/serialized/object_path/ObjectPaths.hh"
 
@@ -12,19 +12,19 @@ public :
 
     explicit AllPolygonContainer(const std::vector<ObjectPaths> &objectsPaths);
 
-    Polygon operator[](unsigned i) const;
+    inline Polygon operator[](unsigned i) const;
 
-    Polygon at(unsigned i) const;
+    inline Polygon at(unsigned i) const;
 
-    std::vector<unsigned> getAllindexes() const;
+    inline std::vector<unsigned> getAllindexes() const;
 
-    std::size_t size() const;
+    inline std::size_t size() const;
 
 private:
     std::vector<Polygon> fromPathToObjStruct(std::string path,
-                                             Vector3D<float> position = Vector3D<float>()) const;
+                                             Vector3D<float> position = Vector3D<float>());
 
     std::vector<Polygon> polygons_;
 };
 
-
+#include "AllPolygonContainer.hxx"

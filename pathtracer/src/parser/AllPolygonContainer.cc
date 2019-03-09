@@ -1,21 +1,18 @@
-//
-// Created by bjorn on 19/02/19.
-//
-#define TINYOBJLOADER_IMPLEMENTATION
-
+#define TINYOBJLOADER_IMPLEMENTATION //define it before header
 #include "AllPolygonContainer.hh"
-#include "../scene_elements/Polygon.hh"
 #include <tiny_obj_loader.h>
+#include "../scene_elements/Polygon.hh"
 #include <iostream>
-
 #ifdef  _WIN32
 const std::string path_global = "..\\objs\\";
 #else
 const std::string relative_path = "../objs/";
 #endif
 
+
+
 std::vector<Polygon> AllPolygonContainer::fromPathToObjStruct(std::string path,
-                                                              Vector3D<float> position) const {
+                                                              Vector3D<float> position) {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
@@ -80,35 +77,10 @@ std::vector<Polygon> AllPolygonContainer::fromPathToObjStruct(std::string path,
     return polygonVector;
 }
 
+
 AllPolygonContainer::AllPolygonContainer(const std::vector<ObjectPaths> &objectsPaths) {
     for (auto &objPath : objectsPaths) {
         auto tmpvec = fromPathToObjStruct(objPath.getPath_obj(), objPath.getPosition());
         polygons_.insert(polygons_.end(), tmpvec.begin(), tmpvec.end());
     }
 }
-
-Polygon AllPolygonContainer::at(unsigned i) const {
-    if (i >= polygons_.size())
-        throw std::invalid_argument("Out of bounds!");
-    return polygons_[i];
-}
-
-Polygon AllPolygonContainer::operator[](unsigned i) const {
-    return polygons_[i];
-}
-
-std::vector<unsigned> AllPolygonContainer::getAllindexes() const {
-    auto vect = std::vector<unsigned int>();
-    vect.reserve(polygons_.size());
-    for (unsigned i = 0; i < polygons_.size(); ++i) {
-        vect.push_back(i);
-    }
-    return vect;
-}
-
-std::size_t AllPolygonContainer::size() const {
-    return polygons_.size();
-}
-
-
-

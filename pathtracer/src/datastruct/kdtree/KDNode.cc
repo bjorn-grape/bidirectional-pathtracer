@@ -12,13 +12,13 @@ KDNode::KDNode(std::vector<unsigned> &indexList, AllPolygonContainer &polygons,
     Polygon::setComparisonfactor(static_cast<Polygon::compFactor>(splitAxis_));
     box_ = std::make_shared<BoundingBox>(box);
     polygons_ = std::make_shared<std::vector<unsigned >>();
-
-    /* End Constructor initialization */
-    if (depth > 5) {
-        for (unsigned index = 0; index < indexList.size(); ++index)
-            polygons_->push_back(indexList[index]);
-        return;
-    }
+//
+//    /* End Constructor initialization */
+//    if (depth > 5) {
+//        for (unsigned index = 0; index < indexList.size(); ++index)
+//            polygons_->push_back(indexList[index]);
+//        return;
+//    }
     double mean = 0.0;
     for (unsigned i = 0; i < indexList.size(); ++i)
         mean += polygons[i].getMeanOfInterest();
@@ -39,13 +39,13 @@ KDNode::KDNode(std::vector<unsigned> &indexList, AllPolygonContainer &polygons,
         }
         polygons_->push_back(indexList[i]);
     }
-    if (!underList.empty() || !aboveList.empty()) {
-        for (unsigned index = 0; index < polygons_->size(); ++index) {
-            underList.push_back((*polygons_)[index]);
-            aboveList.push_back((*polygons_)[index]);
-        }
-        polygons_->clear();
-    }
+//    if (!underList.empty() || !aboveList.empty()) {
+//        for (unsigned index = 0; index < polygons_->size(); ++index) {
+//            underList.push_back((*polygons_)[index]);
+//            aboveList.push_back((*polygons_)[index]);
+//        }
+//        polygons_->clear();
+//    }
 
     if (!underList.empty()) {
         BoundingBox b;
