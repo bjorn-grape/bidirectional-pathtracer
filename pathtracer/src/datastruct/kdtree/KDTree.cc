@@ -9,8 +9,8 @@ KDTree::KDTree(std::vector<Polygon> &polygons) {
         return;
     }
     BoundingBox b;
-    Tools<float>::extremumPolygonList(polygons, b);
-    root_ = std::make_shared<KDNode>(polygons, b);
+    b.setExtremumFromPolygonList(polygons);
+    root_ = std::make_shared<KDNode>(polygons, b, 0);
 }
 
 void KDTree::printPrefix() {

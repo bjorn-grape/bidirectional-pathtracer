@@ -10,7 +10,7 @@
 
 class KDNode {
 public:
-    KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box);
+    KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box, const unsigned depth);
     void printInfix(unsigned depth, bool isleft);
     void getIntersectionList(const Ray& ray, std::vector<Polygon*>& resultList);
 

@@ -4,9 +4,23 @@
 #include "../../tools/Tools.hh"
 #include "../../tools/performances/Stats.hh"
 
-KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box) {
+KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box, const unsigned depth) {
     /* Constructor initialization */
-    splitAxis_ = box.GetLargestDimension();
+//    splitAxis_ = box.GetSmallestDimension();
+    unsigned moddepth = depth % 3;
+    switch (moddepth) {
+        case 0:
+            splitAxis_ = SplitAxis::X;
+            break;
+        case 1:
+            splitAxis_ = SplitAxis::Y;
+            break;
+        default:
+            splitAxis_ = SplitAxis::Z;
+            break;
+    }
+
+
     Polygon::setComparisonfactor(static_cast<Polygon::compFactor>(splitAxis_));
     box_ = std::make_shared<BoundingBox>(box);
     polygons_ = std::make_shared<std::vector<Polygon>>();
@@ -30,17 +44,17 @@ KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box) {
         }
         polygons_->push_back(polygon);
     }
-    
+
     if (!underList.empty()) {
         BoundingBox b;
-        Tools<float>::extremumPolygonList(underList, b);
-        left_ = std::make_shared<KDNode>(underList, b);
+        b.setExtremumFromPolygonList(underList);
+        left_ = std::make_shared<KDNode>(underList, b, depth + 1);
 
     }
     if (!aboveList.empty()) {
         BoundingBox b;
-        Tools<float>::extremumPolygonList(aboveList, b);
-        right_ = std::make_shared<KDNode>(aboveList, b);
+        b.setExtremumFromPolygonList(aboveList);
+        right_ = std::make_shared<KDNode>(aboveList, b, depth + 1);
     }
 
 
@@ -87,7 +101,7 @@ void KDNode::printInfix(unsigned id, bool isleft) {
 void KDNode::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) {
 //    auto start = std::chrono::system_clock::now();
 
-    bool res = Tools<float>::IntersectCubeRay(ray, *box_);
+    bool res = box_->DoIntersect(ray);
 
 //    auto end = std::chrono::system_clock::now();
 //    std::chrono::duration<double> elapsed_seconds = end-start;
@@ -95,7 +109,7 @@ void KDNode::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultL
 //    Stats::AABBvsRay.addTime(elapsed_seconds.count());
 
     if (res) {
-        for ( Polygon &poly: *polygons_) {
+        for (Polygon &poly: *polygons_) {
             resultList.emplace_back(&poly);
         }
         if (left_ != nullptr)

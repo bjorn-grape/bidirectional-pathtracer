@@ -3,7 +3,7 @@
 #include "../datastruct/SplitAxis.hh"
 #include "../scene_elements/fixed_size_vectors/Vector3D.hh"
 #include "../scene_elements/Polygon.hh"
-#include "../datastruct/box/BoundingBox.hh"
+//#include "../datastruct/box/BoundingBox.hh"
 #include "../scene_elements/Ray.hh"
 
 template<typename T>
@@ -16,9 +16,6 @@ public:
 
     inline static SplitAxis::Axis maxIndexOfThree(const T &x, const T &y, const T &z);
 
-    static void extremumPolygonList(const std::vector<Polygon> &polygons, BoundingBox &box);
-
-    static bool IntersectCubeRay(Ray ray, BoundingBox bbox);
 
     static Vector3D<float> originVector;
 
