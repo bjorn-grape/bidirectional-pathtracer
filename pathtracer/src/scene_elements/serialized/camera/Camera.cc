@@ -6,6 +6,7 @@
 #include <tiff.h>
 #include "Camera.hh"
 #include "tbb/tbb.h"
+#include "../../../color/Colors.hh"
 
 Camera::Camera(const float &screenDistance, const Vector2D<unsigned> &screenDimension,
                const Vector3D<float> &position, const Vector3D<float> &orientation,
@@ -62,16 +63,16 @@ void Camera::computeImage(std::vector<Polygon> polygons) {
 
 void Camera::dumpImageToPpm(std::string path) {
     std::ofstream ofstream(path);
-    ofstream << "P2\n";
+    ofstream << "P3\n";
     ofstream << screenDimension_.getX() << " ";
     ofstream << screenDimension_.getY() << "\n";
-    ofstream << "15\n";
+    ofstream << "255\n";
     for (unsigned i = 0; i < screenDimension_.getY(); ++i) {
         for (unsigned j = 0; j < screenDimension_.getX(); ++j) {
-            if ((screen_[(i * screenDimension_.getX() + j) * 3] != 0))
-                ofstream << "15 ";
-            else
-                ofstream << "0 ";
+            int index = (i * screenDimension_.getX() + j) * 3;
+            ofstream << static_cast<int>(screen_[index]) << " ";
+            ofstream << static_cast<int>(screen_[index + 1]) << " ";
+            ofstream << static_cast<int>(screen_[index + 2]) << " ";
         }
         ofstream << "\n";
     }
@@ -107,6 +108,7 @@ void Camera::computeImage(KDTree tree) {
         for (unsigned j = 0; j < screenDimension_.getX(); ++j) {
 
             bool doInter = false;
+            Vector3D<uint8_t> color = Colors::CYAN;
             auto movingDir = screenCenterPoint + Vector3D(j * stepy, i * stepx, 0.f) - position_;
             Ray r = Ray(position_, movingDir);
             Vector3D<float> fff;
@@ -123,10 +125,21 @@ void Camera::computeImage(KDTree tree) {
                                                const_cast<Vector3D<float> &>(p->getVertices()[2]),
                                                fff)) {
                         doInter = true;
+
                         break;
                     }
             }
-            screen_[(i * screenDimension_.getX() + j) * 3] = static_cast<unsigned char>(doInter);
+            size_t index = (i * screenDimension_.getX() + j) * 3;
+            if(doInter){
+                screen_[index] = static_cast<unsigned char>(color.getX());
+                screen_[index + 1] = static_cast<unsigned char>(color.getY());
+                screen_[index + 2] = static_cast<unsigned char>(color.getZ());
+            } else{
+                screen_[index] = static_cast<unsigned char>(0);
+                screen_[index + 1] = static_cast<unsigned char>(0);
+                screen_[index + 2] = static_cast<unsigned char>(0);
+            }
+
         }
     });
 }

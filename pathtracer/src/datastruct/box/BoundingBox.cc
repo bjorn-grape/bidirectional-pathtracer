@@ -2,7 +2,7 @@
 
 BoundingBox::BoundingBox(const Vector3D<float> &mini, const Vector3D<float> &maxi) {
     readVector3DinMin(mini);
-    readVector3DinMin(maxi);
+    readVector3DinMax(maxi);
 }
 
 
