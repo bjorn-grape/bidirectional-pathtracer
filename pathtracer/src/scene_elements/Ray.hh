@@ -23,10 +23,14 @@ public:
 
     const Vector3D<float> &getPosition() const;
     void setPosition(const Vector3D<float> &position);
-    const Vector3D<float> &getOrientation() const;
+    const Vector3D<float> &getDirection() const;
+    const Vector3D<float> &getInvDirection() const;
+    int* getSign();
     void setOrientation(const Vector3D<float> &orientation);
 
 private:
     Vector3D<float> direction_;
     Vector3D<float> position_;
+    Vector3D<float> invdirection_;
+    int sign_[3] = {0,0,0};
 };

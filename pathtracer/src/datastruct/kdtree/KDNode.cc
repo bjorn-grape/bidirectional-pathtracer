@@ -101,12 +101,13 @@ void KDNode::printInfix(unsigned id, bool isleft) {
 void KDNode::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) {
 //    auto start = std::chrono::system_clock::now();
 
-    bool res = box_->DoIntersect(ray);
+    bool res = box_->FasterDoIntersect(ray);
 
 //    auto end = std::chrono::system_clock::now();
 //    std::chrono::duration<double> elapsed_seconds = end-start;
 //    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
 //    Stats::AABBvsRay.addTime(elapsed_seconds.count());
+
 
     if (res) {
         for (Polygon &poly: *polygons_) {

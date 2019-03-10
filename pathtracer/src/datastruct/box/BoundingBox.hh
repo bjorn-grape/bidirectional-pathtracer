@@ -16,6 +16,7 @@ public:
     inline Vector3D<float> GetDimensions() const;
 
     bool DoIntersect(Ray r);
+    bool FasterDoIntersect(Ray r);
 
     inline void readVector3DinMin(const Vector3D<float> &vector3D);
 
@@ -35,9 +36,12 @@ public:
 
     inline void setExtremumFromPolygonList(const std::vector<Polygon> &polygons);
 
+    inline float* operator[](const int&  i);
+
 private:
     float min[3] = {0.f, 0.f, 0.f};
     float max[3] = {0.f, 0.f, 0.f};
+    static const Vector3D<float> toleranceBoundaries;
 };
 
 #include "BoundingBox.hxx"

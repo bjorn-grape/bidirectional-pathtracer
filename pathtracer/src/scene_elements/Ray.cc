@@ -4,7 +4,12 @@
 
 Ray::Ray(const Vector3D<float> &position, const Vector3D<float> &direction)
         : direction_(direction)
-          , position_(position) {}
+          , position_(position) {
+    invdirection_ = Vector3D<float>(1, 1, 1) / direction_;
+    sign_[0] = (invdirection_.getX() < 0);
+    sign_[1] = (invdirection_.getY() < 0);
+    sign_[2] = (invdirection_.getZ() < 0);
+}
 
 
 const Vector3D<float> &Ray::getPosition() const {
@@ -15,7 +20,7 @@ void Ray::setPosition(const Vector3D<float> &position) {
     Ray::position_ = position;
 }
 
-const Vector3D<float> &Ray::getOrientation() const {
+const Vector3D<float> &Ray::getDirection() const {
     return direction_;
 }
 
@@ -96,3 +101,12 @@ std::vector<Vector3D<float>> Ray::intersectAllObjects(const std::vector<Polygon>
     }
     return intersections;
 }
+
+const Vector3D<float> &Ray::getInvDirection() const {
+    return invdirection_;
+}
+
+int *Ray::getSign() {
+    return sign_;
+}
+
