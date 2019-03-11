@@ -97,15 +97,26 @@ void Executor::setSavePath(const std::string &path) {
 void Executor::renderSceneKDTree() {
     auto list = ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects());
     std::cout << "start building KDTree..." << std::endl;
-    KDTree tree(list);
-    std::cout << "Done." << std::endl;
-    std::cout << "start making image..." << std::endl;
     auto start = std::chrono::system_clock::now();
-    sceneSave_.getCamera().computeImage(tree);
+
+    KDTree tree(list);
+
     auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end-start;
     std::cout << "Done." << std::endl;
     std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+
+    std::cout << "Done." << std::endl;
+    std::cout << "start making image..." << std::endl;
+
+    start = std::chrono::system_clock::now();
+    sceneSave_.getCamera().computeImage(tree);
+
+    end = std::chrono::system_clock::now();
+    elapsed_seconds = end-start;
+    std::cout << "Done." << std::endl;
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+
     Stats::AABBvsRay.printInfos();
     sceneSave_.getCamera().dumpImageToPpm(save_path);
 }

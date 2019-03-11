@@ -6,7 +6,6 @@
 
 KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box, const unsigned depth) {
     /* Constructor initialization */
-//    splitAxis_ = box.GetSmallestDimension();
     unsigned moddepth = depth % 3;
     switch (moddepth) {
         case 0:
@@ -19,8 +18,6 @@ KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box, const
             splitAxis_ = SplitAxis::Z;
             break;
     }
-
-
     Polygon::setComparisonfactor(static_cast<Polygon::compFactor>(splitAxis_));
     box_ = std::make_shared<BoundingBox>(box);
     polygons_ = std::make_shared<std::vector<Polygon>>();

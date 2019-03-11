@@ -24,7 +24,7 @@ void KDTree::printPrefix() {
 
 void KDTree::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) {
     root_->getIntersectionList(ray, resultList);
-    Tools<float>::originVector = ray.getPosition();
-    Polygon::setComparisonfactor(Polygon::distanceToOrigin);
-    std::sort(resultList.begin(), resultList.end());
+//    Tools<float>::originVector = ray.getPosition();
+//    Polygon::setComparisonfactor(Polygon::distanceToOrigin);
+//    std::sort(resultList.begin(), resultList.end());
 }
