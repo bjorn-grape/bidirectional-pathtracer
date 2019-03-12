@@ -7,12 +7,14 @@
 
 class KDTree {
 public:
+    KDTree() = default;
 
-    explicit KDTree(std::vector<Polygon>& polygons);
+    explicit KDTree(std::vector<Polygon> &polygons);
 
-    void getIntersectionList(const Ray& ray, std::vector<Polygon*>& resultList);
+    void getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList);
 
     void printPrefix();
+
     std::shared_ptr<KDNode> root_ = nullptr;
 
 };

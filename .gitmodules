@@ -4,3 +4,6 @@
 [submodule "pathtracer/libs/cereal"]
 	path = pathtracer/libs/cereal
 	url = https://github.com/USCiLab/cereal
+[submodule "pathtracer/libs/CImg"]
+	path = pathtracer/libs/CImg
+	url = https://github.com/dtschump/CImg

@@ -1,12 +1,11 @@
-//
-// Created by bjorn on 19/02/19.
-//
-#define TINYOBJLOADER_IMPLEMENTATION
-
 #include "ObjectFileParser.hh"
 #include "../scene_elements/Polygon.hh"
-#include <tiny_obj_loader.h>
+#include "../datastruct/scene/Scene.hh"
 #include <iostream>
+
+#define TINYOBJLOADER_IMPLEMENTATION
+#include <tiny_obj_loader.h>
+
 
 #ifdef  _WIN32
 const std::string path_global = "..\\objs\\";
@@ -14,12 +13,11 @@ const std::string path_global = "..\\objs\\";
 const std::string relative_path = "../objs/";
 #endif
 
-std::vector<Polygon> ObjectFileParser::fromPathToObjStruct(std::string path,
-                                                           Vector3D<float> position) {
+void ObjectFileParser::fromPathToObjStruct(std::string path, Vector3D<float> position,
+                                           std::vector<Polygon>& polygonVector, std::vector<Material>& mats) {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
-
     std::string warn;
     std::string err;
     bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, (relative_path + path).c_str());
@@ -30,7 +28,30 @@ std::vector<Polygon> ObjectFileParser::fromPathToObjStruct(std::string path,
         std::cerr << err << std::endl;
     }
 
-    std::vector<Polygon> polygonVector;
+    for (auto &material : materials) {
+        Material tmpma;
+        tmpma.name = material.name;
+
+        for (int j = 0; j < 3; ++j) {
+            tmpma.ambient[j] = material.ambient[j];
+            tmpma.diffuse[j] = material.diffuse[j];
+            tmpma.specular[j] = material.specular[j];
+            tmpma.transmittance[j] = material.transmittance[j];
+            tmpma.emission[j] = material.emission[j];
+        }
+        tmpma.shininess = material.shininess;
+        tmpma.ior = material.ior;
+        tmpma.dissolve = material.dissolve;
+        tmpma.ambient_texname = material.ambient_texname;
+        tmpma.diffuse_texname = material.diffuse_texname;
+        tmpma.specular_texname = material.specular_texname;
+        tmpma.specular_highlight_texname = material.specular_highlight_texname;
+        tmpma.bump_texname = material.bump_texname;
+        tmpma.alpha_texname = material.alpha_texname;
+        tmpma.reflection_texname = material.reflection_texname;
+        mats.push_back(tmpma);
+    }
+
 
     for (size_t s = 0; s < shapes.size(); s++) {
         // Loop over faces(polygon)
@@ -77,15 +98,21 @@ std::vector<Polygon> ObjectFileParser::fromPathToObjStruct(std::string path,
             shapes[s].mesh.material_ids[f];
         }
     }
-    return polygonVector;
 }
 
-std::vector<Polygon> ObjectFileParser::fromAllObjsToObjStruct(const std::vector<ObjectPaths> &objectsPaths) {
+void ObjectFileParser::fromAllObjsToObjStruct(const std::vector<ObjectPaths> &objectsPaths,
+                                              Scene &scene) {
     std::vector<Polygon> allPoly;
+    std::vector<Material> allMaterials;
     for (auto &objPath : objectsPaths) {
-        auto tmpvec = fromPathToObjStruct(objPath.getPath_obj(), objPath.getPosition());
-        allPoly.insert(allPoly.end(), tmpvec.begin(), tmpvec.end());
+        std::vector<Polygon> tmp_poly_vector;
+        std::vector<Material> tmp_materials;
+        fromPathToObjStruct(objPath.getPath_obj(), objPath.getPosition(),
+                            tmp_poly_vector, tmp_materials);
+        allPoly.insert(allPoly.end(), tmp_poly_vector.begin(), tmp_poly_vector.end());
+        allMaterials.insert(allMaterials.end(), tmp_materials.begin(), tmp_materials.end());
     }
-    return allPoly;
+    scene.kdtree = KDTree(allPoly);
+    scene.allMaterialContainer.addMaterials(allMaterials);
 }
 

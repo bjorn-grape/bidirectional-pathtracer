@@ -11,11 +11,8 @@ public:
 
     enum jobType {
         none,
-        binaryTest,
         buildscene,
-        binaryTest2,
         executeScene,
-        executeSceneKDTree,
         buildTreeAndPrint
     };
 
@@ -33,9 +30,8 @@ public:
 
 
 private:
-    void createTree();
+    void createTreeAndPrint();
     void renderScene();
-    void renderSceneKDTree();
     std::string save_path = "default.ppm";
     SceneSave sceneSave_;
     bool loaded_ = false;

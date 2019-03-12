@@ -8,6 +8,7 @@
 #include "../../Polygon.hh"
 #include "../../Ray.hh"
 #include "../../../datastruct/kdtree/KDTree.hh"
+#include "../../../datastruct/scene/Scene.hh"
 
 class Camera {
 public:
@@ -21,8 +22,8 @@ public:
            const Vector3D<float> &position, const Vector3D<float> &orientation,
            const float &fovDegree);
 
-    void computeImage(std::vector<Polygon> polygons);
-    void computeImage(KDTree tree);
+    void computeImageRaw(KDTree tree);
+    void computeImage(Scene scene);
 
     void dumpImageToPpm(std::string path);
 
