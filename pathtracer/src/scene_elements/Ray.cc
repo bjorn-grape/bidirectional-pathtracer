@@ -1,4 +1,3 @@
-#include <vector>
 #include "Ray.hh"
 
 
@@ -95,4 +94,19 @@ std::vector<Vector3D<float>> Ray::intersectAllObjects(const std::vector<Polygon>
             intersections.push_back(intersect);
     }
     return intersections;
+}
+
+
+Ray reflection(const Vector3D<float> &position, const Polygon &polygon)
+{
+    auto normals = polygon.getNormals();
+    auto d1 = position.distance(normals[0]);
+    auto d2 = position.distance(normals[1]);
+    auto d3 = position.distance(normals[2]);
+    auto tot = d1 + d2 + d3;
+    auto normal = d1 / tot * normals[0] + d2 / tot * normals[1] + d3 / tot * normals[2];
+
+    auto c = -1 * this->dotproduct(normal);
+    auto reflectedRay = this + (2 * N * c);
+    return reflectedRay;
 }

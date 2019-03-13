@@ -21,6 +21,8 @@ public:
 
     std::vector<Vector3D<float>> intersectAllObjects(const std::vector<Polygon>& objects);
 
+    Ray reflection(const Vector3D<float> &position);
+
     const Vector3D<float> &getPosition() const;
     void setPosition(const Vector3D<float> &position);
     const Vector3D<float> &getOrientation() const;
