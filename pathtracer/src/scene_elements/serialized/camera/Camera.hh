@@ -22,8 +22,7 @@ public:
            const Vector3D<float> &position, const Vector3D<float> &orientation,
            const float &fovDegree);
 
-    void computeImageRaw(KDTree tree);
-    void computeImage(Scene scene);
+    void travelScreen(Scene scene);
 
     void dumpImageToPpm(std::string path);
 

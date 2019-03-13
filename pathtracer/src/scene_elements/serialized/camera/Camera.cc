@@ -40,7 +40,31 @@ Camera &Camera::operator=(const Camera &camera) {
     return *this;
 }
 
-void Camera::computeImageRaw(KDTree tree) {
+
+const Vector3D<uint8_t> &getPixelInfos(const Ray &ray, Scene &scene) {
+    Vector3D<float> fff;
+    std::vector<Polygon *> polygons;
+    scene.kdtree.getIntersectionList(ray, polygons);
+    bool doInter = false;
+    for (const Polygon *p : polygons) {
+
+        if (p->isTriangle())
+            if (ray.intersectOneTriangle(const_cast<Vector3D<float> &>(p->getVertices()[0]),
+                                       const_cast<Vector3D<float> &>(p->getVertices()[1]),
+                                       const_cast<Vector3D<float> &>(p->getVertices()[2]),
+                                       fff)) {
+                doInter = true;
+                break;
+            }
+    }
+    if(doInter)
+        return Colors::RED;
+    else
+        return Colors::BLUE;
+
+}
+
+void Camera::travelScreen(Scene scene) {
     const float scaleDimension =
             static_cast<float>(screenDimension_.getY()) / static_cast<float>(screenDimension_.getX());
     float stepx;
@@ -58,56 +82,21 @@ void Camera::computeImageRaw(KDTree tree) {
                                                   -stepx * screenDimension_.getX() / 2.f,
                                                   0);
     screenUpLeftVector.rotate(howToRotate);
-
     screen_.reserve(screenDimension_.getX() * screenDimension_.getY() * 3);
-
-
     tbb::parallel_for(size_t(0), static_cast<size_t>(screenDimension_.getY()), [&](size_t i) {
         auto upOrigin = screenUpLeftVector;
         upOrigin.rotateOnX(stepy * i);
         for (unsigned j = 0; j < screenDimension_.getX(); ++j) {
             auto goodRot = upOrigin;
             goodRot.rotateOnY(stepx * j);
-//            std::cout << "i: " << i << " j: " << j << " -> " << goodRot << std::endl;
-            bool doInter = false;
-            Vector3D<uint8_t> color = Colors::CYAN;
-            //auto movingDir = screenUpLeftVector + Vector3D(j * stepy, i * stepx, 0.f);
-            Ray r = Ray(position_, goodRot);
-            Vector3D<float> fff;
-
-            std::vector<Polygon *> polygons;
-
-            tree.getIntersectionList(r, polygons);
-
-            for (const Polygon *p : polygons) {
-
-                if (p->isTriangle())
-                    if (r.intersectOneTriangle(const_cast<Vector3D<float> &>(p->getVertices()[0]),
-                                               const_cast<Vector3D<float> &>(p->getVertices()[1]),
-                                               const_cast<Vector3D<float> &>(p->getVertices()[2]),
-                                               fff)) {
-                        doInter = true;
-
-                        break;
-                    }
-            }
+            Ray ray = Ray(position_, goodRot);
+            Vector3D<uint8_t> pixel = getPixelInfos(ray, scene);
             size_t index = (i * screenDimension_.getX() + j) * 3;
-            if (doInter) {
-                screen_[index] = static_cast<unsigned char>(color.getX());
-                screen_[index + 1] = static_cast<unsigned char>(color.getY());
-                screen_[index + 2] = static_cast<unsigned char>(color.getZ());
-            } else {
-                screen_[index] = static_cast<unsigned char>(0);
-                screen_[index + 1] = static_cast<unsigned char>(0);
-                screen_[index + 2] = static_cast<unsigned char>(0);
-            }
-
+            screen_[index] = pixel.getX();
+            screen_[index + 1] = pixel.getY();
+            screen_[index + 2] = pixel.getZ();
         }
     });
-}
-
-void Camera::computeImage(Scene scene) {
-
 }
 
 float Camera::getFieldOfViewRadian() {

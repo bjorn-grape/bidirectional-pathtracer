@@ -60,7 +60,7 @@ void Executor::renderScene() {
     ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects(), scene);
     std::cout << "Done." << std::endl;
     std::cout << "Rendering Image..." << std::endl;
-    sceneSave_.getCamera().computeImageRaw(scene.kdtree);
+    sceneSave_.getCamera().travelScreen(scene);
     std::cout << "Done." << std::endl;
     sceneSave_.getCamera().dumpImageToPpm(save_path);
 }
