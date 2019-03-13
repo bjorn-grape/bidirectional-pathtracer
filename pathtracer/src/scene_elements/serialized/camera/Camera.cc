@@ -7,6 +7,7 @@
 #include "Camera.hh"
 #include "tbb/tbb.h"
 #include "../../../color/Colors.hh"
+#include "../../../datastruct/polygon_dist/PolygonDist.hh"
 
 Camera::Camera(const Vector2D<unsigned> &screenDimension,
                const Vector3D<float> &position, const Vector3D<float> &orientation,
@@ -41,12 +42,11 @@ Camera &Camera::operator=(const Camera &camera) {
 }
 
 
-void getPixelInfos(const Ray &ray, Scene &scene, Vector3D<uint8_t>& cool) {
+void getPixelInfos(const Ray &ray, Scene &scene, Vector3D<uint8_t> &cool) {
     Vector3D<float> fff;
     std::vector<Polygon *> polygons;
     scene.kdtree.getIntersectionList(ray, polygons);
-    bool doInter = false;
-    const Polygon *pOfInterest;
+    std::vector<PolygonDist> polygonDists;
     for (const Polygon *p : polygons) {
 
         if (p->isTriangle())
@@ -54,14 +54,14 @@ void getPixelInfos(const Ray &ray, Scene &scene, Vector3D<uint8_t>& cool) {
                                          const_cast<Vector3D<float> &>(p->getVertices()[1]),
                                          const_cast<Vector3D<float> &>(p->getVertices()[2]),
                                          fff)) {
-                doInter = true;
-                pOfInterest = p;
-                break;
+
+                polygonDists.emplace_back((fff - ray.getPosition()).norm(), *p);
             }
     }
-    if (doInter) {
-        auto color = pOfInterest->getMaterial().ambient;
-        cool =  Vector3D<uint8_t>(color[0] * 255, color[1] * 255, color[2] * 255);
+    std::sort(polygonDists.begin(),polygonDists.end());
+    if (!polygonDists.empty()) {
+        auto color = polygonDists[0].getPolygon().getMaterial().ambient;
+        cool = Vector3D<uint8_t>(color[0] * 255, color[1] * 255, color[2] * 255);
     } else
         cool = Colors::GREEN;
 
@@ -86,6 +86,9 @@ void Camera::travelScreen(Scene scene) {
                                                   0);
     screenUpLeftVector.rotate(howToRotate);
     screen_.reserve(screenDimension_.getX() * screenDimension_.getY() * 3);
+//    for (int i = 0; i < screenDimension_.getY(); ++i) {
+
+
     tbb::parallel_for(size_t(0), static_cast<size_t>(screenDimension_.getY()), [&](size_t i) {
         auto upOrigin = screenUpLeftVector;
         upOrigin.rotateOnX(stepy * i);
@@ -101,7 +104,9 @@ void Camera::travelScreen(Scene scene) {
             screen_[index + 2] = pixel.getZ();
         }
     });
+//    }
 }
+
 
 float Camera::getFieldOfViewRadian() {
     return fieldOfView_ * constants::PI / 180.f;
