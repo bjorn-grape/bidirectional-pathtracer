@@ -100,4 +100,4 @@ bool BoundingBox::FasterDoIntersect(Ray r) {
 
 BoundingBox::BoundingBox() = default;
 
-const Vector3D<float> BoundingBox::toleranceBoundaries = Vector3D(0.05f, 0.05f, 0.05f);
+const Vector3D<float> BoundingBox::toleranceBoundaries = Vector3D(0.1f, 0.1f, 0.1f);

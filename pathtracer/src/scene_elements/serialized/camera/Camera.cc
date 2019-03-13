@@ -12,12 +12,9 @@ Camera::Camera(const float &screenDistance, const Vector2D<unsigned> &screenDime
                const Vector3D<float> &position, const Vector3D<float> &orientation,
                const float &fovDegree)
         : fieldOfView_(fovDegree)
-          , screenDistance_(screenDistance)
           , screenDimension_(screenDimension)
           , position_(position)
-          , orientation_(orientation) {
-    fieldOfViewRadian = fieldOfView_ / 180.f * constants::PI;
-}
+          , orientation_(orientation) {}
 
 void Camera::dumpImageToPpm(std::string path) {
     std::ofstream ofstream(path);
@@ -39,8 +36,6 @@ void Camera::dumpImageToPpm(std::string path) {
 Camera &Camera::operator=(const Camera &camera) {
     this->orientation_ = camera.orientation_;
     this->position_ = camera.position_;
-    this->fieldOfViewRadian = camera.fieldOfViewRadian;
-    this->screenDistance_ = camera.screenDistance_;
     this->screenDimension_ = camera.screenDimension_;
     return *this;
 }
@@ -51,25 +46,33 @@ void Camera::computeImageRaw(KDTree tree) {
     float stepx;
     float stepy;
     if (scaleDimension > 1u) {
-        stepx = fieldOfViewRadian / screenDimension_.getX();
-        stepy = fieldOfViewRadian / screenDimension_.getY() * scaleDimension;
+        stepx = getFieldOfViewRadian() / screenDimension_.getX();
+        stepy = getFieldOfViewRadian() / screenDimension_.getY() * scaleDimension;
     } else {
-        stepx = fieldOfViewRadian / screenDimension_.getX() / scaleDimension;
-        stepy = fieldOfViewRadian / screenDimension_.getY();
+        stepx = getFieldOfViewRadian() / screenDimension_.getX() / scaleDimension;
+        stepy = getFieldOfViewRadian() / screenDimension_.getY();
     }
 
-    auto screenCenterPoint = orientation_ * screenDistance_;
-    Vector3D<float> topleft(-fieldOfViewRadian / 2.f, - fieldOfViewRadian / 2.f, 0.f);
-    screenCenterPoint += topleft;
+    Vector3D<float> screenUpLeftVector = orientation_;
+    Vector3D<float> howToRotate = Vector3D<float>(-stepy * screenDimension_.getY() / 2.f,
+                                                  -stepx * screenDimension_.getX() / 2.f,
+                                                  0);
+    screenUpLeftVector.rotate(howToRotate);
+
     screen_.reserve(screenDimension_.getX() * screenDimension_.getY() * 3);
 
-    tbb::parallel_for(size_t(0), static_cast<size_t>(screenDimension_.getY()), [&](size_t i) {
-        for (unsigned j = 0; j < screenDimension_.getX(); ++j) {
 
+    tbb::parallel_for(size_t(0), static_cast<size_t>(screenDimension_.getY()), [&](size_t i) {
+        auto upOrigin = screenUpLeftVector;
+        upOrigin.rotateOnX(stepy * i);
+        for (unsigned j = 0; j < screenDimension_.getX(); ++j) {
+            auto goodRot = upOrigin;
+            goodRot.rotateOnY(stepx * j);
+//            std::cout << "i: " << i << " j: " << j << " -> " << goodRot << std::endl;
             bool doInter = false;
             Vector3D<uint8_t> color = Colors::CYAN;
-            auto movingDir = screenCenterPoint + Vector3D(j * stepy, i * stepx, 0.f);
-            Ray r = Ray(position_, movingDir);
+            //auto movingDir = screenUpLeftVector + Vector3D(j * stepy, i * stepx, 0.f);
+            Ray r = Ray(position_, goodRot);
             Vector3D<float> fff;
 
             std::vector<Polygon *> polygons;
@@ -105,4 +108,8 @@ void Camera::computeImageRaw(KDTree tree) {
 
 void Camera::computeImage(Scene scene) {
 
+}
+
+float Camera::getFieldOfViewRadian() {
+    return fieldOfView_ * constants::PI / 180.f;
 }

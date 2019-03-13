@@ -53,12 +53,12 @@ public:
 
     float angleDegree(const Vector3D &vector3D) const;
 
-    void rotate(Vector3D<float> vector3D);
+    void rotate(Vector3D<T>& vector3D);
 
-    void rotateOnX(const float &angle);
+    void rotateOnX(const T &angle);
 
-    void rotateOnY(const float &angle);
-    void rotateOnZ(const float &angle);
+    void rotateOnY(const T &angle);
+    void rotateOnZ(const T &angle);
 
     Vector3D minOfTwoCoordinates(const Vector3D& vector3D);
     Vector3D maxOfTwoCoordinates(const Vector3D& vector3D);

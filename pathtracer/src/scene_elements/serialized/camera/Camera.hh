@@ -27,12 +27,12 @@ public:
 
     void dumpImageToPpm(std::string path);
 
+    float getFieldOfViewRadian();
     friend class cereal::access;
 
     template<class Archive>
     void serialize(Archive &ar) {
-        ar(CEREAL_NVP(fieldOfView_), CEREAL_NVP(fieldOfViewRadian),
-           CEREAL_NVP(screenDistance_), CEREAL_NVP(screenDimension_),
+        ar(CEREAL_NVP(fieldOfView_), CEREAL_NVP(screenDimension_),
            CEREAL_NVP(screen_), CEREAL_NVP(position_),
            CEREAL_NVP(orientation_));
     }
@@ -40,8 +40,6 @@ public:
 
 private:
     float fieldOfView_ = 0.f;
-    float fieldOfViewRadian = 0.f;
-    float screenDistance_= 0.f;
     Vector2D<unsigned> screenDimension_;
     std::vector<uint8_t> screen_;
     Vector3D<float> position_;

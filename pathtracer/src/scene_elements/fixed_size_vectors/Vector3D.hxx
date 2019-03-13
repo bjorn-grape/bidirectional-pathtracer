@@ -192,7 +192,7 @@ T Vector3D<T>::norm() const {
 
 
 template<typename T>
-void Vector3D<T>::rotateOnX(const float &angle) {
+void Vector3D<T>::rotateOnX(const T &angle) {
     auto yy = getY() * std::cos(angle) - getZ() * std::sin(angle);
     auto zz = getY() * std::sin(angle) + getZ() * std::cos(angle);
     setY(yy);
@@ -200,7 +200,7 @@ void Vector3D<T>::rotateOnX(const float &angle) {
 }
 
 template<typename T>
-void Vector3D<T>::rotateOnY(const float &angle) {
+void Vector3D<T>::rotateOnY(const T &angle) {
     auto xx = getX() * std::cos(angle) + getZ() * std::sin(angle);
     auto zz = -getX() * std::sin(angle) + getZ() * std::cos(angle);
     setX(xx);
@@ -208,7 +208,7 @@ void Vector3D<T>::rotateOnY(const float &angle) {
 }
 
 template<typename T>
-void Vector3D<T>::rotateOnZ(const float &angle) {
+void Vector3D<T>::rotateOnZ(const T &angle) {
     auto xx = getX() * std::cos(angle) - getY() * std::sin(angle);
     auto yy = getX() * std::sin(angle) + getY() * std::cos(angle);
     setX(xx);
@@ -216,7 +216,7 @@ void Vector3D<T>::rotateOnZ(const float &angle) {
 }
 
 template<typename T>
-void Vector3D<T>::rotate(Vector3D<float> vector3D) {
+void Vector3D<T>::rotate(Vector3D<T>& vector3D) {
     rotateOnX(vector3D.getX());
     rotateOnY(vector3D.getY());
     rotateOnZ(vector3D.getZ());
