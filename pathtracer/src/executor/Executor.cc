@@ -58,6 +58,7 @@ void Executor::renderScene() {
     Scene scene;
     std::cout << "Building Tree..." << std::endl;
     ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects(), scene);
+    scene.allLights = sceneSave_.getAllLights();
     std::cout << "Done." << std::endl;
     std::cout << "Rendering Image..." << std::endl;
     sceneSave_.getCamera().travelScreen(scene);

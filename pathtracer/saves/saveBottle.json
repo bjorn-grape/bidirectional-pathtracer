@@ -1,0 +1,66 @@
+{
+    "sceneSave": {
+        "allLights": {
+            "ambient_lights_": [
+                {
+                    "value0": {
+                        "color_": {
+                            "x_": 255,
+                            "y_": 0,
+                            "z_": 0
+                        },
+                        "intensity_": 3.0
+                    }
+                }
+            ],
+            "directional_lights_": [
+                {
+                    "value0": {
+                        "color_": {
+                            "x_": 0,
+                            "y_": 0,
+                            "z_": 255
+                        },
+                        "intensity_": 1.0
+                    },
+                    "direction_": {
+                        "x_": 1.0,
+                        "y_": 0.0,
+                        "z_": 0.0
+                    }
+                }
+            ],
+            "point_lights_": [],
+            "spot_lights_": []
+        },
+        "camera": {
+            "fieldOfView_": 20.0,
+            "screenDimension_": {
+                "x_": 300,
+                "y_": 600
+            },
+            "screen_": [],
+            "position_": {
+                "x_": 0.0,
+                "y_": 0.0,
+                "z_": -15.0
+            },
+            "orientation_": {
+                "x_": 0.0,
+                "y_": 0.0,
+                "z_": 1.0
+            }
+        },
+        "objects": [
+            {
+                "path_obj_": "bottle.obj",
+                "path_mtl_": "rabbit_lowcal.mtl",
+                "position_": {
+                    "x_": 0.0,
+                    "y_": 0.0,
+                    "z_": 0.0
+                }
+            }
+        ]
+    }
+}
