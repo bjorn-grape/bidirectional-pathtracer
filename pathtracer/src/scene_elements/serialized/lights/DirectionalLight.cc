@@ -5,7 +5,7 @@ const Vector3D<float> &DirectionalLight::getDirection() const {
 }
 
 DirectionalLight::DirectionalLight(const Vector3D<float> &direction_,
-                                   float intensity, const Vector3D<uint8_t> &color)
+                                   float intensity, const Vector3D<float> &color)
         : Light(intensity, color), direction_(direction_) {}
 
 void DirectionalLight::setDirection(const Vector3D<float> &direction) {

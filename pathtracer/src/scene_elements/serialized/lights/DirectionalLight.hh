@@ -10,7 +10,7 @@ class DirectionalLight : public Light {
 public:
     explicit DirectionalLight(const Vector3D<float> &direction);
 
-    DirectionalLight( const Vector3D<float> &direction_,float intensity, const Vector3D<uint8_t> &color);
+    DirectionalLight( const Vector3D<float> &direction_,float intensity, const Vector3D<float> &color);
 
     DirectionalLight() = default;
 

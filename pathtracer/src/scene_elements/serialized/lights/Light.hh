@@ -7,7 +7,7 @@
 class Light {
 public:
     Light();
-    Light(float intensity, const Vector3D<uint8_t>& color);
+    Light(float intensity, const Vector3D<float>& color);
 
 
 public:
@@ -16,9 +16,9 @@ public:
 
     void setIntensity_(float intensity_);
 
-    const Vector3D<uint8_t> &getColor_() const;
+    const Vector3D<float> &getColor_() const;
 
-    void setColor_(const Vector3D<uint8_t> &color_);
+    void setColor_(const Vector3D<float> &color_);
 
     friend class cereal::access;
 
@@ -28,7 +28,7 @@ public:
     }
 
 protected:
-    Vector3D<uint8_t> color_;
+    Vector3D<float> color_;
     float intensity_;
 };
 

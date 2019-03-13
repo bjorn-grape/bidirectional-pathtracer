@@ -7,5 +7,5 @@
 AmbientLight::AmbientLight()
         : Light() {}
 
-AmbientLight::AmbientLight(float intensity, const Vector3D<uint8_t> &color)
+AmbientLight::AmbientLight(float intensity, const Vector3D<float> &color)
         : Light(intensity, color) {}

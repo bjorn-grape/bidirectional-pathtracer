@@ -9,7 +9,7 @@ class AmbientLight : public Light {
 public:
     AmbientLight();
 
-    AmbientLight(float intensity, const Vector3D<uint8_t> &color);
+    AmbientLight(float intensity, const Vector3D<float> &color);
 
     friend class cereal::access;
 

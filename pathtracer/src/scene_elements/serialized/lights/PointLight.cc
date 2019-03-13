@@ -20,7 +20,7 @@ PointLight::PointLight(const Vector3D<float> &position, float radius)
         : position(position)
           , radius_(radius) {}
 
-PointLight::PointLight(float intensity, const Vector3D<uint8_t> &color,
+PointLight::PointLight(float intensity, const Vector3D<float> &color,
                        const Vector3D<float> &position, float radius)
         : Light(intensity, color)
           , position(position)

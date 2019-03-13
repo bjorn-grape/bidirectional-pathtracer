@@ -42,7 +42,7 @@ Camera &Camera::operator=(const Camera &camera) {
 }
 
 
-void getPixelInfos(const Ray &ray, Scene &scene, Vector3D<uint8_t> &cool) {
+void getPixelInfos(const Ray &ray, Scene &scene, Vector3D<float> &cool) {
     Vector3D<float> fff;
     std::vector<Polygon *> polygons;
     scene.kdtree.getIntersectionList(ray, polygons);
@@ -58,10 +58,13 @@ void getPixelInfos(const Ray &ray, Scene &scene, Vector3D<uint8_t> &cool) {
                 polygonDists.emplace_back((fff - ray.getPosition()).norm(), *p);
             }
     }
-    std::sort(polygonDists.begin(),polygonDists.end());
+    std::sort(polygonDists.begin(), polygonDists.end());
     if (!polygonDists.empty()) {
         auto color = polygonDists[0].getPolygon().getMaterial().ambient;
-        cool = Vector3D<uint8_t>(color[0] * 255, color[1] * 255, color[2] * 255);
+        auto ambiantColor = scene.allLights.ambient_lights_[0];
+        cool = Vector3D<float>(color[0] * ambiantColor.getColor_().getX() * 255,
+                                 color[1] * ambiantColor.getColor_().getY() * 255,
+                                 color[2] * ambiantColor.getColor_().getZ() * 255);
     } else
         cool = Colors::GREEN;
 
@@ -96,12 +99,12 @@ void Camera::travelScreen(Scene scene) {
             auto goodRot = upOrigin;
             goodRot.rotateOnY(stepx * j);
             Ray ray = Ray(position_, goodRot);
-            Vector3D<uint8_t> pixel;
+            Vector3D<float> pixel;
             getPixelInfos(ray, scene, pixel);
             size_t index = (i * screenDimension_.getX() + j) * 3;
-            screen_[index] = pixel.getX();
-            screen_[index + 1] = pixel.getY();
-            screen_[index + 2] = pixel.getZ();
+            screen_[index] = static_cast<unsigned char>(pixel.getX());
+            screen_[index + 1] = static_cast<unsigned char>(pixel.getY());
+            screen_[index + 2] = static_cast<unsigned char>(pixel.getZ());
         }
     });
 //    }
