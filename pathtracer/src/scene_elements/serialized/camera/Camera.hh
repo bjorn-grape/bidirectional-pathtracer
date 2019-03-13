@@ -18,7 +18,7 @@ public:
     Camera &operator=(const Camera &);
 
 
-    Camera(const float &screenDistance, const Vector2D<unsigned> &screenDimension,
+    Camera(const Vector2D<unsigned> &screenDimension,
            const Vector3D<float> &position, const Vector3D<float> &orientation,
            const float &fovDegree);
 
@@ -27,6 +27,7 @@ public:
     void dumpImageToPpm(std::string path);
 
     float getFieldOfViewRadian();
+
     friend class cereal::access;
 
     template<class Archive>

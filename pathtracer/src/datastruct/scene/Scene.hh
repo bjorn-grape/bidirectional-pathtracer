@@ -4,5 +4,7 @@
 
 struct Scene {
     KDTree kdtree;
-    AllMaterialContainer allMaterialContainer;
+    void AddMaterials(const std::vector<Material>& materials);
+private:
+    AllMaterialContainer allMaterialContainer; // simple storage shouldn't be changed
 };

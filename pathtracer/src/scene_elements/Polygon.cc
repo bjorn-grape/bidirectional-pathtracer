@@ -18,9 +18,6 @@ const std::vector<Vector2D<float>> &Polygon::getTexcoords() const {
     return texcoords_;
 }
 
-const std::vector<Vector3D<uint8_t>> &Polygon::getColors() const {
-    return colors_;
-}
 
 bool Polygon::isValid() {
     return vertices_.size() > 2;
@@ -35,7 +32,6 @@ void Polygon::add(const Vector3D<float> &vextex, const Vector3D<float> &normal,
     vertices_.emplace_back(vextex);
     normals_.emplace_back(normal);
     texcoords_.emplace_back(texcoord);
-    colors_.emplace_back(color);
     mean_ = meanVertices();
     computeMinMax();
 }
@@ -137,4 +133,12 @@ float Polygon::getMeanOfInterest() const {
             return mean_.getZ();
     }
     throw std::invalid_argument("comparisonFactor not set in polygon");
+}
+
+const Material &Polygon::getMaterial() const {
+    return material_;
+}
+
+void Polygon::setMaterial(const Material &material) {
+    material_ = material;
 }

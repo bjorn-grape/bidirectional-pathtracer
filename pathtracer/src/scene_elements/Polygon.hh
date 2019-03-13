@@ -6,6 +6,7 @@
 #include "fixed_size_vectors/Vector3D.hh"
 #include "fixed_size_vectors/Vector2D.hh"
 #include "../datastruct/SplitAxis.hh"
+#include "../datastruct/materials/Material.hh"
 
 class Polygon {
 public:
@@ -22,7 +23,6 @@ public:
 
     const std::vector<Vector2D<float>> &getTexcoords() const;
 
-    const std::vector<Vector3D<uint8_t>> &getColors() const;
 
     const Vector3D<float> meanVertices() const;
 
@@ -46,6 +46,9 @@ public:
 
     float getMeanOfInterest() const;
 
+    const Material &getMaterial() const;
+
+    void setMaterial(const Material &material);
 
     static void setComparisonfactor(compFactor comparisonfactor);
 
@@ -53,15 +56,13 @@ public:
 
 private:
     void computeMinMax();
-
     std::vector<Vector3D<float>> vertices_;
     std::vector<Vector3D<float>> normals_;
     std::vector<Vector2D<float>> texcoords_;
-    std::vector<Vector3D<uint8_t>> colors_;
     Vector3D<float> mean_;
     Vector3D<float> min_;
     Vector3D<float> max_;
-
+    Material material_;
 };
 
 #include "Polygon.hxx"

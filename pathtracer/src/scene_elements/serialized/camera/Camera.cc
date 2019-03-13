@@ -8,7 +8,7 @@
 #include "tbb/tbb.h"
 #include "../../../color/Colors.hh"
 
-Camera::Camera(const float &screenDistance, const Vector2D<unsigned> &screenDimension,
+Camera::Camera(const Vector2D<unsigned> &screenDimension,
                const Vector3D<float> &position, const Vector3D<float> &orientation,
                const float &fovDegree)
         : fieldOfView_(fovDegree)
@@ -41,26 +41,29 @@ Camera &Camera::operator=(const Camera &camera) {
 }
 
 
-const Vector3D<uint8_t> &getPixelInfos(const Ray &ray, Scene &scene) {
+void getPixelInfos(const Ray &ray, Scene &scene, Vector3D<uint8_t>& cool) {
     Vector3D<float> fff;
     std::vector<Polygon *> polygons;
     scene.kdtree.getIntersectionList(ray, polygons);
     bool doInter = false;
+    const Polygon *pOfInterest;
     for (const Polygon *p : polygons) {
 
         if (p->isTriangle())
             if (ray.intersectOneTriangle(const_cast<Vector3D<float> &>(p->getVertices()[0]),
-                                       const_cast<Vector3D<float> &>(p->getVertices()[1]),
-                                       const_cast<Vector3D<float> &>(p->getVertices()[2]),
-                                       fff)) {
+                                         const_cast<Vector3D<float> &>(p->getVertices()[1]),
+                                         const_cast<Vector3D<float> &>(p->getVertices()[2]),
+                                         fff)) {
                 doInter = true;
+                pOfInterest = p;
                 break;
             }
     }
-    if(doInter)
-        return Colors::RED;
-    else
-        return Colors::BLUE;
+    if (doInter) {
+        auto color = pOfInterest->getMaterial().ambient;
+        cool =  Vector3D<uint8_t>(color[0] * 255, color[1] * 255, color[2] * 255);
+    } else
+        cool = Colors::GREEN;
 
 }
 
@@ -90,7 +93,8 @@ void Camera::travelScreen(Scene scene) {
             auto goodRot = upOrigin;
             goodRot.rotateOnY(stepx * j);
             Ray ray = Ray(position_, goodRot);
-            Vector3D<uint8_t> pixel = getPixelInfos(ray, scene);
+            Vector3D<uint8_t> pixel;
+            getPixelInfos(ray, scene, pixel);
             size_t index = (i * screenDimension_.getX() + j) * 3;
             screen_[index] = pixel.getX();
             screen_[index + 1] = pixel.getY();

@@ -4,6 +4,7 @@
 #include <iostream>
 
 #define TINYOBJLOADER_IMPLEMENTATION
+
 #include <tiny_obj_loader.h>
 
 
@@ -14,7 +15,7 @@ const std::string relative_path = "../objs/";
 #endif
 
 void ObjectFileParser::fromPathToObjStruct(std::string path, Vector3D<float> position,
-                                           std::vector<Polygon>& polygonVector, std::vector<Material>& mats) {
+                                           std::vector<Polygon> &polygonVector, std::vector<Material> &mats) {
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
@@ -93,9 +94,12 @@ void ObjectFileParser::fromPathToObjStruct(std::string path, Vector3D<float> pos
 
             }
             index_offset += fv;
+            auto materialId = shapes[s].mesh.material_ids[f];
+
+            p.setMaterial(mats.at(static_cast<unsigned long>(materialId)));
             polygonVector.emplace_back(p);
             // per-face material
-            shapes[s].mesh.material_ids[f];
+
         }
     }
 }
@@ -113,6 +117,6 @@ void ObjectFileParser::fromAllObjsToObjStruct(const std::vector<ObjectPaths> &ob
         allMaterials.insert(allMaterials.end(), tmp_materials.begin(), tmp_materials.end());
     }
     scene.kdtree = KDTree(allPoly);
-    scene.allMaterialContainer.addMaterials(allMaterials);
+    scene.AddMaterials(allMaterials);
 }
 
