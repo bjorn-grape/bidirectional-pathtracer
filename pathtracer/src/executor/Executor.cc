@@ -56,8 +56,12 @@ void Executor::renderScene() {
         return;
     }
     Scene scene;
+    std::cout << "Building Tree..." << std::endl;
     ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects(), scene);
+    std::cout << "Done." << std::endl;
+    std::cout << "Rendering Image..." << std::endl;
     sceneSave_.getCamera().computeImageRaw(scene.kdtree);
+    std::cout << "Done." << std::endl;
     sceneSave_.getCamera().dumpImageToPpm(save_path);
 }
 

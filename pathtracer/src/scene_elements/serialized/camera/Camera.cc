@@ -58,8 +58,9 @@ void Camera::computeImageRaw(KDTree tree) {
         stepy = fieldOfViewRadian / screenDimension_.getY();
     }
 
-    auto screenCenterPoint = position_ + orientation_ * screenDistance_;
-    screenCenterPoint -= (fieldOfViewRadian / 2.f);
+    auto screenCenterPoint = orientation_ * screenDistance_;
+    Vector3D<float> topleft(-fieldOfViewRadian / 2.f, - fieldOfViewRadian / 2.f, 0.f);
+    screenCenterPoint += topleft;
     screen_.reserve(screenDimension_.getX() * screenDimension_.getY() * 3);
 
     tbb::parallel_for(size_t(0), static_cast<size_t>(screenDimension_.getY()), [&](size_t i) {
@@ -67,7 +68,7 @@ void Camera::computeImageRaw(KDTree tree) {
 
             bool doInter = false;
             Vector3D<uint8_t> color = Colors::CYAN;
-            auto movingDir = screenCenterPoint + Vector3D(j * stepy, i * stepx, 0.f) - position_;
+            auto movingDir = screenCenterPoint + Vector3D(j * stepy, i * stepx, 0.f);
             Ray r = Ray(position_, movingDir);
             Vector3D<float> fff;
 
@@ -88,11 +89,11 @@ void Camera::computeImageRaw(KDTree tree) {
                     }
             }
             size_t index = (i * screenDimension_.getX() + j) * 3;
-            if(doInter){
+            if (doInter) {
                 screen_[index] = static_cast<unsigned char>(color.getX());
                 screen_[index + 1] = static_cast<unsigned char>(color.getY());
                 screen_[index + 2] = static_cast<unsigned char>(color.getZ());
-            } else{
+            } else {
                 screen_[index] = static_cast<unsigned char>(0);
                 screen_[index + 1] = static_cast<unsigned char>(0);
                 screen_[index + 2] = static_cast<unsigned char>(0);
