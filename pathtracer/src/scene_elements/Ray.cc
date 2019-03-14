@@ -97,7 +97,7 @@ std::vector<Vector3D<float>> Ray::intersectAllObjects(const std::vector<Polygon>
 }
 
 
-Ray reflection(const Vector3D<float> &position, const Polygon &polygon)
+Ray Ray::reflection(const Vector3D<float> &position, const Polygon &polygon)
 {
     auto normals = polygon.getNormals();
     auto d1 = position.distance(normals[0]);
@@ -106,7 +106,9 @@ Ray reflection(const Vector3D<float> &position, const Polygon &polygon)
     auto tot = d1 + d2 + d3;
     auto normal = d1 / tot * normals[0] + d2 / tot * normals[1] + d3 / tot * normals[2];
 
-    auto c = -1 * this->dotproduct(normal);
-    auto reflectedRay = this + (2 * N * c);
+    auto c = -1 * getOrientation().dotproduct(normal);
+    auto reflectedDirection = getOrientation() + (normal * c) * 2;
+
+    auto reflectedRay = Ray(position, reflectedDirection);
     return reflectedRay;
 }
