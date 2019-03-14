@@ -42,8 +42,7 @@ public:
     Vector3D<T> operator/(const T &elm) const;
     void operator/=(const Vector3D<T> &vector3D);
     void operator/=(const T &elm);
-    Vector3D<T> square();
-    T distance(const Vector3D<T> &point);
+    T distance(const Vector3D<T> &point) const;
 
     T dotproduct(const Vector3D &vector3D) const;
 

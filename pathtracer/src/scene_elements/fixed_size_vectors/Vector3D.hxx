@@ -246,19 +246,11 @@ std::ostream &operator<<(std::ostream &os, const Vector3D<T> &d) {
     return os;
 }
 
-template<typename T>
-Vector3D<T> Vector3D<T>::square()
-{
-    return Vector3D(getX() * getX(),
-                    getY() * getY(),
-                    getZ() * getZ());
-}
-
 
 template<typename T>
-T Vector3D<T>::distance(const Vector3D<T> &point)
+T Vector3D<T>::distance(const Vector3D<T> &point) const
 {
-    return sqrt((getX() - point.getX()).square()
-	      + (getY() - point.getY()).square()
-	      + (getZ() - point.getZ()).square());
+    return sqrt((getX() - point.getX()) * (getX() - point.getX())
+	      + (getY() - point.getY()) * (getX() - point.getX())
+	      + (getZ() - point.getZ()) * (getX() - point.getX()));
 }
