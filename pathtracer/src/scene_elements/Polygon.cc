@@ -142,3 +142,17 @@ const Material &Polygon::getMaterial() const {
 void Polygon::setMaterial(const Material &material) {
     material_ = material;
 }
+
+Vector3D<float> Polygon::getNormalAt(Vector3D<float> pos) {
+    float dist1 = (normals_[0] - pos).norm();
+    float dist2 = (normals_[1] - pos).norm();
+    float dist3 = (normals_[2] - pos).norm();
+    float sumdist = dist1 + dist2 + dist3;
+    dist1 /= sumdist;
+    dist2 /= sumdist;
+    dist3 /= sumdist;
+    dist1 = 1 - dist1;
+    dist2 = 1 - dist2;
+    dist3 = 1 - dist3;
+    return normals_[0] * dist1 + normals_[1] * dist2 + normals_[2] * dist3;
+}

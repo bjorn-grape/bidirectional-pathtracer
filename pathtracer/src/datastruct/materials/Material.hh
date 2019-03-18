@@ -3,12 +3,12 @@
 
 struct Material {
     std::string name;
-    float ambient[3];
-    float diffuse[3];
-    float specular[3];
+    float ambient[3]; // Ka
+    float diffuse[3]; // Kd
+    float specular[3]; // Ks
     float transmittance[3];
     float emission[3];
-    float shininess;
+    float shininess; // alpha
     float ior;       // index of refraction
     float dissolve;  // 1 == opaque; 0 == fully transparent
     std::string ambient_texname;             // map_Ka

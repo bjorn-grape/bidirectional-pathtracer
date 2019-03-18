@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include <tiff.h>
 #include "Camera.hh"
 #include "tbb/tbb.h"
 #include "../../../color/Colors.hh"
@@ -43,30 +42,41 @@ Camera &Camera::operator=(const Camera &camera) {
 
 
 void getPixelInfos(const Ray &ray, Scene &scene, Vector3D<float> &cool) {
-    Vector3D<float> fff;
-    std::vector<Polygon *> polygons;
-    scene.kdtree.getIntersectionList(ray, polygons);
-    std::vector<PolygonDist> polygonDists;
-    for (const Polygon *p : polygons) {
+    Polygon intersect_poly;
+    bool hit = scene.kdtree.getIntersectionPoly(ray, intersect_poly);
 
-        if (p->isTriangle())
-            if (ray.intersectOneTriangle(const_cast<Vector3D<float> &>(p->getVertices()[0]),
-                                         const_cast<Vector3D<float> &>(p->getVertices()[1]),
-                                         const_cast<Vector3D<float> &>(p->getVertices()[2]),
-                                         fff)) {
 
-                polygonDists.emplace_back((fff - ray.getPosition()).norm(), *p);
-            }
-    }
-    std::sort(polygonDists.begin(), polygonDists.end());
-    if (!polygonDists.empty()) {
-        auto color = polygonDists[0].getPolygon().getMaterial().ambient;
-        auto ambiantColor = scene.allLights.ambient_lights_[0];
-        cool = Vector3D<float>(color[0] * ambiantColor.getColor_().getX() * 255,
-                                 color[1] * ambiantColor.getColor_().getY() * 255,
-                                 color[2] * ambiantColor.getColor_().getZ() * 255);
+    if (hit) {
+        Vector3D<float> intersectionPoint;
+        ray.intersectOneTriangle(intersect_poly, intersectionPoint);
+        Vector3D<float> N;//intersect_poly.getNormalAt(intersectionPoint);
+        for (int i = 0; i < 3; ++i) {
+            N += intersect_poly.getNormals()[i];
+        }
+        N /= 3;
+        Vector3D<float> Ks = Vector3D(intersect_poly.getMaterial().specular);
+        Vector3D<float> Kd = Vector3D(intersect_poly.getMaterial().diffuse);
+        Vector3D<float> Ka = Vector3D(intersect_poly.getMaterial().ambient);
+        float Alpha = 1;//intersect_poly.getMaterial().shininess;
+        Vector3D<float> V = ray.getDirection() * -1;
+
+        Vector3D<float> Ia = scene.allLights.ambient_lights_[0].getColor_();
+
+
+        Vector3D<float> Ip = Vector3D<float>(0.f, 0.f, 0.f);// = Ka * Ia;
+        for (const auto &light: scene.allLights.directional_lights_) {
+            Vector3D<float> Lm = light.getDirection() * -1;
+            Vector3D<float> Rm = 2.f * (Lm.dotproduct(N)) * N - Lm;
+            Vector3D<float> Id = light.getColor_();
+            Ip += Kd * (Lm.dotproduct(N)) * Id + (Ks * Rm.dotproduct(V)).power(Alpha) * 1.f;
+        }
+
+        float R = std::max(Ip.getX(), 1.f);
+        float G = std::max(Ip.getY(), 1.f);
+        float B = std::max(Ip.getZ(), 1.f);
+        cool = Vector3D<float>(R, G, B) * 255;
     } else
-        cool = Colors::GREEN;
+        cool = Colors::RED * 255;
 
 }
 

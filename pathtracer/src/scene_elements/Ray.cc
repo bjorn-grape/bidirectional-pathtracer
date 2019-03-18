@@ -110,3 +110,7 @@ int *Ray::getSign() {
     return sign_;
 }
 
+bool Ray::intersectOneTriangle(const Polygon &poly, Vector3D<float> &intersection) const {
+    intersectOneTriangle(poly.getVertices()[0], poly.getVertices()[1], poly.getVertices()[2], intersection);
+}
+

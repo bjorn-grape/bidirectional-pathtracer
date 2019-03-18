@@ -99,13 +99,6 @@ void KDNode::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultL
 //    auto start = std::chrono::system_clock::now();
 
     bool res = box_->FasterDoIntersect(ray);
-
-//    auto end = std::chrono::system_clock::now();
-//    std::chrono::duration<double> elapsed_seconds = end-start;
-//    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-//    Stats::AABBvsRay.addTime(elapsed_seconds.count());
-
-
     if (res) {
         for (Polygon &poly: *polygons_) {
             resultList.emplace_back(&poly);
@@ -114,5 +107,31 @@ void KDNode::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultL
             left_->getIntersectionList(ray, resultList);
         if (right_ != nullptr)
             right_->getIntersectionList(ray, resultList);
+    }
+
+}
+
+void KDNode::getIntersectionPolygon(const Ray &ray, Polygon &result, float &minDistance) {
+    bool res = box_->FasterDoIntersect(ray);
+    if (res) {
+        for (Polygon &poly: *polygons_) {
+            Vector3D<float> intersectionPoint;
+            if(ray.intersectOneTriangle(poly.getVertices()[0],
+                                        poly.getVertices()[1],
+                                        poly.getVertices()[2],
+                                        intersectionPoint))
+            {
+                float tmpdist = (ray.getPosition() - intersectionPoint).norm();
+                if(tmpdist < minDistance)
+                {
+                    minDistance = tmpdist;
+                    result = poly;
+                }
+            }
+        }
+        if (left_ != nullptr)
+            left_->getIntersectionPolygon(ray, result, minDistance);
+        if (right_ != nullptr)
+            right_->getIntersectionPolygon(ray, result, minDistance);
     }
 }

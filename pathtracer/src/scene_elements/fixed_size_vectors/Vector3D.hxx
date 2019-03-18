@@ -216,7 +216,7 @@ void Vector3D<T>::rotateOnZ(const T &angle) {
 }
 
 template<typename T>
-void Vector3D<T>::rotate(Vector3D<T>& vector3D) {
+void Vector3D<T>::rotate(Vector3D<T> &vector3D) {
     rotateOnX(vector3D.getX());
     rotateOnY(vector3D.getY());
     rotateOnZ(vector3D.getZ());
@@ -242,6 +242,20 @@ void Vector3D<T>::replaceMyContentBy(const Vector3D &vector3D) {
     x_ = vector3D.x_;
     y_ = vector3D.y_;
     z_ = vector3D.z_;
+}
+
+template<typename T>
+Vector3D<T>::Vector3D(const T *array) {
+    x_ = array[0];
+    y_ = array[1];
+    z_ = array[2];
+}
+
+template<typename T>
+Vector3D<float> Vector3D<T>::power(const float& val) const {
+    return Vector3D<float>(std::pow(x_, val),
+                           std::pow(y_, val),
+                           std::pow(z_, val));
 }
 
 

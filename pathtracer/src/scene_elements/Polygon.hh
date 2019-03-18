@@ -50,9 +50,11 @@ public:
 
     void setMaterial(const Material &material);
 
+    Vector3D<float> getNormalAt(Vector3D<float> pos);
+
     static void setComparisonfactor(compFactor comparisonfactor);
 
-    static compFactor comparisonFactor;
+    static compFactor comparisonFactor; //should be changed but not sure how
 
 private:
     void computeMinMax();

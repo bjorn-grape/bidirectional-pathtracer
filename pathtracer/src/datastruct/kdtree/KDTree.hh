@@ -12,6 +12,7 @@ public:
     explicit KDTree(std::vector<Polygon> &polygons);
 
     void getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList);
+    bool getIntersectionPoly(const Ray &ray, Polygon &result);
 
     void printPrefix();
 

@@ -16,6 +16,7 @@ public:
 
     bool intersectOneTriangle(const Vector3D<float>& v0, const Vector3D<float>& v1,
                      const Vector3D<float>& v2, Vector3D<float>& intersection) const;
+    bool intersectOneTriangle(const Polygon& poly, Vector3D<float>& intersection) const;
 
     bool intersectOnePolygon(std::vector<Vector3D<float>> vertices, Vector3D<float>& intersection) const;
 

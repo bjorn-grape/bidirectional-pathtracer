@@ -13,6 +13,7 @@ public:
     KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box, const unsigned depth);
     void printInfix(unsigned depth, bool isleft);
     void getIntersectionList(const Ray& ray, std::vector<Polygon*>& resultList);
+    void getIntersectionPolygon(const Ray& ray, Polygon& result,float &minDistance);
 
 private:
     float splitValue_ = 0.f;
