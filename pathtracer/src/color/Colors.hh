@@ -9,6 +9,7 @@ struct Colors {
     static const Vector3D<float> YELLOW;
     static const Vector3D<float> CYAN;
     static const Vector3D<float> MAGENTA;
+    static const Vector3D<float> DARKGREY;
 };
 
 

@@ -48,12 +48,12 @@ void getPixelInfos(const Ray &ray, Scene &scene, Vector3D<float> &cool) {
 
     if (hit) {
         Vector3D<float> intersectionPoint;
-        ray.intersectOneTriangle(intersect_poly, intersectionPoint);
-        Vector3D<float> N;//intersect_poly.getNormalAt(intersectionPoint);
-        for (int i = 0; i < 3; ++i) {
-            N += intersect_poly.getNormals()[i];
-        }
-        N /= 3;
+        ray.intersect(intersect_poly, intersectionPoint);
+        Vector3D<float> N = intersect_poly.getNormalAt(intersectionPoint);
+//        for (int i = 0; i < 3; ++i) {
+//            N += intersect_poly.getNormals()[i];
+//        }
+//        N /= 3;
         Vector3D<float> Ks = Vector3D(intersect_poly.getMaterial().specular);
         Vector3D<float> Kd = Vector3D(intersect_poly.getMaterial().diffuse);
         Vector3D<float> Ka = Vector3D(intersect_poly.getMaterial().ambient);
@@ -62,21 +62,21 @@ void getPixelInfos(const Ray &ray, Scene &scene, Vector3D<float> &cool) {
 
         Vector3D<float> Ia = scene.allLights.ambient_lights_[0].getColor_();
 
-
-        Vector3D<float> Ip = Vector3D<float>(0.f, 0.f, 0.f);// = Ka * Ia;
+        Vector3D<float> Ip = Ka * Ia;
+//
         for (const auto &light: scene.allLights.directional_lights_) {
             Vector3D<float> Lm = light.getDirection() * -1;
             Vector3D<float> Rm = 2.f * (Lm.dotproduct(N)) * N - Lm;
             Vector3D<float> Id = light.getColor_();
-            Ip += Kd * (Lm.dotproduct(N)) * Id + (Ks * Rm.dotproduct(V)).power(Alpha) * 1.f;
+            Ip += Kd * (Lm.dotproduct(N)) * Id /*+ (Ks * Rm.dotproduct(V)).power(Alpha) * 0.1f*/;
         }
 
-        float R = std::max(Ip.getX(), 1.f);
-        float G = std::max(Ip.getY(), 1.f);
-        float B = std::max(Ip.getZ(), 1.f);
+        float R = std::max(0.f, std::min(Ip.getX(), 1.f));
+        float G = std::max(0.f, std::min(Ip.getY(), 1.f));
+        float B = std::max(0.f, std::min(Ip.getZ(), 1.f));
         cool = Vector3D<float>(R, G, B) * 255;
     } else
-        cool = Colors::RED * 255;
+        cool = Colors::DARKGREY * 255;
 
 }
 
