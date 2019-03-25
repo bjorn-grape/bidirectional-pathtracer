@@ -170,3 +170,16 @@ Vector3D<float> Polygon::getNormalAt(Vector3D<float> pos) {
     }
     return res;
 }
+
+bool Polygon::operator==(const Polygon &rhs) const {
+    return vertices_ == rhs.vertices_ &&
+           normals_ == rhs.normals_ &&
+           texcoords_ == rhs.texcoords_ &&
+           mean_ == rhs.mean_ &&
+           min_ == rhs.min_ &&
+           max_ == rhs.max_;
+}
+
+bool Polygon::operator!=(const Polygon &rhs) const {
+    return !(rhs == *this);
+}

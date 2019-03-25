@@ -55,6 +55,9 @@ public:
     static void setComparisonfactor(compFactor comparisonfactor);
 
     static compFactor comparisonFactor; //should be changed but not sure how
+    bool operator==(const Polygon &rhs) const;
+
+    bool operator!=(const Polygon &rhs) const;
 
 private:
     void computeMinMax();

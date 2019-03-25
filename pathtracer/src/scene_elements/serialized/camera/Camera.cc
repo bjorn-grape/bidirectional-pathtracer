@@ -57,7 +57,7 @@ void getPixelInfos(const Ray &ray, Scene &scene, Vector3D<float> &cool) {
         Vector3D<float> Ks = Vector3D(intersect_poly.getMaterial().specular);
         Vector3D<float> Kd = Vector3D(intersect_poly.getMaterial().diffuse);
         Vector3D<float> Ka = Vector3D(intersect_poly.getMaterial().ambient);
-        float Alpha = 1;//intersect_poly.getMaterial().shininess;
+        float Alpha = intersect_poly.getMaterial().shininess;
         Vector3D<float> V = ray.getDirection() * -1;
 
         Vector3D<float> Ia = scene.allLights.ambient_lights_[0].getColor_();
@@ -65,10 +65,17 @@ void getPixelInfos(const Ray &ray, Scene &scene, Vector3D<float> &cool) {
         Vector3D<float> Ip = Ka * Ia;
 //
         for (const auto &light: scene.allLights.directional_lights_) {
+//            Ray lir = Ray(intersectionPoint,light.getDirection());
+//            Polygon firstIntersectionPoly;
+//            scene.kdtree.getIntersectionPoly(lir, firstIntersectionPoly);
+//            if(firstIntersectionPoly != intersect_poly){
+//                continue;
+//            }
+
             Vector3D<float> Lm = light.getDirection() * -1;
             Vector3D<float> Rm = 2.f * (Lm.dotproduct(N)) * N - Lm;
             Vector3D<float> Id = light.getColor_();
-            Ip += Kd * (Lm.dotproduct(N)) * Id /*+ (Ks * Rm.dotproduct(V)).power(Alpha) * 0.1f*/;
+            Ip += Kd * (Lm.dotproduct(N)) * Id + (Ks * Rm.dotproduct(V)).power(2.f) * 0.05f;
         }
 
         float R = std::max(0.f, std::min(Ip.getX(), 1.f));
