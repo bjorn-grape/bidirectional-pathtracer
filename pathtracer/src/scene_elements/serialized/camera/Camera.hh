@@ -13,6 +13,11 @@
 class Camera {
 public:
 
+    enum screenType{
+        perspective,
+        orthographic
+    };
+
     Camera() = default;
 
     Camera &operator=(const Camera &);
@@ -22,11 +27,7 @@ public:
            const Vector3D<float> &position, const Vector3D<float> &orientation,
            const float &fovDegree);
 
-    void travelScreen(Scene scene);
-
-    void dumpImageToPpm(std::string path);
-
-    float getFieldOfViewRadian();
+    float getFieldOfViewRadian() const;
 
     friend class cereal::access;
 
@@ -37,6 +38,13 @@ public:
            CEREAL_NVP(orientation_));
     }
 
+    screenType getScreenType() const;
+
+    void initPerspective(float& stepx,float& stepy,Vector3D<float>& perpective) const;
+
+    size_t getScreenDimensionX() const;
+    size_t getScreenDimensionY() const;
+    Vector3D<float> getPosition() const;
 
 private:
     float fieldOfView_ = 0.f;
@@ -44,6 +52,8 @@ private:
     std::vector<uint8_t> screen_;
     Vector3D<float> position_;
     Vector3D<float> orientation_;
+    // orthographic might be added later
+    const screenType screen_type_ = perspective;
 };
 
 

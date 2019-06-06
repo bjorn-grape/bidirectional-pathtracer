@@ -2,6 +2,7 @@
 #include <cereal/types/vector.hpp>
 #include <cereal/types/string.hpp>
 #include <chrono>
+#include <PathtraceImageFactory.hh>
 #include "Executor.hh"
 #include "Vector3D.hh"
 #include "Polygon.hh"
@@ -13,6 +14,7 @@
 #include "Stats.hh"
 #include "AllMaterialContainer.hh"
 #include "Scene.hh"
+#include "PhongImageFactory.hh"
 
 void Executor::load(const std::string &path) {
     SaveManager::Load(path, sceneSave_);
@@ -36,7 +38,7 @@ Executor::Executor() {
     map_actions[jobType::none] = [](Executor &executor) {};
     map_actions[jobType::buildscene] = [](Executor &executor) { executor.sceneSave_ = SceneFactory::BuildScene(); };
     map_actions[jobType::raytrace] = [](Executor &executor) { executor.renderSceneRaytracing(); };
-    map_actions[jobType::pathtrace] = [](Executor &executor) { executor.renderSceneRaytracing(); };
+    map_actions[jobType::pathtrace] = [](Executor &executor) { executor.renderScenePathtracing(); };
     map_actions[jobType::buildTreeAndPrint] = [](Executor &executor) { executor.createTreeAndPrint(); };
 }
 
@@ -57,14 +59,15 @@ void Executor::renderSceneRaytracing() {
         return;
     }
     Scene scene;
+    PhongImageFactory Pif= PhongImageFactory(sceneSave_.getCamera(),scene);
     std::cout << "Building Tree..." << std::endl;
     ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects(), scene);
     scene.allLights = sceneSave_.getAllLights();
     std::cout << "Done." << std::endl;
     std::cout << "Rendering Image..." << std::endl;
-    sceneSave_.getCamera().travelScreen(scene);
+    Pif.compute();
     std::cout << "Done." << std::endl;
-    sceneSave_.getCamera().dumpImageToPpm(save_path);
+    Pif.dumpToPpm(save_path);
 }
 
 void Executor::renderScenePathtracing() {
@@ -73,14 +76,15 @@ void Executor::renderScenePathtracing() {
         return;
     }
     Scene scene;
+    PathtraceImageFactory Ptif = PathtraceImageFactory(sceneSave_.getCamera(),scene);
     std::cout << "Building Tree..." << std::endl;
     ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects(), scene);
     scene.allLights = sceneSave_.getAllLights();
     std::cout << "Done." << std::endl;
     std::cout << "Rendering Image..." << std::endl;
-    sceneSave_.getCamera().travelScreen(scene);
+    Ptif.compute();
     std::cout << "Done." << std::endl;
-    sceneSave_.getCamera().dumpImageToPpm(save_path);
+    Ptif.dumpToPpm(save_path);
 }
 
 

@@ -1,5 +1,5 @@
 #include "SceneFactory.hh"
-#include "../color/Colors.hh"
+#include "Colors.hh"
 
 SceneSave SceneFactory::BuildScene() {
     SceneSave save;

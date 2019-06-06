@@ -26,7 +26,7 @@ void KDTree::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultL
     root_->getIntersectionList(ray, resultList);
 }
 
-bool KDTree::getIntersectionPoly(const Ray &ray, Polygon &result) {
+bool KDTree::getIntersectionPoly(const Ray &ray, Polygon &result) const  {
     float dist = INFINITY;
     root_->getIntersectionPolygon(ray, result, dist);
     return dist != INFINITY;

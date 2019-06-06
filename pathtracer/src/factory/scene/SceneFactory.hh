@@ -1,7 +1,10 @@
 #pragma once
-#include "../scene_elements/serialized/SceneSave.hh"
+
+#include "SceneSave.hh"
 
 class SceneFactory {
+    SceneFactory() = delete;
+
 public:
     static SceneSave BuildScene();
 };
