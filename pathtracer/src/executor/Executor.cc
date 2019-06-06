@@ -35,7 +35,7 @@ void Executor::run() {
 Executor::Executor() {
     map_actions[jobType::none] = [](Executor &executor) {};
     map_actions[jobType::buildscene] = [](Executor &executor) { executor.sceneSave_ = SceneFactory::BuildScene(); };
-    map_actions[jobType::executeScene] = [](Executor &executor) { executor.renderScene(); };
+    map_actions[jobType::raytrace] = [](Executor &executor) { executor.renderScene(); };
     map_actions[jobType::buildTreeAndPrint] = [](Executor &executor) { executor.createTreeAndPrint(); };
 }
 

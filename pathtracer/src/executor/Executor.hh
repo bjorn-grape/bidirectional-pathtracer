@@ -12,7 +12,7 @@ public:
     enum jobType {
         none,
         buildscene,
-        executeScene,
+        raytrace,
         buildTreeAndPrint
     };
 
