@@ -3,10 +3,10 @@
 
 #include <vector>
 #include <ostream>
-#include "fixed_size_vectors/Vector3D.hh"
-#include "fixed_size_vectors/Vector2D.hh"
-#include "../datastruct/SplitAxis.hh"
-#include "../datastruct/materials/Material.hh"
+#include "Vector3D.hh"
+#include "Vector2D.hh"
+#include "SplitAxis.hh"
+#include "Material.hh"
 
 class Polygon {
 public:

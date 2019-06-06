@@ -3,7 +3,7 @@
 #include <string>
 #include <cereal/access.hpp>
 #include <cereal/cereal.hpp>
-#include "../../fixed_size_vectors/Vector3D.hh"
+#include "Vector3D.hh"
 
 
 class ObjectPaths {

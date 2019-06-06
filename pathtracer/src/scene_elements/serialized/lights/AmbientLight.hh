@@ -2,7 +2,7 @@
 #include <cereal/access.hpp>
 #include <cereal/cereal.hpp>
 #include <stdint-gcc.h>
-#include "../../fixed_size_vectors/Vector3D.hh"
+#include "Vector3D.hh"
 #include "Light.hh"
 
 class AmbientLight : public Light {

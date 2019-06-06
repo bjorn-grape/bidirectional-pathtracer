@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../scene_elements/serialized/SceneSave.hh"
+#include "SceneSave.hh"
 
 class Executor {
 
@@ -13,6 +13,7 @@ public:
         none,
         buildscene,
         raytrace,
+        pathtrace,
         buildTreeAndPrint
     };
 
@@ -31,7 +32,8 @@ public:
 
 private:
     void createTreeAndPrint();
-    void renderScene();
+    void renderSceneRaytracing();
+    void renderScenePathtracing();
     std::string save_path = "default.ppm";
     SceneSave sceneSave_;
     bool loaded_ = false;

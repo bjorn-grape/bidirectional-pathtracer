@@ -2,8 +2,8 @@
 
 #include <memory>
 #include "KDNode.hh"
-#include "../../scene_elements/Polygon.hh"
-#include "../../scene_elements/Ray.hh"
+#include "../polygon/Polygon.hh"
+#include "../ray/Ray.hh"
 
 class KDTree {
 public:

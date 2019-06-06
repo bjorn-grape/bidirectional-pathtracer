@@ -1,10 +1,9 @@
 #pragma once
 
-#include "../datastruct/SplitAxis.hh"
-#include "../scene_elements/fixed_size_vectors/Vector3D.hh"
-#include "../scene_elements/Polygon.hh"
-//#include "../datastruct/box/BoundingBox.hh"
-#include "../scene_elements/Ray.hh"
+#include "SplitAxis.hh"
+#include "Vector3D.hh"
+#include "Polygon.hh"
+#include "Ray.hh"
 
 template<typename T>
 class Tools {

@@ -1,5 +1,5 @@
 #include "ObjectFileParser.hh"
-#include "../scene_elements/Polygon.hh"
+#include "../datastruct/polygon/Polygon.hh"
 #include "../datastruct/scene/Scene.hh"
 #include <iostream>
 

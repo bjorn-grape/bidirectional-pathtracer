@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../scene_elements/fixed_size_vectors/Vector3D.hh"
+#include "Vector3D.hh"
 
 struct Colors {
     static const Vector3D<float> RED;

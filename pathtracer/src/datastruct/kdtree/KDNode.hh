@@ -2,18 +2,21 @@
 
 #include <memory>
 #include <ostream>
-#include "../../scene_elements/fixed_size_vectors/Vector3D.hh"
-#include "../../scene_elements/Polygon.hh"
-#include "../box/BoundingBox.hh"
-#include "../SplitAxis.hh"
-#include "../../scene_elements/Ray.hh"
+#include "Vector3D.hh"
+#include "Polygon.hh"
+#include "BoundingBox.hh"
+#include "SplitAxis.hh"
+#include "Ray.hh"
 
 class KDNode {
 public:
     KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box, const unsigned depth);
+
     void printInfix(unsigned depth, bool isleft);
-    void getIntersectionList(const Ray& ray, std::vector<Polygon*>& resultList);
-    void getIntersectionPolygon(const Ray& ray, Polygon& result,float &minDistance);
+
+    void getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList);
+
+    void getIntersectionPolygon(const Ray &ray, Polygon &result, float &minDistance);
 
 private:
     float splitValue_ = 0.f;

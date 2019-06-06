@@ -7,8 +7,8 @@
 #include <vector>
 
 #include "fixed_size_vectors/Vector3D.hh"
-#include "Polygon.hh"
-#include "Ray.hh"
+#include "../datastruct/polygon/Polygon.hh"
+#include "../datastruct/ray/Ray.hh"
 
 class LuminanceInPoint {
 public:

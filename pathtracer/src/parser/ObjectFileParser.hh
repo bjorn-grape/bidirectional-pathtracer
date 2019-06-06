@@ -2,7 +2,7 @@
 
 
 #include<string>
-#include "../scene_elements/Polygon.hh"
+#include "../datastruct/polygon/Polygon.hh"
 #include "../scene_elements/serialized/object_path/ObjectPaths.hh"
 #include "../datastruct/scene/Scene.hh"
 

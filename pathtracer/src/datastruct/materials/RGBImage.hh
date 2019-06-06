@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "../../scene_elements/fixed_size_vectors/Vector3D.hh"
+#include "Vector3D.hh"
 
 class RGBImage {
 public:

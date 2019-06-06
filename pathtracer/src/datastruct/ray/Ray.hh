@@ -5,7 +5,7 @@
 #pragma once
 
 #include "fixed_size_vectors/Vector3D.hh"
-#include "Polygon.hh"
+#include "../polygon/Polygon.hh"
 #include <exception>
 #include <vector>
 

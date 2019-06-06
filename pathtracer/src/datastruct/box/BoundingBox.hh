@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../scene_elements/fixed_size_vectors/Vector3D.hh"
-#include "../SplitAxis.hh"
-#include "../../scene_elements/Ray.hh"
+#include "Vector3D.hh"
+#include "SplitAxis.hh"
+#include "Ray.hh"
 
 class BoundingBox {
 public:

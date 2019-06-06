@@ -3,12 +3,12 @@
 #include <vector>
 #include <fstream>
 
-#include "../../fixed_size_vectors/Vector3D.hh"
-#include "../../fixed_size_vectors/Vector2D.hh"
-#include "../../Polygon.hh"
-#include "../../Ray.hh"
-#include "../../../datastruct/kdtree/KDTree.hh"
-#include "../../../datastruct/scene/Scene.hh"
+#include "Vector3D.hh"
+#include "Vector2D.hh"
+#include "Polygon.hh"
+#include "Ray.hh"
+#include "KDTree.hh"
+#include "Scene.hh"
 
 class Camera {
 public:

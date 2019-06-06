@@ -6,7 +6,7 @@
 #define PATHTRACER_POLYGONDIST_HH
 
 
-#include "../../scene_elements/Polygon.hh"
+#include "../polygon/Polygon.hh"
 
 class PolygonDist {
 
