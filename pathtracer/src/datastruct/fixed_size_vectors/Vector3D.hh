@@ -101,6 +101,8 @@ public:
         ar(CEREAL_NVP(x_), CEREAL_NVP(y_), CEREAL_NVP(z_));
     }
 
+    Vector3D<float> getRandomRayAccordingToDiffuseBrdf();
+
 private:
     T x_;
     T y_;

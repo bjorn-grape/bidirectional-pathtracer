@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Vector3D.hh"
-
+#include "RandomVals.hh"
 
 template<typename T>
 Vector3D<T>::Vector3D()
@@ -252,10 +252,18 @@ Vector3D<T>::Vector3D(const T *array) {
 }
 
 template<typename T>
-Vector3D<float> Vector3D<T>::power(const float& val) const {
+Vector3D<float> Vector3D<T>::power(const float &val) const {
     return Vector3D<float>(std::pow(x_, val),
                            std::pow(y_, val),
                            std::pow(z_, val));
+}
+
+template<typename T>
+Vector3D<float> Vector3D<T>::getRandomRayAccordingToDiffuseBrdf() {
+    float rdn1 = RandomVals::getRandomNumberUniformZeroCentered(constants::PI);
+    float rdn2 = RandomVals::getRandomNumberUniformZeroCentered(constants::PI);
+    Vector3D<float> ff = Vector3D<float>(rdn1, rdn2, 0.f);
+    return *this + ff;
 }
 
 

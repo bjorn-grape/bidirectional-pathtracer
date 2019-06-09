@@ -18,6 +18,8 @@ public:
                      const Vector3D<float>& v2, Vector3D<float>& intersection) const;
     bool intersect(const Polygon &poly, Vector3D<float> &intersection) const;
 
+
+
     bool intersectOnePolygon(std::vector<Vector3D<float>> vertices, Vector3D<float>& intersection) const;
 
     std::vector<Vector3D<float>> intersectAllObjects(const std::vector<Polygon>& objects);

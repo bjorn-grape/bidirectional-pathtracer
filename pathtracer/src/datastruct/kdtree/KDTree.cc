@@ -24,6 +24,10 @@ void KDTree::printPrefix() {
 
 void KDTree::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) {
     root_->getIntersectionList(ray, resultList);
+    std::vector<Polygon> temp_array;
+//    for(const Polygon* poly: resultList)
+//        if()
+
 }
 
 bool KDTree::getIntersectionPoly(const Ray &ray, Polygon &result) const  {

@@ -116,14 +116,9 @@ void KDNode::getIntersectionPolygon(const Ray &ray, Polygon &result, float &minD
     if (res) {
         for (Polygon &poly: *polygons_) {
             Vector3D<float> intersectionPoint;
-            if(ray.intersectOneTriangle(poly.getVertices()[0],
-                                        poly.getVertices()[1],
-                                        poly.getVertices()[2],
-                                        intersectionPoint))
-            {
+            if (ray.intersect(poly, intersectionPoint)) {
                 float tmpdist = (ray.getPosition() - intersectionPoint).norm();
-                if(tmpdist < minDistance)
-                {
+                if (tmpdist < minDistance) {
                     minDistance = tmpdist;
                     result = poly;
                 }

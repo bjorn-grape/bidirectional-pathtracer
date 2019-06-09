@@ -9,4 +9,6 @@ void PathtraceImageFactory::computePixel(const Ray &ray, Vector3D<float> &cool) 
 
 void PathtraceImageFactory::compute() {
 
+
+    travelScreen();
 }
