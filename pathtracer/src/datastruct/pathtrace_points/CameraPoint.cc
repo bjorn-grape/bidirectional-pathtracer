@@ -1,7 +1,3 @@
-//
-// Created by bjorn on 09/06/19.
-//
-
 #include "CameraPoint.hh"
 
 const std::vector<CameraPoint> &CameraPoint::getChildren() const {

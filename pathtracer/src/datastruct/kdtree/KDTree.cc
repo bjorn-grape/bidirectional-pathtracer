@@ -24,7 +24,7 @@ void KDTree::printPrefix() {
 
 }
 
-void KDTree::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) {
+void KDTree::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) const {
     root_->getIntersectionList(ray, resultList);
     std::vector<PolygonWithIntersection> temp_array;
     for (Polygon *poly: resultList) {
@@ -35,17 +35,21 @@ void KDTree::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultL
         }
     }
     DistancePolygonComparator disty = DistancePolygonComparator(ray.getPosition());
-    std::sort(temp_array.begin(),temp_array.end(), disty);
+    std::sort(temp_array.begin(), temp_array.end(), disty);
     resultList.clear();
-    for(PolygonWithIntersection poly: temp_array){
-       Polygon* p = poly.polygon;
-        resultList.emplace_back(p);
+    for (PolygonWithIntersection poly: temp_array) {
+        resultList.emplace_back(poly.polygon);
     }
 
 }
 
 bool KDTree::getIntersectionPoly(const Ray &ray, Polygon &result) const {
-    float dist = INFINITY;
-    root_->getIntersectionPolygon(ray, result, dist);
-    return dist != INFINITY;
+    std::vector<Polygon *> pols;
+    getIntersectionList(ray, pols);
+    if (!pols.empty()) {
+        result = *pols[0];
+        return true;
+    }
+    return false;
+
 }

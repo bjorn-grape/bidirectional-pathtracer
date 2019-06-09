@@ -111,22 +111,22 @@ void KDNode::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultL
 
 }
 
-void KDNode::getIntersectionPolygon(const Ray &ray, Polygon &result, float &minDistance) {
-    bool res = box_->FasterDoIntersect(ray);
-    if (res) {
-        for (Polygon &poly: *polygons_) {
-            Vector3D<float> intersectionPoint;
-            if (ray.intersect(poly, intersectionPoint)) {
-                float tmpdist = (ray.getPosition() - intersectionPoint).norm();
-                if (tmpdist < minDistance) {
-                    minDistance = tmpdist;
-                    result = poly;
-                }
-            }
-        }
-        if (left_ != nullptr)
-            left_->getIntersectionPolygon(ray, result, minDistance);
-        if (right_ != nullptr)
-            right_->getIntersectionPolygon(ray, result, minDistance);
-    }
-}
+//void KDNode::getIntersectionPolygon(const Ray &ray, Polygon &result, float &minDistance) {
+//    bool res = box_->FasterDoIntersect(ray);
+//    if (res) {
+//        for (Polygon &poly: *polygons_) {
+//            Vector3D<float> intersectionPoint;
+//            if (ray.intersect(poly, intersectionPoint)) {
+//                float tmpdist = (ray.getPosition() - intersectionPoint).norm();
+//                if (tmpdist < minDistance) {
+//                    minDistance = tmpdist;
+//                    result = poly;
+//                }
+//            }
+//        }
+//        if (left_ != nullptr)
+//            left_->getIntersectionPolygon(ray, result, minDistance);
+//        if (right_ != nullptr)
+//            right_->getIntersectionPolygon(ray, result, minDistance);
+//    }
+//}
