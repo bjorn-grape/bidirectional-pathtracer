@@ -24,30 +24,25 @@ void KDTree::printPrefix() {
 
 }
 
-void KDTree::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) const {
+void KDTree::getIntersectionList(const Ray &ray, std::vector<PolygonWithIntersection> &resultListWithIntersection) const {
+    std::vector<Polygon *>resultList;
     root_->getIntersectionList(ray, resultList);
-    std::vector<PolygonWithIntersection> temp_array;
     for (Polygon *poly: resultList) {
         Vector3D<float> intersect;
         if (ray.intersect(*poly, intersect)) {
-            auto pppoo = PolygonWithIntersection(poly, intersect);
-            temp_array.emplace_back(pppoo);
+            PolygonWithIntersection pppoo = PolygonWithIntersection(poly, intersect);
+            resultListWithIntersection.emplace_back(pppoo);
         }
     }
     DistancePolygonComparator disty = DistancePolygonComparator(ray.getPosition());
-    std::sort(temp_array.begin(), temp_array.end(), disty);
-    resultList.clear();
-    for (PolygonWithIntersection poly: temp_array) {
-        resultList.emplace_back(poly.polygon);
-    }
-
+    std::sort(resultListWithIntersection.begin(), resultListWithIntersection.end(), disty);
 }
 
 bool KDTree::getIntersectionPoly(const Ray &ray, Polygon &result) const {
-    std::vector<Polygon *> pols;
+    std::vector<PolygonWithIntersection > pols;
     getIntersectionList(ray, pols);
     if (!pols.empty()) {
-        result = *pols[0];
+        result = *pols[0].polygon;
         return true;
     }
     return false;

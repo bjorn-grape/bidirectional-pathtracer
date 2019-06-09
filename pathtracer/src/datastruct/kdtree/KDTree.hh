@@ -2,8 +2,9 @@
 
 #include <memory>
 #include "KDNode.hh"
-#include "../polygon/Polygon.hh"
+#include "Polygon.hh"
 #include "../ray/Ray.hh"
+#include "PolygonWithIntersection.hh"
 
 class KDTree {
 public:
@@ -11,7 +12,7 @@ public:
 
     explicit KDTree(std::vector<Polygon> &polygons);
 
-    void getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) const;
+    void getIntersectionList(const Ray &ray, std::vector<PolygonWithIntersection> &resultList) const;
     bool getIntersectionPoly(const Ray &ray, Polygon &result) const;
 
     void printPrefix();
