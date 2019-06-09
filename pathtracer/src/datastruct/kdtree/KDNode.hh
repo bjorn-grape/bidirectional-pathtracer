@@ -10,7 +10,7 @@
 
 class KDNode {
 public:
-    KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box, const unsigned depth);
+    KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box, size_t depth);
 
     void printInfix(unsigned depth, bool isleft);
 

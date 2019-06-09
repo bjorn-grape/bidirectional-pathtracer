@@ -34,5 +34,4 @@ inline SplitAxis::Axis Tools<T>::minIndexOfThree(const T &x, const T &y, const T
 template<typename T>
 typename Tools<T>::mapAxis Tools<T>::comparisonFunctionsMap = create_map();
 
-template<typename T>
-Vector3D<float> Tools<T>::originVector = Vector3D<float>(NAN, NAN, NAN);
+

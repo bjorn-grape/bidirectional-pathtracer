@@ -4,7 +4,7 @@
 #include "../../tools/Tools.hh"
 #include "../../tools/performances/Stats.hh"
 
-KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box, const unsigned depth) {
+KDNode::KDNode(std::vector<Polygon> &polygonsVect, const BoundingBox &box, size_t depth) {
     /* Constructor initialization */
     unsigned moddepth = depth % 3;
     switch (moddepth) {

@@ -1,4 +1,6 @@
 #include <memory>
+#include <polygon/PolygonWithIntersection.hh>
+#include <DistancePolygonComparator.hh>
 
 #include "KDTree.hh"
 #include "../../tools/Tools.hh"
@@ -24,13 +26,25 @@ void KDTree::printPrefix() {
 
 void KDTree::getIntersectionList(const Ray &ray, std::vector<Polygon *> &resultList) {
     root_->getIntersectionList(ray, resultList);
-    std::vector<Polygon> temp_array;
-//    for(const Polygon* poly: resultList)
-//        if()
+    std::vector<PolygonWithIntersection> temp_array;
+    for (Polygon *poly: resultList) {
+        Vector3D<float> intersect;
+        if (ray.intersect(*poly, intersect)) {
+            auto pppoo = PolygonWithIntersection(poly, intersect);
+            temp_array.emplace_back(pppoo);
+        }
+    }
+    DistancePolygonComparator disty = DistancePolygonComparator(ray.getPosition());
+    std::sort(temp_array.begin(),temp_array.end(), disty);
+    resultList.clear();
+    for(PolygonWithIntersection poly: temp_array){
+       Polygon* p = poly.polygon;
+        resultList.emplace_back(p);
+    }
 
 }
 
-bool KDTree::getIntersectionPoly(const Ray &ray, Polygon &result) const  {
+bool KDTree::getIntersectionPoly(const Ray &ray, Polygon &result) const {
     float dist = INFINITY;
     root_->getIntersectionPolygon(ray, result, dist);
     return dist != INFINITY;
