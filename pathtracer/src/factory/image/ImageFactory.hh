@@ -22,7 +22,7 @@ protected:
 
     const Camera &camera_;
     const Scene &scene_;
-    std::vector<uint8_t> screen_content_;
+    std::vector<float> screen_content_;
 
 };
 

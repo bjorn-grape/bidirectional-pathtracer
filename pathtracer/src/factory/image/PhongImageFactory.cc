@@ -6,7 +6,7 @@
 PhongImageFactory::PhongImageFactory(const Camera &cam, const Scene &scene)
         : ImageFactory(cam, scene) {}
 
-void PhongImageFactory::computePixel(const Ray &ray, Vector3D<float> &cool)  const {
+void PhongImageFactory::computePixel(const Ray &ray, Vector3D<float> &cool) const {
     Polygon intersect_poly;
     bool hit = scene_.kdtree.getIntersectionPoly(ray, intersect_poly);
 
@@ -46,9 +46,9 @@ void PhongImageFactory::computePixel(const Ray &ray, Vector3D<float> &cool)  con
         float R = std::max(0.f, std::min(Ip.getX(), 1.f));
         float G = std::max(0.f, std::min(Ip.getY(), 1.f));
         float B = std::max(0.f, std::min(Ip.getZ(), 1.f));
-        cool = Vector3D<float>(R, G, B) * 255;
+        cool = Vector3D<float>(R, G, B) ;
     } else
-        cool = Colors::DARKGREY * 255;
+        cool = Colors::DARKGREY ;
 
 }
 

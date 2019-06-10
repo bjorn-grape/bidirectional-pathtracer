@@ -7,6 +7,7 @@ PathtraceImageFactory::PathtraceImageFactory(const Camera &cam, const Scene &sce
 }
 
 void PathtraceImageFactory::computePixel(const Ray &ray, Vector3D<float> &cool) const {
+//    std::cout << "computing pixel" << std::endl;
     CameraPoint camPT = CameraPoint(ray.getPosition(), cool, ray.getDirection(), 3, 10, scene_.kdtree);
     camPT.gatherLightsSeen(lightPoint, cool);
 }

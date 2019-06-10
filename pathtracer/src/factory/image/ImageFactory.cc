@@ -44,9 +44,9 @@ void ImageFactory::dumpToPpm(const std::string &path) {
     for (unsigned i = 0; i < camera_.getScreenDimensionY(); ++i) {
         for (unsigned j = 0; j < camera_.getScreenDimensionX(); ++j) {
             size_t index = (i * camera_.getScreenDimensionX() + j) * 3;
-            ofstream << static_cast<int>(screen_content_[index]) << " ";
-            ofstream << static_cast<int>(screen_content_[index + 1]) << " ";
-            ofstream << static_cast<int>(screen_content_[index + 2]) << " ";
+            ofstream << static_cast<int>( 255.f * screen_content_[index] ) << " ";
+            ofstream << static_cast<int>( 255.f * screen_content_[index + 1]  ) << " ";
+            ofstream << static_cast<int>( 255.f * screen_content_[index + 2] ) << " ";
         }
         ofstream << "\n";
     }

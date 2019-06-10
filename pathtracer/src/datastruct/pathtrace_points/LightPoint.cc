@@ -28,7 +28,7 @@ void LightPoint::gatherLightpointsForCamerapoint(const CameraPoint &camPT, Vecto
         colorSum += colorTmp;
     }
     colorSum /= children_.size();
-    color_res = color_res / 2 + colorSum / 2;
+    color_res = color_res + colorSum ;
 }
 
 LightPoint::LightPoint(const Vector3D<float> &position, const Vector3D<float> &color, const Vector3D<float> &normal,
