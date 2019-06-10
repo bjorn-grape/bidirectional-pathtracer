@@ -260,8 +260,8 @@ Vector3D<float> Vector3D<T>::power(const float &val) const {
 
 template<typename T>
 Vector3D<float> Vector3D<T>::getRandomRayAccordingToDiffuseBrdf() {
-    float rdn1 = RandomVals::getRandomNumberUniformZeroCentered(constants::PI);
-    float rdn2 = RandomVals::getRandomNumberUniformZeroCentered(constants::PI);
+    float rdn1 = RandomVals::getRandomNumberUniformZeroCentered(constants::PI / 2 );
+    float rdn2 = RandomVals::getRandomNumberUniformZeroCentered(constants::PI / 2);
     Vector3D<float> ff = Vector3D<float>(rdn1, rdn2, 0.f);
     return *this + ff;
 }
