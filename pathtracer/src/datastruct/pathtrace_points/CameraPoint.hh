@@ -8,15 +8,17 @@ class LightPoint;
 
 class CameraPoint : public PathtracePoint {
 public:
-    CameraPoint(const Vector3D<float> &position, const Vector3D<float> &color, const Vector3D<float> &normal,
-                const size_t depth_, const size_t point_number_, const KDTree &kd_tree);
+    CameraPoint();
 
-    virtual void addToChildren(const Vector3D<float> &position,
-                               const Vector3D<float> &color,
-                               const Vector3D<float> &normal,
-                               const size_t depth_,
-                               const size_t point_number_,
-                               const KDTree &kd_tree);
+    CameraPoint(const Vector3D<float> &position,const Vector3D<float> &color, const Vector3D<float> &normal,
+                size_t depth_, size_t point_number_,const KDTree &kd_tree);
+
+    void addToChildren(Vector3D<float> &position,
+                       Vector3D<float> &color,
+                       Vector3D<float> &normal,
+                       size_t depth_,
+                       size_t point_number_,
+                       const KDTree &kd_tree);
 
     void gatherLightsSeen(const LightPoint &lp, Vector3D<float> &color_seen);
 

@@ -76,7 +76,7 @@ void Executor::renderScenePathtracing() {
         return;
     }
     Scene scene;
-    PathtraceImageFactory Ptif = PathtraceImageFactory(sceneSave_.getCamera(),scene);
+    PathtraceImageFactory Ptif = PathtraceImageFactory(sceneSave_.getCamera(), scene);
     std::cout << "Building Tree..." << std::endl;
     ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects(), scene);
     scene.allLights = sceneSave_.getAllLights();

@@ -1,8 +1,8 @@
 #include "PathtracePoint.hh"
 
-PathtracePoint::PathtracePoint(const Vector3D<float> &position, const Vector3D<float> &color,
-                               const Vector3D<float> &normal, const size_t depth_, const size_t point_number_,
-                               const KDTree &kd_tree)
+PathtracePoint::PathtracePoint(Vector3D<float> &position, Vector3D<float> &color,
+                               Vector3D<float> &normal, size_t depth_, size_t point_number_,
+                               KDTree &kd_tree)
         : position_(position)
           , color_(color)
           , normal_of_touched_element_(normal)
@@ -53,8 +53,22 @@ void PathtracePoint::setup() {
         Vector3D<float> intersectionPt = list_res[0].intersection_point_ - (new_dir * constants::BIGEPSILON);
         Polygon poly = *list_res[0].polygon;
         Vector3D<float> color_res = Vector3D(poly.getMaterial().diffuse) * color_;
+        auto normalAt = poly.getNormalAt(intersectionPt);
         addToChildren(intersectionPt, color_res,
-                      poly.getNormalAt(intersectionPt),
+                      normalAt,
                       depth_ - 1, point_number_, kdTree_);
     }
+}
+
+
+PathtracePoint::PathtracePoint(const Vector3D<float> &position, const Vector3D<float> &color,
+                               const Vector3D<float> &normal, const size_t depth,
+                               const size_t point_number, const KDTree &kd_tree)
+        : position_(position)
+          , color_(color)
+          , normal_of_touched_element_(normal)
+          , depth_(depth)
+          , point_number_(point_number)
+          , kdTree_(kd_tree){
+
 }
