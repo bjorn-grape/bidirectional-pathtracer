@@ -38,14 +38,9 @@ public:
 
     void setNormalOfTouchedElement(const Vector3D<float> &normal_of_touched_element);
 
-    virtual void addToChildren(Vector3D<float> &position,
-                               Vector3D<float> &color,
-                               Vector3D<float> &normal,
-                               size_t depth_,
-                               size_t point_number_,
-                               const KDTree &kd_tree) = 0;
 
-    void setup();
+
+
 protected:
 
     Vector3D<float> position_;

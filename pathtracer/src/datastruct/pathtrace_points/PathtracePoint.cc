@@ -34,31 +34,7 @@ void PathtracePoint::setNormalOfTouchedElement(const Vector3D<float> &normal_of_
     PathtracePoint::normal_of_touched_element_ = normal_of_touched_element;
 }
 
-void PathtracePoint::setup() {
 
-    if (depth_ < 1)
-        return;
-    for (size_t i = 0; i < point_number_; ++i) {
-
-
-        Vector3D new_dir = normal_of_touched_element_.getRandomRayAccordingToDiffuseBrdf();
-        Ray ray = Ray(position_, new_dir);
-        std::vector<PolygonWithIntersection> list_res;
-        kdTree_.getIntersectionList(ray, list_res);
-        // no intersection, go next
-        if (list_res.empty())
-            continue;
-        // here one gets the intersection of the first polygon and go back
-        // a bit in order not to be behind the polygon
-        Vector3D<float> intersectionPt = list_res[0].intersection_point_ - (new_dir * constants::BIGEPSILON);
-        Polygon poly = *list_res[0].polygon;
-        Vector3D<float> color_res = Vector3D(poly.getMaterial().diffuse) * color_;
-        auto normalAt = poly.getNormalAt(intersectionPt);
-        addToChildren(intersectionPt, color_res,
-                      normalAt,
-                      depth_ - 1, point_number_, kdTree_);
-    }
-}
 
 
 PathtracePoint::PathtracePoint(const Vector3D<float> &position, const Vector3D<float> &color,
@@ -70,5 +46,5 @@ PathtracePoint::PathtracePoint(const Vector3D<float> &position, const Vector3D<f
           , depth_(depth)
           , point_number_(point_number)
           , kdTree_(kd_tree){
-    setup();
 }
+

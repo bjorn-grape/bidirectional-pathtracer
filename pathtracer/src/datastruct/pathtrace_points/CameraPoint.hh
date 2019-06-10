@@ -23,6 +23,7 @@ public:
     void gatherLightsSeen(const LightPoint &lp, Vector3D<float> &color_seen);
 
     std::vector<CameraPoint> getChildren() const;
+    void setup();
 
 private:
     std::vector<CameraPoint> children_;

@@ -9,10 +9,11 @@ class LightPoint : public PathtracePoint {
 public:
     LightPoint(const Vector3D<float> &position, const Vector3D<float> &color, const Vector3D<float> &normal,
                const size_t depth_, const size_t point_number_, const KDTree &kd_tree);
-    LightPoint( const KDTree &kd_tree);
 
 
-    LightPoint(LightPoint &lp) = default;
+    LightPoint();
+
+    LightPoint(const KDTree &kd_tree);
 
     void addToChildren(Vector3D<float> &position,
                        Vector3D<float> &color,
@@ -20,6 +21,8 @@ public:
                        size_t depth_,
                        size_t point_number_,
                        const KDTree &kd_tree);
+
+    void setup();
 
     void gatherLightpointsForCamerapoint(const CameraPoint &camPT, Vector3D<float> &color_res) const;
 
