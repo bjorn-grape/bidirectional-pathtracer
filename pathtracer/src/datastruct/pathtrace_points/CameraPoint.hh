@@ -4,8 +4,9 @@
 #include "PathtracePoint.hh"
 #include "LightPoint.hh"
 
-class CameraPoint : public PathtracePoint {
+class LightPoint;
 
+class CameraPoint : public PathtracePoint {
 public:
     CameraPoint(const Vector3D<float> &position, const Vector3D<float> &color, const Vector3D<float> &normal,
                 const size_t depth_, const size_t point_number_, const KDTree &kd_tree);
@@ -15,9 +16,9 @@ public:
                                const Vector3D<float> &normal,
                                const size_t depth_,
                                const size_t point_number_,
-                               const KDTree & kd_tree);
+                               const KDTree &kd_tree);
 
-    void gatherLightsSeen(LightPoint lp, Vector3D<float> color_seen);
+    void gatherLightsSeen(const LightPoint &lp, Vector3D<float> &color_seen);
 
     std::vector<CameraPoint> getChildren() const;
 

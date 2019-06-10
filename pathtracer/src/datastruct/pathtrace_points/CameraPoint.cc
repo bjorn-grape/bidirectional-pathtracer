@@ -16,4 +16,20 @@ CameraPoint::addToChildren(const Vector3D<float> &position, const Vector3D<float
     children_.emplace_back(camPT);
 }
 
+void CameraPoint::gatherLightsSeen(const LightPoint &lp, Vector3D<float> &color_seen) {
+    lp.gatherLightpointsForCamerapoint(*this, color_seen);
+
+    if (children_.empty())
+        return;
+
+    Vector3D<float> color_sum;
+    for (CameraPoint &camPoint :children_) {
+        Vector3D<float> temp_color;
+        camPoint.gatherLightsSeen(lp, temp_color);
+        color_sum += temp_color;
+    }
+    color_sum /= children_.size();
+    color_seen = color_seen / 2 + color_sum / 2;
+}
+
 
