@@ -70,5 +70,5 @@ PathtracePoint::PathtracePoint(const Vector3D<float> &position, const Vector3D<f
           , depth_(depth)
           , point_number_(point_number)
           , kdTree_(kd_tree){
-
+    setup();
 }

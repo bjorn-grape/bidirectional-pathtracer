@@ -45,8 +45,8 @@ public:
                                size_t point_number_,
                                const KDTree &kd_tree) = 0;
 
-protected:
     void setup();
+protected:
 
     Vector3D<float> position_;
     Vector3D<float> color_;

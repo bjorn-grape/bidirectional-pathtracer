@@ -2,12 +2,13 @@
 
 PathtraceImageFactory::PathtraceImageFactory(const Camera &cam, const Scene &scene)
         : ImageFactory(cam, scene)
-        , lightPoint(scene.kdtree){
+          , lightPoint(scene.kdtree) {
 
 }
 
 void PathtraceImageFactory::computePixel(const Ray &ray, Vector3D<float> &cool) const {
-
+    CameraPoint camPT = CameraPoint(ray.getPosition(), cool, ray.getDirection(), 3, 10, scene_.kdtree);
+    camPT.gatherLightsSeen(lightPoint, cool);
 }
 
 void PathtraceImageFactory::compute() {
@@ -21,6 +22,6 @@ void PathtraceImageFactory::compute() {
     lightPoint.setNormalOfTouchedElement(d1.getDirection());
     lightPoint.setDepth(3);
     lightPoint.setRayNumber(10);
-
+    lightPoint.setup();
     travelScreen();
 }
