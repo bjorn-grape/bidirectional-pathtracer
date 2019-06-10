@@ -71,7 +71,7 @@ void LightPoint::setup() {
     for (size_t i = 0; i < point_number_; ++i) {
 
 
-        Vector3D new_dir = normal_of_touched_element_;//.getRandomRayAccordingToDiffuseBrdf();
+        Vector3D new_dir = normal_of_touched_element_.getRandomRayAccordingToDiffuseBrdf();
         Ray ray = Ray(position_, new_dir);
         std::vector<PolygonWithIntersection> list_res;
         kdTree_.getIntersectionList(ray, list_res);

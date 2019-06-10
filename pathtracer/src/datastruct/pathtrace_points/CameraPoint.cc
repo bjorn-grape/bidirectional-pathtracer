@@ -24,7 +24,7 @@ void CameraPoint::gatherLightsSeen(const LightPoint &lp, Vector3D<float> &color_
         color_sum += temp_color;
     }
     color_sum /= children_.size();
-    color_seen = color_seen  + color_sum ;
+    color_seen = color_seen + color_sum ;
 }
 
 CameraPoint::CameraPoint()

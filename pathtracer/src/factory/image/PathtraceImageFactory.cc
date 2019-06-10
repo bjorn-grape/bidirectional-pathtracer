@@ -25,8 +25,8 @@ void PathtraceImageFactory::compute() {
     lightPoint.setPosition(Vector3D<float>() - d1.getDirection() * 5.f);
     lightPoint.setDiffuseColor(d1.getColor_());
     lightPoint.setNormalOfTouchedElement(d1.getDirection());
-    lightPoint.setDepth(1);
-    lightPoint.setRayNumber(1);
+    lightPoint.setDepth(3);
+    lightPoint.setRayNumber(10);
     lightPoint.setup();
     travelScreen();
 }
