@@ -13,7 +13,7 @@ int main(int argc, const char *argv[]) {
     Executor executor;
     executor.load(cliParser.getPathSave());
     executor.setSavePath("mine.ppm");
-    executor.setType(Executor::raytrace);
+    executor.setType(Executor::pathtrace);
     executor.run();
 
     return 0;

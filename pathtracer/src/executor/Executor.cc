@@ -76,11 +76,11 @@ void Executor::renderScenePathtracing() {
         return;
     }
     Scene scene;
-    PathtraceImageFactory Ptif = PathtraceImageFactory(sceneSave_.getCamera(), scene);
     std::cout << "Building Tree..." << std::endl;
     ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects(), scene);
     scene.allLights = sceneSave_.getAllLights();
     std::cout << "Done." << std::endl;
+    PathtraceImageFactory Ptif = PathtraceImageFactory(sceneSave_.getCamera(), scene);
     std::cout << "Rendering Image..." << std::endl;
     Ptif.compute();
     std::cout << "Done." << std::endl;

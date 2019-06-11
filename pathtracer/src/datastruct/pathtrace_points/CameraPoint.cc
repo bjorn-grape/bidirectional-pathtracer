@@ -52,8 +52,7 @@ void CameraPoint::setup() {
         return;
     for (size_t i = 0; i < point_number_; ++i) {
 
-
-        Vector3D new_dir = normal_of_touched_element_;//.getRandomRayAccordingToDiffuseBrdf();
+        Vector3D new_dir = normal_of_touched_element_;//.getRandomRayAccordingToDiffuseBrdfLowAngle();//.getRandomRayAccordingToDiffuseBrdf();
         Ray ray = Ray(position_, new_dir);
         std::vector<PolygonWithIntersection> list_res;
         kdTree_.getIntersectionList(ray, list_res);
@@ -66,6 +65,7 @@ void CameraPoint::setup() {
         Polygon poly = *list_res[0].polygon;
         Vector3D<float> color_res = Vector3D(poly.getMaterial().diffuse) + color_ ;
         auto normalAt = poly.getNormalAt(intersectionPt);
+        normalAt = normalAt.getRandomRayAccordingToDiffuseBrdf();
         addToChildren(intersectionPt, color_res,
                       normalAt,
                       depth_ - 1, point_number_, kdTree_);

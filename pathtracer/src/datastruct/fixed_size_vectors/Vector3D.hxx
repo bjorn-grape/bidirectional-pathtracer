@@ -266,6 +266,14 @@ Vector3D<float> Vector3D<T>::getRandomRayAccordingToDiffuseBrdf() {
     return *this + ff;
 }
 
+template<typename T>
+Vector3D<float>  Vector3D<T>::getRandomRayAccordingToDiffuseBrdfLowAngle() {
+    float rdn1 = RandomVals::getRandomNumberUniformZeroCentered(constants::PI/1000);
+    float rdn2 = RandomVals::getRandomNumberUniformZeroCentered(constants::PI/1000);
+    Vector3D<float> ff = Vector3D<float>(rdn1, rdn2, 0.f);
+    return *this + ff;
+}
+
 
 template<typename T>
 std::ostream &operator<<(std::ostream &os, const Vector3D<T> &d) {

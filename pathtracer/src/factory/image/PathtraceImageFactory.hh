@@ -11,7 +11,7 @@ public:
     void compute();
 
 private:
-    LightPoint lightPoint;
+    std::vector<LightPoint> lightPoints;
 };
 
 

@@ -103,6 +103,8 @@ public:
 
     Vector3D<float> getRandomRayAccordingToDiffuseBrdf();
 
+    Vector3D<float>  getRandomRayAccordingToDiffuseBrdfLowAngle();
+
 private:
     T x_;
     T y_;
