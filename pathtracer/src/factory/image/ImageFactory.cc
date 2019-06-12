@@ -17,10 +17,12 @@ void ImageFactory::travelScreen() {
     Vector3D<float> screenUpLeftVector;
     camera_.initPerspective(stepx, stepy, screenUpLeftVector);
 
-    tbb::parallel_for(size_t(0), static_cast<size_t>(camera_.getScreenDimensionY()), [&](size_t i) {
+    tbb::parallel_for(size_t(0), static_cast<size_t>(camera_.getScreenDimensionY()), [&](size_t ii) {
+        long i = -(ii - camera_.getScreenDimensionY() / 2);
         auto upOrigin = screenUpLeftVector;
         upOrigin.rotateOnX(stepy * i);
-        for (unsigned j = 0; j < camera_.getScreenDimensionX(); ++j) {
+        for (unsigned jj = 0; jj < camera_.getScreenDimensionX(); ++jj) {
+            long j = -( jj - camera_.getScreenDimensionX() /2);
             auto goodRot = upOrigin;
             goodRot.rotateOnY(stepx * j);
             Ray ray = Ray(camera_.getPosition(), goodRot);
@@ -29,7 +31,7 @@ void ImageFactory::travelScreen() {
             // part to change between pathtracer and raytracer
             computePixel(ray, pixel);
 
-            placePixel(i, j, pixel);
+            placePixel(ii, jj, pixel);
         }
     });
 }

@@ -59,7 +59,7 @@ void Executor::renderSceneRaytracing() {
         return;
     }
     Scene scene;
-    PhongImageFactory Pif= PhongImageFactory(sceneSave_.getCamera(),scene);
+    PhongImageFactory Pif = PhongImageFactory(sceneSave_.getCamera(), scene);
     std::cout << "Building Tree..." << std::endl;
     ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects(), scene);
     scene.allLights = sceneSave_.getAllLights();

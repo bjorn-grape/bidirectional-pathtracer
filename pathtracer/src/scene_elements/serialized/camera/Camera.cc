@@ -49,10 +49,10 @@ void Camera::initPerspective(float &stepx, float &stepy, Vector3D<float> &screen
         stepy = getFieldOfViewRadian() / screenDimension_.getY();
     }
     screenUpLeftVector = orientation_;
-    Vector3D<float> howToRotate = Vector3D<float>(-stepy * screenDimension_.getY() / 2.f,
-                                                  -stepx * screenDimension_.getX() / 2.f,
-                                                  0);
-    screenUpLeftVector.rotate(howToRotate);
+//    Vector3D<float> howToRotate = Vector3D<float>(-stepy * screenDimension_.getY() / 2.f,
+//                                                  -stepx * screenDimension_.getX() / 2.f,
+//                                                  0);
+//    screenUpLeftVector.rotate(howToRotate);
 }
 
 size_t Camera::getScreenDimensionX() const {
