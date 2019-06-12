@@ -274,6 +274,11 @@ Vector3D<float>  Vector3D<T>::getRandomRayAccordingToDiffuseBrdfLowAngle() {
     return *this + ff;
 }
 
+template<typename T>
+Vector3D<T> Vector3D<T>::abs() {
+    return Vector3D<T>(std::abs(this->getX()),std::abs(this->getY()),std::abs(this->getZ()));
+}
+
 
 template<typename T>
 std::ostream &operator<<(std::ostream &os, const Vector3D<T> &d) {

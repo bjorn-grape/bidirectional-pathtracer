@@ -64,8 +64,8 @@ inline void BoundingBox::setExtremumFromPolygonList(const std::vector<Polygon> &
         vmin.replaceMyContentBy(vmin.minOfTwoCoordinates(mean));
         vmax.replaceMyContentBy(vmax.maxOfTwoCoordinates(mean));
     }
-    readVector3DinMin(vmin - toleranceBoundaries);
-    readVector3DinMax(vmax + toleranceBoundaries);
+    readVector3DinMin(vmin - toleranceBoundaries * vmin.abs());
+    readVector3DinMax(vmax + toleranceBoundaries * vmin.abs());
 }
 
 

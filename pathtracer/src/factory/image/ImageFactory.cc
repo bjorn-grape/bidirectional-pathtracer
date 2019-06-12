@@ -18,7 +18,7 @@ void ImageFactory::travelScreen() {
     camera_.initPerspective(stepx, stepy, screenUpLeftVector);
 
     tbb::parallel_for(size_t(0), static_cast<size_t>(camera_.getScreenDimensionY()), [&](size_t ii) {
-        long i = -(ii - camera_.getScreenDimensionY() / 2);
+        long i = (ii - camera_.getScreenDimensionY() / 2);
         auto upOrigin = screenUpLeftVector;
         upOrigin.rotateOnX(stepy * i);
         for (unsigned jj = 0; jj < camera_.getScreenDimensionX(); ++jj) {

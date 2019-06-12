@@ -10,14 +10,19 @@ void LightPoint::gatherLightpointsForCamerapoint(const CameraPoint &camPT, Vecto
     Ray ray = Ray(camPT.getPosition(), direction);
     std::vector<PolygonWithIntersection> polyIntersect;
     kdTree_.getIntersectionList(ray, polyIntersect);
-    color_res = camPT.getDiffuseColor() * getDiffuseColor();
-    if (!polyIntersect.empty()) {
-        Vector3D<float> firstInter = polyIntersect[0].intersection_point_;
-        if ((camPT.getPosition() - firstInter).norm() < direction.norm()) {
-            // polygon is blocking view, maybe change it later with transparency
-            color_res = Vector3D(0.f, 0.f, 0.f);
-        }
+
+    if (!polyIntersect.empty() &&
+        (camPT.getPosition() - polyIntersect[0].intersection_point_).norm() < direction.norm()) {
+        // polygon is blocking view, maybe change it later with transparency
+        color_res = Vector3D(0.f, 0.f, 0.f);
+    } else {
+        auto Kd_cam = camPT.getDiffuseColor();
+        auto Id = getDiffuseColor();
+        auto Lm = this->getNormalOfTouchedElement() * -1;
+        auto N = camPT.getNormalOfTouchedElement();
+        color_res = Kd_cam * (Lm.dotproduct(N)) * Id;
     }
+
 
     if (children_.empty())
         return;
@@ -28,7 +33,7 @@ void LightPoint::gatherLightpointsForCamerapoint(const CameraPoint &camPT, Vecto
         colorSum += colorTmp;
     }
     colorSum /= children_.size();
-    color_res = color_res + colorSum ;
+    color_res = color_res + colorSum;
 }
 
 LightPoint::LightPoint(const Vector3D<float> &position, const Vector3D<float> &color, const Vector3D<float> &normal,
@@ -60,8 +65,7 @@ void LightPoint::setRayNumber(int point_nb) {
 
 LightPoint::LightPoint()
         : LightPoint(Vector3D<float>(), Vector3D<float>(),
-                         Vector3D<float>(), 0, 0, KDTree()) {}
-
+                     Vector3D<float>(), 0, 0, KDTree()) {}
 
 
 void LightPoint::setup() {

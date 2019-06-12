@@ -2,10 +2,10 @@
 
 PathtraceImageFactory::PathtraceImageFactory(const Camera &cam, const Scene &scene)
         : ImageFactory(cam, scene) {
-    size_t depth = 3;
-    size_t rayNb = 10;
+    size_t depth = 2;
+    size_t rayNb = 6;
     for (auto dirLi :scene_.allLights.directional_lights_) {
-        LightPoint lp = LightPoint(Vector3D<float>() - dirLi.getDirection() * 5.f,
+        LightPoint lp = LightPoint(Vector3D<float>() - dirLi.getDirection() * 500.f,
                                    dirLi.getColor_(), dirLi.getDirection(),
                                    depth, rayNb, scene.kdtree);
         lp.setup();
@@ -15,7 +15,7 @@ PathtraceImageFactory::PathtraceImageFactory(const Camera &cam, const Scene &sce
 
 void PathtraceImageFactory::computePixel(const Ray &ray, Vector3D<float> &cool) const {
 //    std::cout << "computing pixel" << std::endl;
-    CameraPoint camPT = CameraPoint(ray.getPosition(), cool, ray.getDirection(), 1, 10, scene_.kdtree);
+    CameraPoint camPT = CameraPoint(ray.getPosition(), cool, ray.getDirection(), 1, 1, scene_.kdtree);
 
     Vector3D<float> lightSum;
     for (const LightPoint &lp : lightPoints) {
@@ -34,10 +34,8 @@ void PathtraceImageFactory::computePixel(const Ray &ray, Vector3D<float> &cool) 
 void PathtraceImageFactory::compute() {
     if (scene_.allLights.directional_lights_.empty())
     {
-    std::cout << "no light";
+        std::cout << "no light";
         return;
     }
-
-
     travelScreen();
 }
