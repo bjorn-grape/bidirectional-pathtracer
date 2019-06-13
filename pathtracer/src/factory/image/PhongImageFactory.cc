@@ -54,5 +54,5 @@ void PhongImageFactory::computePixel(const Ray &ray, Vector3D<float> &cool) cons
 
 void PhongImageFactory::compute() {
 
-    travelScreen();
+    travelScreen(0);
 }

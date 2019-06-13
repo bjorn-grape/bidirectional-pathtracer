@@ -15,10 +15,10 @@ public:
 
 protected:
 
-    void travelScreen();
+    void travelScreen(unsigned current_iteration);
     virtual void computePixel(const Ray &ray, Vector3D<float> &cool) const = 0;
 
-    inline void placePixel(size_t x, size_t y, const Vector3D<float> &pixel);
+    inline void placePixel(size_t x, size_t y, const Vector3D<float> &pixel, std::vector<float>& temp_screen_content);
 
     const Camera &camera_;
     const Scene &scene_;

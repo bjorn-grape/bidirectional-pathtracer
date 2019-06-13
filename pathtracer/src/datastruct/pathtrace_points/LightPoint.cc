@@ -45,6 +45,10 @@ LightPoint::LightPoint(const Vector3D<float> &position, const Vector3D<float> &c
 void
 LightPoint::addToChildren(Vector3D<float> &position, Vector3D<float> &color, Vector3D<float> &normal, size_t depth_,
                           size_t point_number_, const KDTree &kd_tree) {
+    if(color.getX() < constants::COLORMIN
+    && color.getY() < constants::COLORMIN
+    && color.getY() < constants::COLORMIN)
+        return;
     LightPoint camPT = LightPoint(position, color, normal, depth_, point_number_, kd_tree);
     children_.emplace_back(camPT);
 }

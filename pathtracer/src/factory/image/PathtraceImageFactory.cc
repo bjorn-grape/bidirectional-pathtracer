@@ -1,9 +1,10 @@
+#include <sstream>
 #include "PathtraceImageFactory.hh"
 
 PathtraceImageFactory::PathtraceImageFactory(const Camera &cam, const Scene &scene)
         : ImageFactory(cam, scene) {
-    size_t depth = 2;
-    size_t rayNb = 6;
+    size_t depth = 3;
+    size_t rayNb = 3;
     for (auto dirLi :scene_.allLights.directional_lights_) {
         LightPoint lp = LightPoint(Vector3D<float>() - dirLi.getDirection() * 500.f,
                                    dirLi.getColor_(), dirLi.getDirection(),
@@ -15,7 +16,9 @@ PathtraceImageFactory::PathtraceImageFactory(const Camera &cam, const Scene &sce
 
 void PathtraceImageFactory::computePixel(const Ray &ray, Vector3D<float> &cool) const {
 //    std::cout << "computing pixel" << std::endl;
-    CameraPoint camPT = CameraPoint(ray.getPosition(), cool, ray.getDirection(), 1, 1, scene_.kdtree);
+    size_t depth = 3;
+    size_t lightNb = 3;
+    CameraPoint camPT = CameraPoint(ray.getPosition(), cool, ray.getDirection(), depth, lightNb, scene_.kdtree);
 
     Vector3D<float> lightSum;
     for (const LightPoint &lp : lightPoints) {
@@ -37,5 +40,16 @@ void PathtraceImageFactory::compute() {
         std::cout << "no light";
         return;
     }
-    travelScreen();
+
+    unsigned max_iter = 4;
+    for (unsigned i = 0; i < max_iter; ++i) {
+        std::cout << "step " << i << " started!\n";
+        travelScreen(i);
+        std::stringstream builder;
+        builder << "step_" << i << ".ppm";
+        std::cout <<  builder.str() << " written !\n";
+        dumpToPpm(builder.str());
+
+    }
+
 }
