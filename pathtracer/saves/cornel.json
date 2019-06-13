@@ -1,0 +1,82 @@
+{
+    "sceneSave": {
+        "allLights": {
+            "ambient_lights_": [
+                {
+                    "value0": {
+                        "color_": {
+                            "x_": 0.2,
+                            "y_": 0.2,
+                            "z_": 0.2
+                        },
+                        "intensity_": 3.0
+                    }
+                }
+            ],
+            "directional_lights_": [
+                {
+                    "value0": {
+                        "color_": {
+                            "x_": 0.7,
+                            "y_": 0.7,
+                            "z_": 0.7
+                        },
+                        "intensity_": 1.0
+                    },
+                    "direction_": {
+                        "x_": 0.0,
+                        "y_": 0.0,
+                        "z_": 1.0
+                    }
+                },
+                {
+                    "value1": {
+                        "color_": {
+                            "x_": 0.7,
+                            "y_": 0.7,
+                            "z_": 0.7
+                        },
+                        "intensity_": 1.0
+                    },
+                    "direction_": {
+                        "x_": 1.0,
+                        "y_": 0.2,
+                        "z_": 1.0
+                    }
+                }
+
+            ],
+            "point_lights_": [],
+            "spot_lights_": []
+        },
+        "camera": {
+            "fieldOfView_": 30.0,
+            "screenDimension_": {
+                "x_": 200,
+                "y_": 200
+            },
+            "screen_": [],
+            "position_": {
+                "x_": 0.0,
+                "y_": 2.0,
+                "z_": -30.0
+            },
+            "orientation_": {
+                "x_": 0.0,
+                "y_": 0.0,
+                "z_": 1.0
+            }
+        },
+        "objects": [
+            {
+                "path_obj_": "cornell2.obj",
+                "path_mtl_": "cornell.mtl",
+                "position_": {
+                    "x_": 0.0,
+                    "y_": 0.0,
+                    "z_": 0.0
+                }
+            }
+        ]
+    }
+}
