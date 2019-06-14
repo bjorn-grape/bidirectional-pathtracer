@@ -11,15 +11,14 @@ public:
 
     enum jobType {
         none,
-        buildscene,
-        raytrace,
-        pathtrace,
+        build_scene,
+        render_scene,
         buildTreeAndPrint
     };
 
     void load(const std::string &path);
 
-    void save(const std::string &path);
+    void saveScene(const std::string &path);
 
     void setSavePath(const std::string& path);
 
@@ -33,7 +32,7 @@ public:
 private:
     void createTreeAndPrint();
     void renderSceneRaytracing();
-    void renderScenePathtracing();
+    void renderScene();
     std::string save_path = "default.ppm";
     SceneSave sceneSave_;
     bool loaded_ = false;

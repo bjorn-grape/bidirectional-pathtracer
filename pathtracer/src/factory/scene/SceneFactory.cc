@@ -9,15 +9,13 @@ SceneSave SceneFactory::BuildScene() {
     allLights.directional_lights_.emplace_back(DirectionalLight(Vector3D(1.f, 0.f, 0.f), 1.0f, Colors::BLUE));
     save.setAllLights(allLights);
 
-    Camera camera = Camera( Vector2D<unsigned>(512, 512), Vector3D(0.f, 0.0f, -6.f), Vector3D(0.f, 0.f, 1.f), 60);
+    Camera camera = Camera(Vector2D<unsigned>(512, 512), Vector3D(0.f, 0.0f, -6.f), Vector3D(0.f, 0.f, 1.f), 60);
     save.setCamera(camera);
 
-    ObjectPaths objectPath("cube.mtl", "cube.obj", Vector3D(0.f, 0.f, 0.f));
-    ObjectPaths objectPath2("cube.mtl", "cube.obj", Vector3D(0.3f, 0.3f, 0.3f));
-    ObjectPaths objectPath3("cube.mtl", "cube.obj", Vector3D(0.5f, 0.5f, 0.5f));
+    ObjectPaths objectPath("cornell2.mtl", "cornell2.obj", Vector3D(0.f, 0.f, 0.f));
     save.addObject(objectPath);
-    save.addObject(objectPath2);
-    save.addObject(objectPath3);
 
+    RenderType rd = RenderType(RenderType::pathtracer, 1, 2, 5, 2, 5);
+    save.setRenderType(rd);
     return save;
 }

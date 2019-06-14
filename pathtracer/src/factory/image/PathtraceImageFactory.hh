@@ -6,7 +6,7 @@
 
 class PathtraceImageFactory : public ImageFactory {
 public:
-    PathtraceImageFactory(const Camera &cam, const Scene &scene);
+    PathtraceImageFactory(const Camera &cam, const Scene &scene, const RenderType &rd_);
     virtual void computePixel(const Ray &ray, Vector3D<float> &cool)  const;
     void compute();
 

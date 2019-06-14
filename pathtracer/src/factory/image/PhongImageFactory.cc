@@ -3,8 +3,8 @@
 #include "Camera.hh"
 #include "PhongImageFactory.hh"
 
-PhongImageFactory::PhongImageFactory(const Camera &cam, const Scene &scene)
-        : ImageFactory(cam, scene) {}
+PhongImageFactory::PhongImageFactory(const Camera &cam, const Scene &scene, const RenderType &rd)
+        : ImageFactory(cam, scene, rd) {}
 
 void PhongImageFactory::computePixel(const Ray &ray, Vector3D<float> &cool) const {
     Polygon intersect_poly;

@@ -12,7 +12,7 @@
 
 class LuminanceInPoint {
 public:
-    //Verify that there is no objects between the point p1 and the point p2
+    //Verify that there is no objects_ between the point p1 and the point p2
     bool IsShadowRay(Vector3D<float> p1, Vector3D<float> p2);
     //Return all the shadow ray of point p
     std::vector<Vector3D<float>> allShadowRays(Vector3D<float> p);

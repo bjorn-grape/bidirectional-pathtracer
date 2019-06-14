@@ -11,9 +11,14 @@ int main(int argc, const char *argv[]) {
 
     CliParser cliParser(argc, argv);
     Executor executor;
+
+//    executor.setType(Executor::build_scene);
+//    executor.run();
+//    executor.saveScene("neww.json");
+
     executor.load(cliParser.getPathSave());
-    executor.setSavePath("mine.ppm");
-    executor.setType(Executor::pathtrace);
+//    executor.setSavePath("mine.ppm");
+    executor.setType(Executor::render_scene);
     auto start = std::chrono::system_clock::now();
     executor.run();
     auto end = std::chrono::system_clock::now();

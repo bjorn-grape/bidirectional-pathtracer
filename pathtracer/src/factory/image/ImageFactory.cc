@@ -2,11 +2,14 @@
 #include <tbb/parallel_for.h>
 #include <atomic>
 #include "ImageFactory.hh"
+#include "PhongImageFactory.hh"
+#include "PathtraceImageFactory.hh"
 
 
-ImageFactory::ImageFactory(const Camera& cam, const Scene& scene)
+ImageFactory::ImageFactory(const Camera &cam, const Scene &scene, const RenderType &rd)
         : camera_(cam)
-          , scene_(scene) {
+          , scene_(scene)
+          , rd_(rd) {
     screen_content_.reserve(cam.getScreenDimensionX() * cam.getScreenDimensionY() * 3);
 }
 
@@ -16,7 +19,7 @@ void ImageFactory::travelScreen(unsigned current_iteration) {
     float stepx;
     float stepy;
     std::vector<float> temp_screen_content;
-    unsigned total_component_nb = camera_.getScreenDimensionX() * camera_.getScreenDimensionY() * 3;
+    size_t total_component_nb = camera_.getScreenDimensionX() * camera_.getScreenDimensionY() * 3;
     temp_screen_content.reserve(total_component_nb);
     Vector3D<float> screenUpLeftVector;
     camera_.initPerspective(stepx, stepy, screenUpLeftVector);
@@ -52,7 +55,7 @@ void ImageFactory::travelScreen(unsigned current_iteration) {
 }
 
 
-void ImageFactory::dumpToPpm(const std::string& path) {
+void ImageFactory::dumpToPpm(const std::string &path) {
     std::ofstream ofstream(path);
     ofstream << "P3\n";
     ofstream << camera_.getScreenDimensionX() << " ";
@@ -66,6 +69,29 @@ void ImageFactory::dumpToPpm(const std::string& path) {
             ofstream << static_cast<int>( 255.f * screen_content_[index + 2] ) << " ";
         }
         ofstream << "\n";
+    }
+}
+
+// not deleted to be allowed to factorize code
+void ImageFactory::compute() {
+    throw std::runtime_error("This abstract class should not be instanciated!");
+}
+
+// not deleted to be allowed to factorize code
+void ImageFactory::computePixel(const Ray &ray, Vector3D<float> &cool) const {
+    throw std::runtime_error("This abstract class should not be instanciated!");
+}
+
+
+ImageFactory *ImageFactory::makeFactory(Camera &camera, Scene scene, RenderType type) {
+    if (type.getType() == RenderType::render_algo::raytracer) {
+        auto toret = new PhongImageFactory(camera, scene, type);
+        return toret;
+    } else if (type.getType() == RenderType::render_algo::pathtracer) {
+        auto toret =  new PathtraceImageFactory(camera, scene, type);
+        return toret;
+    } else{
+        throw  std::runtime_error("Should be pathtracer or raytracer!");
     }
 }
 

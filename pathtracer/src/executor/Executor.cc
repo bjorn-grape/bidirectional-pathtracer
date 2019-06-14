@@ -21,7 +21,7 @@ void Executor::load(const std::string &path) {
     loaded_ = true;
 }
 
-void Executor::save(const std::string &path) {
+void Executor::saveScene(const std::string &path) {
     SaveManager::Save(path, sceneSave_);
 }
 
@@ -36,9 +36,8 @@ void Executor::run() {
 
 Executor::Executor() {
     map_actions[jobType::none] = [](Executor &executor) {};
-    map_actions[jobType::buildscene] = [](Executor &executor) { executor.sceneSave_ = SceneFactory::BuildScene(); };
-    map_actions[jobType::raytrace] = [](Executor &executor) { executor.renderSceneRaytracing(); };
-    map_actions[jobType::pathtrace] = [](Executor &executor) { executor.renderScenePathtracing(); };
+    map_actions[jobType::build_scene] = [](Executor &executor) { executor.sceneSave_ = SceneFactory::BuildScene(); };
+    map_actions[jobType::render_scene] = [](Executor &executor) { executor.renderScene(); };
     map_actions[jobType::buildTreeAndPrint] = [](Executor &executor) { executor.createTreeAndPrint(); };
 }
 
@@ -59,7 +58,7 @@ void Executor::renderSceneRaytracing() {
         return;
     }
     Scene scene;
-    PhongImageFactory Pif = PhongImageFactory(sceneSave_.getCamera(), scene);
+    PhongImageFactory Pif = PhongImageFactory(sceneSave_.getCamera(), scene, sceneSave_.getRenderType());
     std::cout << "Building Tree..." << std::endl;
     ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects(), scene);
     scene.allLights = sceneSave_.getAllLights();
@@ -70,7 +69,7 @@ void Executor::renderSceneRaytracing() {
     Pif.dumpToPpm(save_path);
 }
 
-void Executor::renderScenePathtracing() {
+void Executor::renderScene() {
     if (!loaded_) {
         std::cout << "Please load a json.\n";
         return;
@@ -80,11 +79,23 @@ void Executor::renderScenePathtracing() {
     ObjectFileParser::fromAllObjsToObjStruct(sceneSave_.getObjects(), scene);
     scene.allLights = sceneSave_.getAllLights();
     std::cout << "Done." << std::endl;
-    PathtraceImageFactory Ptif = PathtraceImageFactory(sceneSave_.getCamera(), scene);
-    std::cout << "Rendering Image..." << std::endl;
-    Ptif.compute();
-    std::cout << "Done." << std::endl;
-    Ptif.dumpToPpm(save_path);
+
+    auto type = sceneSave_.getRenderType();
+    auto camera = sceneSave_.getCamera();
+
+    if (type.getType() == RenderType::render_algo::raytracer) {
+        auto imFact = PhongImageFactory(camera, scene, type);
+        std::cout << "Rendering Image..." << std::endl;
+        imFact.compute();
+        std::cout << "Done." << std::endl;
+        imFact.dumpToPpm(save_path);
+    } else if (type.getType() == RenderType::render_algo::pathtracer) {
+        auto imFact = PathtraceImageFactory(camera, scene, type);
+        std::cout << "Rendering Image..." << std::endl;
+        imFact.compute();
+        std::cout << "Done." << std::endl;
+    }
+
 }
 
 
