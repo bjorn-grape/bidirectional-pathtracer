@@ -6,9 +6,14 @@ PathtraceImageFactory::PathtraceImageFactory(const Camera &cam, const Scene &sce
     size_t depth = rd.getLight_depth();
     size_t rayNb = rd.getLight_number_per_depth();
     for (auto dirLi :scene_.allLights.directional_lights_) {
-        LightPoint lp = LightPoint(Vector3D<float>() - dirLi.getDirection() * 500.f,
-                                   dirLi.getColor_(), dirLi.getDirection(),
-                                   depth, rayNb, scene.kdtree);
+        Polygon p;
+        auto pos = Vector3D<float>() - dirLi.getDirection() * 500.f;
+        auto dir = dirLi.getDirection() ;
+        auto res = scene.kdtree.getIntersectionPoly(Ray(pos,dir),p);
+        if (!res)
+            continue;
+        LightPoint lp = LightPoint(pos, dirLi.getColor_(), dir,
+                                   depth, rayNb, scene.kdtree, p.getMaterial(), dir);
         lp.setup();
         lightPoints.emplace_back(lp);
     }
