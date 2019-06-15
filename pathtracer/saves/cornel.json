@@ -24,9 +24,9 @@
                         "intensity_": 1.0
                     },
                     "direction_": {
-                        "x_": 0.0,
+                        "x_": -0.2,
                         "y_": -1.0,
-                        "z_": 0.3
+                        "z_": 0.0
                     }
                 }
             ],
@@ -36,18 +36,18 @@
         "camera_": {
             "fieldOfView_": 30.0,
             "screenDimension_": {
-                "x_": 150,
-                "y_": 150
+                "x_": 50,
+                "y_": 50
             },
             "screen_": [],
             "position_": {
                 "x_": 0.0,
-                "y_": 6.0,
+                "y_": 10.0,
                 "z_": -30.0
             },
             "orientation_": {
                 "x_": 0.0,
-                "y_": 0.0,
+                "y_": -0.2,
                 "z_": 1.0
             }
         },
@@ -65,7 +65,7 @@
         "rd_type_": {
             "type": 0,
             "pass_number_": 10,
-            "light_depth_": 5,
+            "light_depth_": 4,
             "light_number_per_depth_": 10,
             "camera_depth_": 2,
             "camera_number_per_depth_": 10
