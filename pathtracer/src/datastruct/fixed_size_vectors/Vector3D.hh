@@ -107,6 +107,8 @@ public:
 
     Vector3D<T> abs();
 
+    Vector3D<float> giveMirrorOutcomingRayFromIncommingRay(const Vector3D<float> incoming_direction);
+
 private:
     T x_;
     T y_;

@@ -38,6 +38,6 @@ public:
 private:
     std::vector<LightPoint> children_;
     const Material &touched_material_;
-    const Vector3D<float> &incomming_light_;
+    const Vector3D<float> &incomming_light_direction_;
 };
 

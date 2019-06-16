@@ -174,8 +174,8 @@ Vector3D<T> Vector3D<T>::crossproduct(const Vector3D &vector3D) const {
 
 template<typename T>
 float Vector3D<T>::angleRadian(const Vector3D &vector3D) const {
-    auto dotprod = *this->dotproduct(vector3D);
-    auto normprod = *this->norm() * vector3D.norm();
+    auto dotprod = dotproduct(vector3D);
+    auto normprod = norm() * vector3D.norm();
     return std::acos(dotprod / normprod);
 }
 
@@ -267,16 +267,34 @@ Vector3D<float> Vector3D<T>::getRandomRayAccordingToDiffuseBrdf() {
 }
 
 template<typename T>
-Vector3D<float>  Vector3D<T>::getRandomRayAccordingToDiffuseBrdfLowAngle() {
-    float rdn1 = RandomVals::getRandomNumberUniformZeroCentered(constants::PI/1000);
-    float rdn2 = RandomVals::getRandomNumberUniformZeroCentered(constants::PI/1000);
+Vector3D<float> Vector3D<T>::getRandomRayAccordingToDiffuseBrdfLowAngle() {
+    float rdn1 = RandomVals::getRandomNumberUniformZeroCentered(constants::PI / 1000);
+    float rdn2 = RandomVals::getRandomNumberUniformZeroCentered(constants::PI / 1000);
     Vector3D<float> ff = Vector3D<float>(rdn1, rdn2, 0.f);
     return *this + ff;
 }
 
 template<typename T>
 Vector3D<T> Vector3D<T>::abs() {
-    return Vector3D<T>(std::abs(this->getX()),std::abs(this->getY()),std::abs(this->getZ()));
+    return Vector3D<T>(std::abs(this->getX()), std::abs(this->getY()), std::abs(this->getZ()));
+}
+
+
+// based on some physics drawing I came with a custom formula, not sure if working
+template<typename T>
+Vector3D<float>
+Vector3D<T>::giveMirrorOutcomingRayFromIncommingRay(const Vector3D<float> incoming_direction) {
+    Vector3D<float> invert_dir = Vector3D<float>() - incoming_direction;
+    auto normal_xy = Vector3D<float>(x_, y_, 0.f);
+    auto normal_yz = Vector3D<float>(0.f, y_, z_);
+    auto incoming_xy = Vector3D<float>(invert_dir.x_, invert_dir.y_, 0.f);
+    auto incoming_yz = Vector3D<float>(0.f, invert_dir.y_, invert_dir.z_);
+    float theta = incoming_xy.angleRadian(normal_xy);
+    float omega = incoming_yz.angleRadian(normal_yz);
+    Vector3D<float> res = *this;
+    auto angles = Vector3D(theta, omega, 0.f);
+    res.rotate(angles);
+    return res;
 }
 
 

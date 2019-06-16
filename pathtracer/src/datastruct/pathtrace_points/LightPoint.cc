@@ -25,7 +25,7 @@ void LightPoint::gatherLightpointsForCamerapoint(const CameraPoint &camPT, Vecto
         auto N = camPT.getNormalOfTouchedElement();
         Vector3D<float> Rm = 2.f * (Lm.dotproduct(N)) * N - Lm;
         Vector3D<float> V = ray.getDirection() * -1;
-        color_res = Kd * (Lm.dotproduct(N)) * Id + (Ks * Rm.dotproduct(V)).power(2.f) * 0.05f;
+        color_res = Kd * (Lm.dotproduct(N)) * Id;// + (Ks * Rm.dotproduct(V)).power(2.f) * 0.05f;
     }
 
     float shininess = touched_material_.shininess / 1000.f;
@@ -49,7 +49,7 @@ LightPoint::LightPoint(const Vector3D<float> &position, const Vector3D<float> &c
                        const Vector3D<float> &incomming_light)
         : PathtracePoint(position, color, normal, depth_, point_number_, kd_tree)
           , touched_material_(mat)
-          , incomming_light_(incomming_light) {
+          , incomming_light_direction_(incomming_light) {
     setup();
 }
 
@@ -93,13 +93,12 @@ void LightPoint::setup() {
     for (size_t i = 0; i < point_number_; ++i) {
 
 
-        Vector3D new_dir = normal_of_touched_element_.getRandomRayAccordingToDiffuseBrdf();
-//        float shininess = touched_material_.shininess / 1000.f;
-//        if(shininess >0.7f){
-//            new_dir = normal_of_touched_element_.getRandomRayAccordingToDiffuseBrdf();
-//        } else{
-//            new_dir = normal_of_touched_element_.giveMirrorOutcomingRayFromIncommingRay()
-//        }
+        Vector3D<float> new_dir;// = normal_of_touched_element_.getRandomRayAccordingToDiffuseBrdf();
+        float shininess = touched_material_.shininess / 1000.f;
+        new_dir += (1.f - shininess) * normal_of_touched_element_.getRandomRayAccordingToDiffuseBrdf();
+        new_dir += shininess *
+                   normal_of_touched_element_.giveMirrorOutcomingRayFromIncommingRay(incomming_light_direction_);
+
 
         Ray ray = Ray(position_, new_dir);
         std::vector<PolygonWithIntersection> list_res;
@@ -115,6 +114,7 @@ void LightPoint::setup() {
         auto normalAt = poly.getNormalAt(intersectionPt);
         addToChildren(intersectionPt, color_res,
                       normalAt,
-                      depth_ - 1, point_number_, kdTree_, poly.getMaterial(), new_dir);
+                      depth_ - 1, point_number_,
+                      kdTree_, poly.getMaterial(), new_dir);
     }
 }
