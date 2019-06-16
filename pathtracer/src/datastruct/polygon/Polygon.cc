@@ -145,38 +145,38 @@ void Polygon::setMaterial(const Material &material) {
 
 Vector3D<float> Polygon::getNormalAt(Vector3D<float> pos) {
     if (isTriangle()) {
-        auto A = vertices_[0];
-        auto B = vertices_[1];
-        auto C = vertices_[2];
+//        auto A = vertices_[0];
+//        auto B = vertices_[1];
+//        auto C = vertices_[2];
+//
+//        auto AB = B - A;
+//        auto AC = C - A;
+//        auto AD = pos - A;
+//        float u = AB.dotproduct(AD);// / (AB.norm() *AD.norm()) ;
+//        float v = AC.dotproduct(AD);/// (AC.norm()*AD.norm());
+//        auto N0 = normals_[0];
+//        auto N1 = normals_[1];
+//        auto N2 = normals_[2];
+//        return (1.f - u - v) * N0 + u * N1 + v * N2;
 
-        auto AB = B - A;
-        auto AC = C - A;
-        auto AD = pos - A;
-        float u = AB.dotproduct(AD);// / (AB.norm() *AD.norm()) ;
-        float v = AC.dotproduct(AD);/// (AC.norm()*AD.norm());
-        auto N0 = normals_[0];
-        auto N1 = normals_[1];
-        auto N2 = normals_[2];
-        return (1.f - u - v) * N0 + u * N1 + v * N2;
 
-
-//        float dist1 = (vertices_[0] - pos).norm();
-//        float dist2 = (vertices_[1] - pos).norm();
-//        float dist3 = (vertices_[2] - pos).norm();
-//        float sumdist = dist1 + dist2 + dist3;
-//        dist1 /= sumdist;
-//        dist2 /= sumdist;
-//        dist3 /= sumdist;
-//        dist1 = 1 - dist1;
-//        dist2 = 1 - dist2;
-//        dist3 = 1 - dist3;
+        float dist1 = (vertices_[0] - pos).norm();
+        float dist2 = (vertices_[1] - pos).norm();
+        float dist3 = (vertices_[2] - pos).norm();
+        float sumdist = dist1 + dist2 + dist3;
+        dist1 /= sumdist;
+        dist2 /= sumdist;
+        dist3 /= sumdist;
+        dist1 = 1 - dist1;
+        dist2 = 1 - dist2;
+        dist3 = 1 - dist3;
 
 
 //        sumdist = dist1 + dist2 + dist3;
 //        dist1 /= sumdist;
 //        dist2 /= sumdist;
 //        dist3 /= sumdist;
-//        return normals_[0] * dist1 + normals_[1] * dist2 + normals_[2] * dist3;
+        return normals_[0] * dist1 + normals_[1] * dist2 + normals_[2] * dist3;
     }
     std::vector<float> distances;
     float sum = 0.f;

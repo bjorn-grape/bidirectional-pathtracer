@@ -50,7 +50,12 @@ void PathtraceImageFactory::compute() {
         std::cout << "step " << i << " started!\n";
         travelScreen(i);
         std::stringstream builder;
-        builder << "step_" << i << ".ppm";
+        builder << "step_";
+        if(i < 100)
+            builder << "0";
+        if(i < 10)
+            builder << "0";
+        builder << i << ".ppm";
         std::cout << builder.str() << " written !\n";
         dumpToPpm(builder.str());
 

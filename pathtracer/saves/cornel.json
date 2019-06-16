@@ -24,9 +24,9 @@
                         "intensity_": 1.0
                     },
                     "direction_": {
-                        "x_": 0.0,
+                        "x_": 0.3,
                         "y_": -1.0,
-                        "z_": 1.0
+                        "z_": 0.3
                     }
                 }
             ],
@@ -34,7 +34,7 @@
             "spot_lights_": []
         },
         "camera_": {
-            "fieldOfView_": 30.0,
+            "fieldOfView_": 36.0,
             "screenDimension_": {
                 "x_": 100,
                 "y_": 100
@@ -42,19 +42,19 @@
             "screen_": [],
             "position_": {
                 "x_": 0.0,
-                "y_": 10.0,
+                "y_": 26.0,
                 "z_": -30.0
             },
             "orientation_": {
                 "x_": 0.0,
-                "y_": -0.2,
+                "y_": -0.6,
                 "z_": 1.0
             }
         },
         "objects_": [
             {
-                "path_obj_": "cornell3.obj",
-                "path_mtl_": "cornell3.mtl",
+                "path_obj_": "cornell4.obj",
+                "path_mtl_": "cornell4.mtl",
                 "position_": {
                     "x_": 0.0,
                     "y_": 0.0,
@@ -65,7 +65,7 @@
         "rd_type_": {
             "type": 0,
             "pass_number_": 10,
-            "light_depth_": 3,
+            "light_depth_": 5,
             "light_number_per_depth_": 10,
             "camera_depth_": 2,
             "camera_number_per_depth_": 10
