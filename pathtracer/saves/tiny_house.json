@@ -1,0 +1,74 @@
+{
+    "sceneSave": {
+        "all_lights_": {
+            "ambient_lights_": [
+                {
+                    "value0": {
+                        "color_": {
+                            "x_": 0.4,
+                            "y_": 0.4,
+                            "z_": 0.4
+                        },
+                        "intensity_": 3.0
+                    }
+                }
+            ],
+            "directional_lights_": [
+                {
+                    "value0": {
+                        "color_": {
+                            "x_": 0.4,
+                            "y_": 0.4,
+                            "z_": 0.4
+                        },
+                        "intensity_": 1.0
+                    },
+                    "direction_": {
+                        "x_": 0.0,
+                        "y_": -1.0,
+                        "z_": 1.0
+                    }
+                }
+            ],
+            "point_lights_": [],
+            "spot_lights_": []
+        },
+        "camera_": {
+            "fieldOfView_": 36.0,
+            "screenDimension_": {
+                "x_": 50,
+                "y_": 50
+            },
+            "screen_": [],
+            "position_": {
+                "x_": 0.0,
+                "y_": 5.0,
+                "z_": -14.0
+            },
+            "orientation_": {
+                "x_": 0.0,
+                "y_": -0.3,
+                "z_": 1.0
+            }
+        },
+        "objects_": [
+            {
+                "path_obj_": "tiny_house.obj",
+                "path_mtl_": "tiny_house.obj.mtl",
+                "position_": {
+                    "x_": 0.0,
+                    "y_": 1.0,
+                    "z_": 1.0
+                }
+            }
+        ],
+        "rd_type_": {
+            "type": 0,
+            "pass_number_": 10,
+            "light_depth_": 5,
+            "light_number_per_depth_": 10,
+            "camera_depth_": 2,
+            "camera_number_per_depth_": 10
+        }
+    }
+}
