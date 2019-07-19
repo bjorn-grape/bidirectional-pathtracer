@@ -4,7 +4,7 @@ Bidirectionnal pathtracer project for Image synthesis class
 
 
 ![](https://ibb.co/Pc29bCs)
-
+[click here to see a video example :)](https://youtu.be/c81YWpwX9A4)
 
 You need to install the following dependencies:
 
