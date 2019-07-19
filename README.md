@@ -3,7 +3,7 @@
 Bidirectionnal pathtracer project for Image synthesis class
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/c81YWpwX9A4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+![](https://ibb.co/Pc29bCs)
 
 
 You need to install the following dependencies:
