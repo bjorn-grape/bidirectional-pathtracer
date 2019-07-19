@@ -1,4 +1,4 @@
-# image-pathtracer
+# Bidirectional-pathtracer
 
 Bidirectionnal pathtracer project for Image synthesis class
 
